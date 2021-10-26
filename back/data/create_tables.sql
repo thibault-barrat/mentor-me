@@ -18,6 +18,8 @@ CREATE TABLE "user" (
   home_phone INT,
   mobile_phone INT,
   role_id INT NOT NULL,
+  -- par défaut, l'avatar du user sera le logo de mentor.me
+  avatar_url TEXT NOT NULL DEFAULT 'https://i.imgur.com/Z9fVYeP.png',
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
