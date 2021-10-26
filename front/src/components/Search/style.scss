@@ -1,0 +1,8 @@
+@use 'src/styles/vars';
+
+.search-input{
+  width: 95%;
+  border: solid 1px vars.$primary-color;
+  border-radius: 50px;
+  padding: vars.$gutter/2;
+}
