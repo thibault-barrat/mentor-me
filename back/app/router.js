@@ -14,6 +14,6 @@ const router = Router();
  * @returns {string} 404 - Unknown ticket number
  * @returns {string} 500 - Server error
  */
-// router.get("/register", mainController.init);
+router.get("/register", mainController.init);
 
 module.exports = router;
