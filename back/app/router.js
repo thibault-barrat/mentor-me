@@ -1,6 +1,11 @@
-const { Router } = require("express");
+const {
+    Router
+} = require("express");
 // import des controllers
-const mainController = require("./controllers/mainController");
+const {
+    mainController,
+    categoryController
+} = require("./controllers/");
 
 const router = Router();
 
@@ -15,5 +20,6 @@ const router = Router();
  * @returns {string} 500 - Server error
  */
 router.get("/register", mainController.init);
+router.get("/category", categoryController.getAllCategory)
 
 module.exports = router;
