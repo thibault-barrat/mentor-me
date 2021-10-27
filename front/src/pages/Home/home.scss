@@ -1,0 +1,48 @@
+@use 'src/styles/vars';
+
+.slogan {
+  padding: 1rem 5%;
+  text-align: center;
+  color: vars.$text-color;
+  &__title {
+    font-size: 1.4rem;
+    margin: 1rem 0;
+    line-height: 1.6rem;
+  }
+  &__text {
+    line-height: 1.1rem;
+  }
+}
+
+.popular-category {
+  padding: 1rem 5%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &__title {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  &__cards {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__card {
+    flex: 0 0 100%;
+    position: relative;
+  }
+  &__card-image {
+    width: 100%;
+  }
+  &__card-name {
+    color: #fff;
+    position: absolute;
+    text-transform: capitalize;
+    width: 100%;
+    left: 0;
+    bottom: 15px;
+    text-align: center;
+  }
+}
