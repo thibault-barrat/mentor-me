@@ -18,6 +18,7 @@
     padding-left: 40px;
     background-color: white;
     margin-bottom: calc(vars.$gutter*1.5);
+    transition: .3s;
     &:focus{
       border-color: dodgerblue;
       box-shadow: 0 0 8px 0 dodgerblue;

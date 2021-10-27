@@ -1,0 +1,17 @@
+@use 'src/styles/vars';
+
+.field{
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  margin: auto;
+  &-label{
+    margin-bottom: calc(vars.$gutter/2);
+    text-align: left;
+  }
+  &-input{
+    padding: vars.$gutter;
+    margin-bottom: calc(vars.$gutter*3);
+    border: solid 2px #dcdcdc;
+  }
+}
