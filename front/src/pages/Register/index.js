@@ -4,6 +4,7 @@ import React from 'react';
 import './style.scss';
 // eslint-disable-next-line import/no-unresolved
 import DecImage from '/src/assets/images/business-gfb594ee9b_1280.jpg';
+import Field from '../../components/Field';
 
 export default function Register() {
   const [email, setEmail] = React.useState("");
@@ -40,77 +41,41 @@ export default function Register() {
       </div>
       <form onSubmit={handleSubmit} className="right__container">
         <h2 className="form__title">Créer un compte</h2>
-        <label className="form__label">
-          Email:
-          <input
-            name="email"
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label className="form__label">
-          Nom:
-          <input
-            name="lastname"
-            type="text"
-            value={lastname}
-            onChange={e => setLastname(e.target.value)}
-            required
-          />
-        </label>
-        <label className="form__label">
-          Prenom:
-          <input
-            name="firstname"
-            type="text"
-            value={firstname}
-            onChange={e => setFirstname(e.target.value)}
-            required
-          />
-        </label>
-        <label className="form__label">
-          Mot de passe :
-          <input className="form__input"
-            name="password"
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <label className="form__label">
-          Confirmer <br /> le mot de passe :
-          <input className="form__input"
-            name="password"
-            type="password"
-            value={confirmedPassword}
-            onChange={e => setConfirmedPassword(e.target.value)}
-            required
-          />
-        </label>
-        <label className="form__label">
-          <input
-            name="acceptedTerms"
-            type="checkbox"
-            onChange={(e) => setAcceptedTerms(e.target.value)}
-            required
-          />
-          J'accepte les conditions générales et la politique de confidentialité.
-        </label>
-        <label className="form__label">
-          <input
-            name="acceptedEmailDiff"
-            type="checkbox"
-            onChange={(e) => setAcceptedEmailDiff(e.target.value)}
-            required
-          />
-          J'accepte que mon email soit diffusé en cas de proposition d'offre.
-        </label>
+        <Field 
+          name="Nom"
+          placeholder="votre Nom"
+          value={lastname}
+          
+        />
+        <Field 
+          name="Prénom"
+          placeholder="votre Prénom"
+          value={firstname}
+          
+        />
+        <Field 
+          name="email"
+          placeholder="votre adresse email"
+          value={email}
+          
+        />
+        <Field
+          name="password"
+          placeholder="Mot de passe"
+          value={password}
+
+        />
+        <Field
+          name="confirmedPassword"
+          placeholder="Confirmer le mot de passe"
+          value={confirmedPassword}
+
+        />
+        
 
         <div class="g-recaptcha" data-sitekey="6LdSsPscAAAAADmH6Q83VWexeO7rsy09eWggHmEy" />
-        <button>M'inscrire</button>
+         
+        <button type="submit" className="connect-button">M'inscrire</button>
       </form>
       
     </div>
