@@ -1,6 +1,6 @@
 require("dotenv").config({ path: "./.env" });
 const express = require("express");
-
+require("./data/import_data.sql").importFunction();
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
