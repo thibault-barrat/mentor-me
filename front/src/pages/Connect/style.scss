@@ -1,0 +1,39 @@
+@use 'src/styles/vars';
+
+.connect{
+  background-color: white;
+  width: 350px;
+  height: 400px;
+  margin: auto;
+  text-align: center;
+  margin-top: calc(vars.$gutter*4);
+  margin-bottom: calc(vars.$gutter*4);
+  padding-top: calc(vars.$gutter*2.5);
+  &-button{
+    color: white;
+    padding: calc(vars.$gutter/1.5);
+    font-size: vars.$gutter;
+    background-color: #6558f5;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-bottom: calc(vars.$gutter*2);
+    transition: .3s;
+    &:hover{
+      background-color: lighten($color: #6558f5, $amount: 10%);
+    }
+  }
+  &-link{
+    color: #6558f5;
+    text-decoration: underline;
+    &:hover{
+      color: lighten($color: #6558f5, $amount: 10%);
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .connect{
+    width: 470px;
+  }
+}
