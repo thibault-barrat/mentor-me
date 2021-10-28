@@ -3,32 +3,35 @@ import Field from './Field';
 
 import './style.scss';
 
-const Connect = () => (
-  <div className="connect">
-    <form >
-      <Field 
-        name="email"
-        placeholder="Email"
-        
-      />
-      <Field 
-        name="password"
-        placeholder="Mot de passe"
-        
-      />
-      <button
-        className="connect-button"
-      >
-      Me connecter
-      </button>
-    </form>
-    <Link 
-      className="connect-link"
-      to="/inscription"
-    >
-    Vous n'avez pas de compte ?
-    </Link>
-  </div>
-);
+export default function Connect() {
 
-export default Connect;
+  return (
+    <div className="connect">
+      <form >
+        <Field 
+          name="email"
+          placeholder="Email"
+          
+        />
+        <Field 
+          name="password"
+          placeholder="Mot de passe"
+          
+        />
+        <button
+          className="connect-button"
+        >
+        Me connecter
+        </button>
+      </form>
+      <Link 
+        className="connect-link"
+        to="/inscription"
+      >
+      Vous n'avez pas de compte ?
+      </Link>
+    </div>
+  );
+}  
+
+

@@ -2,9 +2,8 @@
 
 .connect{
   background-color: white;
-  width: 90%;
-  height: 50vh;
-  border-radius: 25px;
+  width: 350px;
+  height: 400px;
   margin: auto;
   text-align: center;
   margin-top: calc(vars.$gutter*4);
@@ -35,7 +34,6 @@
 
 @media (min-width: 768px) {
   .connect{
-    width: 50%;
-    margin-left: calc(vars.$gutter*2);
+    width: 470px;
   }
 }
