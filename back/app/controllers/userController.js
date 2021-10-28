@@ -57,6 +57,19 @@ const userController = {
             .send({ errorMessage: `${property} can't be empty!` });
         }
       }
+      // on vérifie le format de l'email grâce à une regex
+      const regexEmail = new RegExp(/^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$/);
+      if (!regexEmail.test(req.body.email)) {
+        return res.status(406).send({ errorMessage: `Wrong email format!` });
+      }
+      // on vérifie le format du password grâce à une regex
+      const regexPassword = new RegExp(
+        /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}/
+      );
+      if (!regexPassword.test(req.body.password)) {
+        return res.status(406).send({ errorMessage: `Wrong password format!` });
+      }
+
       const user = new User(req.body);
       await user.createOne();
 
@@ -73,6 +86,19 @@ const userController = {
       res.status(500).send(err);
     }
   },
+
+  /**
+   * TODO
+   * Modifie le profil d'un user
+   * @param  {Object} req
+   * @param  {Object} res
+   */
+  // modifyUserProfile: async (req, res) => {
+  //   try {
+  //   } catch (err) {
+  //     res.status(500).send(err);
+  //   }
+  // },
 
   /**
    * Supprime un user par son id

@@ -30,6 +30,15 @@ router.get("/user/:id(\\d+)", userController.getOneUser);
 router.post("/register", userController.createNewUser);
 
 /**
+ * TODO
+ * Modifier le profil d'un user
+ * @route PATCH /user/:id
+ * @returns {User} 201 - created
+ * @returns {string} 500 - Server error
+ */
+//  router.post("/user/:id(\\d+)", userController.modifyUserProfile);
+
+/**
  * Supprimer un user par son id
  * @route DELETE /user/:id
  * @param {number} id du user

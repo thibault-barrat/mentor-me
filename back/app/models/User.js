@@ -79,6 +79,19 @@ module.exports = class User {
   }
 
   /**
+   * TODO
+   * Méthode pour modifier le profil d'un user
+   * @param {number} id
+   */
+  async modifyOne(id) {
+    const query = {
+      // text: "DELETE FROM users WHERE id=$1",
+      // values: [id],
+    };
+    await pool.query(query);
+  }
+
+  /**
    * Méthode pour supprimer un user par son id
    * @param {number} id
    */
