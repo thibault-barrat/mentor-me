@@ -1,0 +1,79 @@
+@use 'src/styles/vars';
+
+.search {
+  padding-top: vars.$gutter;
+  
+  &-form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+  }
+  &-input{
+    width: 90%;
+    border: solid 1px #dcdcdc;
+    border-radius: 50px;
+    font-size: vars.$gutter;
+    padding: calc(vars.$gutter/2);
+    padding-left: 40px;
+    background-color: white;
+    margin-bottom: calc(vars.$gutter*1.5);
+    &:focus{
+      border-color: dodgerblue;
+      box-shadow: 0 0 8px 0 dodgerblue;
+    }
+  }
+  &-input{
+    &:focus + #icon{
+      color: dodgerblue;
+    }
+  }
+  &-button{
+    width: 70%;
+    border-radius: 9px;
+    border: none;
+    padding: calc(vars.$gutter/2);
+    font-size: calc(vars.$gutter*1.5);
+    color: white;
+    background-color: #f0613c;
+    transition: .3s;
+    &:hover{
+      background-color: lighten($color: #f0613c, $amount: 10%);
+    }
+  }
+  &-icon{
+    position: absolute;
+    left: 8%;
+    top: 8px;
+    color: #a88175;
+  
+  }
+}
+
+/* for every screens larger than 768px */
+@media (min-width: 768px) {
+  .search {
+    &-form{
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-around;
+      align-items: baseline;
+    }
+    &-input{
+      width: 60%;
+    }
+    &-button{
+      width: 30%;
+      font-size: vars.$gutter;
+      padding: calc(vars.$gutter/2);
+    }
+    &-icon{
+      position: absolute;
+      left: 4.5%;
+      top: 8px;
+    }
+  }
+}
+
+
+
