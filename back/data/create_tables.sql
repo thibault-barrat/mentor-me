@@ -1,6 +1,6 @@
 BEGIN;
 -- Suppression des tables si elles existent déjà
-DROP TABLE IF EXISTS "user",
+DROP TABLE IF EXISTS "users",
 "service",
 "user_likes_service",
 "category",
@@ -8,11 +8,11 @@ DROP TABLE IF EXISTS "user",
 "user_likes_service",
 "role";
 -- Création de la table user
-CREATE TABLE "user" (
+CREATE TABLE "users" (
   id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   firstname TEXT NOT NULL,
   lastname TEXT NOT NULL,
-  email TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
   password TEXT NOT NULL,
   biography TEXT,
   home_phone INT,
@@ -32,7 +32,7 @@ CREATE TABLE "service" (
   online BOOLEAN NOT NULL DEFAULT FALSE,
   irl BOOLEAN NOT NULL DEFAULT FALSE,
   is_published BOOLEAN NOT NULL DEFAULT FALSE,
-  user_id int NOT NULL REFERENCES "user"("id") ON DELETE CASCADE,
+  user_id int NOT NULL REFERENCES "users"("id") ON DELETE CASCADE,
   category_id INT NOT NULL,
   location_id INT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -41,7 +41,7 @@ CREATE TABLE "service" (
 --Création de la table user_likes_service
 CREATE TABLE "user_likes_service" (
   id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  user_id int NOT NULL REFERENCES "user"("id") ON DELETE CASCADE,
+  user_id int NOT NULL REFERENCES "users"("id") ON DELETE CASCADE,
   service_id int NOT NULL REFERENCES "service"("id") ON DELETE CASCADE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -72,7 +72,7 @@ CREATE TABLE "role" (
 );
 --Ajout du type FOREIGN KEYS aux clés étrangères
 ALTER TABLE
-  "user"
+  "users"
 ADD
   CONSTRAINT user_fk FOREIGN KEY ("role_id") REFERENCES "role"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE

@@ -1,9 +1,9 @@
-require("dotenv").config();
+require("dotenv").config({ path: "./.env" });
 const express = require("express");
-
+require("./data/import_data.sql").importFunction();
 const app = express();
 
-app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const router = require("./app/router");
 app.use(router);

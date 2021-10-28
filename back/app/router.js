@@ -1,19 +1,49 @@
 const { Router } = require("express");
 // import des controllers
-const mainController = require("./controllers/mainController");
+const userController = require("./controllers/userController");
 
 const router = Router();
 
 /**
- * Respond with a visitor idenfified by its ticket number
- * @route GET /register
- * @param {string} ticketNumber.path.required The ticket number
- * @returns {Visitor} 200 - An identified visitor
- * @returns {string} 400 - Missing ticket number
- * @returns {string} 401 - Outdated ticket number
- * @returns {string} 404 - Unknown ticket number
+ * Récupérer tous les users
+ * @route GET /allUsers
+ * @returns {Users} 200
  * @returns {string} 500 - Server error
  */
-router.get("/register", mainController.init);
+router.get("/allUsers", userController.getAllUsers);
+
+/**
+ * Récupérer un user par son id
+ * @route GET /user/:id
+ * @param {number} id du user
+ * @returns {User} 200
+ * @returns {string} 500 - Server error
+ */
+router.get("/user/:id(\\d+)", userController.getOneUser);
+
+/**
+ * Ajouter un user
+ * @route POST /user/:id
+ * @returns {User} 201 - created
+ * @returns {string} 500 - Server error
+ */
+router.post("/register", userController.createNewUser);
+
+/**
+ * Modifier le profil d'un user
+ * @route PATCH /user/:id
+ * @returns {User} 201 - created
+ * @returns {string} 500 - Server error
+ */
+router.patch("/user/:id(\\d+)", userController.modifyUserProfile);
+
+/**
+ * Supprimer un user par son id
+ * @route DELETE /user/:id
+ * @param {number} id du user
+ * @returns {User} 200
+ * @returns {string} 500 - Server error
+ */
+router.delete("/user/:id(\\d+)", userController.deleteOneUser);
 
 module.exports = router;
