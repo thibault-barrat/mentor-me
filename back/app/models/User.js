@@ -84,9 +84,45 @@ module.exports = class User {
    * @param {number} id
    */
   async modifyOne(id) {
+    // on récupère le user existant en db
+    await this.findOne(id);
+    // gestion des erreurs si champ non rempli, on récupère l'ancien champ
+    if (!this.firstname || this.firstname.length === 0) {
+      this.firstname = this.userById[0].firstname;
+    }
+    if (!this.lastname || this.lastname.length === 0) {
+      this.lastname = this.userById[0].lastname;
+    }
+    if (!this.biography || this.biography.length === 0) {
+      this.biography = this.userById[0].biography;
+    }
+    if (!this.avatar_url || this.avatar_url.length === 0) {
+      this.avatar_url = this.userById[0].avatar_url;
+    }
+    if (
+      !this.home_phone ||
+      this.home_phone === undefined ||
+      typeof +this.home_phone !== "number"
+    ) {
+      this.home_phone = this.userById[0].home_phone;
+    }
+    if (!this.mobile_phone || typeof +this.mobile_phone !== "number") {
+      this.mobile_phone = this.userById[0].mobile_phone;
+    }
+
     const query = {
-      // text: "DELETE FROM users WHERE id=$1",
-      // values: [id],
+      text: `UPDATE users
+      SET "firstname"=$1, "lastname"=$2, "biography"=$3, "home_phone"=$4, "mobile_phone"=$5, "avatar_url"=$6
+      WHERE id=$7;`,
+      values: [
+        this.firstname,
+        this.lastname,
+        this.biography,
+        +this.home_phone,
+        +this.mobile_phone,
+        this.avatar_url,
+        id,
+      ],
     };
     await pool.query(query);
   }

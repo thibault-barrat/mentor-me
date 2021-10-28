@@ -36,7 +36,7 @@ router.post("/register", userController.createNewUser);
  * @returns {User} 201 - created
  * @returns {string} 500 - Server error
  */
-//  router.post("/user/:id(\\d+)", userController.modifyUserProfile);
+router.patch("/user/:id(\\d+)", userController.modifyUserProfile);
 
 /**
  * Supprimer un user par son id

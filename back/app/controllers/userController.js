@@ -58,13 +58,17 @@ const userController = {
         }
       }
       // on vérifie le format de l'email grâce à une regex
-      const regexEmail = new RegExp(/^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$/);
+      const regexEmail = new RegExp(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        "g"
+      );
       if (!regexEmail.test(req.body.email)) {
         return res.status(406).send({ errorMessage: `Wrong email format!` });
       }
       // on vérifie le format du password grâce à une regex
       const regexPassword = new RegExp(
-        /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}/
+        "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}",
+        "g"
       );
       if (!regexPassword.test(req.body.password)) {
         return res.status(406).send({ errorMessage: `Wrong password format!` });
@@ -93,12 +97,38 @@ const userController = {
    * @param  {Object} req
    * @param  {Object} res
    */
-  // modifyUserProfile: async (req, res) => {
-  //   try {
-  //   } catch (err) {
-  //     res.status(500).send(err);
-  //   }
-  // },
+  modifyUserProfile: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      // on vérifie si les numéros de  téléphone envoyés sont de type number
+      const regex = new RegExp(/^\d+/);
+      if (
+        // si ce n'est pas un number et si ce n'est pas undefined (avec undefined, on laisse l'ancien champ (cf User.js))
+        !regex.test(Number(req.body.home_phone)) &&
+        req.body.home_phone !== undefined
+      ) {
+        // on renvoie une erreur 406 not acceptable!
+        return res
+          .status(406)
+          .send({ errorMessage: `Home phone is not a number!` });
+      }
+      if (
+        !regex.test(Number(req.body.mobile_phone)) &&
+        req.body.mobile_phone !== undefined
+      ) {
+        return res
+          .status(406)
+          .send({ errorMessage: `Mobile phone is not a number!` });
+      }
+      const user = new User(req.body);
+      await user.modifyOne(+id);
+
+      res.status(200).send({ modified: true });
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  },
 
   /**
    * Supprime un user par son id
