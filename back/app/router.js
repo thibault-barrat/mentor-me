@@ -2,10 +2,9 @@ const {
     Router
 } = require("express");
 // import des controllers
-const {
-    mainController,
-    categoryController
-} = require("./controllers/");
+const mainController = require("./controllers/mainController");
+
+const categoryController = require("./controllers/categoryController");
 
 const router = Router();
 
@@ -19,7 +18,12 @@ const router = Router();
  * @returns {string} 404 - Unknown ticket number
  * @returns {string} 500 - Server error
  */
-router.get("/register", mainController.init);
-router.get("/category", categoryController.getAllCategory)
+//router.get("/register", mainController.init);
+
+/* Category */
+router.get("/categorys", categoryController.findAll); // Route pour toutes les catégories
+router.get("/categorys/:id(\\d+)", categoryController.findById); // Route pour un ID de catégorie
+router.post("/categorys", categoryController.createNewCategory); // Route pour ajouter une catégorie
+router.delete("/categorys/:id(\\d+)", categoryController.deleteCategory); // Route pour suppirmer une catégorie
 
 module.exports = router;

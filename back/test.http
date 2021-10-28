@@ -1,0 +1,15 @@
+POST http://localhost:3001/categorys
+Content-Type: application/x-www-form-urlencoded
+
+name=Peche
+&color=#f0f
+&position=1
+
+### suppression d'une catégorie
+DELETE http://localhost:3001/categorys/6
+
+### Récupération des catégories
+GET http://localhost:3001/categorys
+
+### Récupération d'une catégorie par ID
+GET http://localhost:3001/categorys/6
