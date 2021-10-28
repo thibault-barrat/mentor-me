@@ -1,3 +1,5 @@
+@use 'src/styles/vars';
+
 //.container {
   //display: flex;
   //flex-direction: row;
@@ -44,7 +46,7 @@
 /* Partie droite de la page ici le form */ 
 
 .right__container {
-  height: 80vh;
+  
   text-align: center;
   margin: 2rem 2rem 5rem 2rem;
   background-color: #FFF;
@@ -58,4 +60,17 @@
 .form__title {
   font-size: 2rem;
   padding: 1.4rem;
+
 }
+
+.right__container input {
+  display: block;
+  padding: vars.$gutter;
+    margin-bottom: calc(vars.$gutter*3);
+    border: solid 2px #dcdcdc;
+}
+
+.form__input {
+  margin: 1rem;
+}
+

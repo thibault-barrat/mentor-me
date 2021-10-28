@@ -40,7 +40,7 @@ export default function Register() {
       </div>
       <form onSubmit={handleSubmit} className="right__container">
         <h2 className="form__title">Créer un compte</h2>
-        <label>
+        <label className="form__label">
           Email:
           <input
             name="email"
@@ -50,7 +50,7 @@ export default function Register() {
             required
           />
         </label>
-        <label>
+        <label className="form__label">
           Nom:
           <input
             name="lastname"
@@ -60,7 +60,7 @@ export default function Register() {
             required
           />
         </label>
-        <label>
+        <label className="form__label">
           Prenom:
           <input
             name="firstname"
@@ -70,9 +70,9 @@ export default function Register() {
             required
           />
         </label>
-        <label>
+        <label className="form__label">
           Mot de passe :
-          <input
+          <input className="form__input"
             name="password"
             type="password"
             value={password}
@@ -80,9 +80,9 @@ export default function Register() {
             required
           />
         </label>
-        <label>
-          Confirmer le mot de passe :
-          <input
+        <label className="form__label">
+          Confirmer <br /> le mot de passe :
+          <input className="form__input"
             name="password"
             type="password"
             value={confirmedPassword}
@@ -90,7 +90,7 @@ export default function Register() {
             required
           />
         </label>
-        <label>
+        <label className="form__label">
           <input
             name="acceptedTerms"
             type="checkbox"
@@ -99,7 +99,7 @@ export default function Register() {
           />
           J'accepte les conditions générales et la politique de confidentialité.
         </label>
-        <label>
+        <label className="form__label">
           <input
             name="acceptedEmailDiff"
             type="checkbox"
