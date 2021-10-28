@@ -31,7 +31,7 @@ const userController = {
         // s'il n'existe pas, on retourne une erreur 404 : not found
         return res
           .status(404)
-          .send({ errorMessage: "This user does not exist in database" });
+          .send({ errorMessage: "This user does not exist" });
       }
       //TODO : error 401 unauthorized
       // on renvoie le json du user
@@ -92,7 +92,6 @@ const userController = {
   },
 
   /**
-   * TODO
    * Modifie le profil d'un user
    * @param  {Object} req
    * @param  {Object} res
@@ -145,7 +144,7 @@ const userController = {
         // s'il n'existe pas, on retourne une erreur 404 : not found
         return res
           .status(404)
-          .send({ errorMessage: "This user does not exist in database" });
+          .send({ errorMessage: "This user does not exist!" });
       }
       await user.deleteOne(+id);
       // on mentionne que la suppression a bien eu lieu

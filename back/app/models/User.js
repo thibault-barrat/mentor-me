@@ -72,6 +72,7 @@ module.exports = class User {
     // on hash le password pour le stocker hashé en bdd
     const hashedPassword = await bcrypt.hash(this.password, this.saltRounds);
     const query = {
+      //TODO RETURNING
       text: `INSERT INTO users ("firstname","lastname","email","password","role_id") VALUES ($1, $2, $3, $4, $5)`,
       values: [this.firstname, this.lastname, this.email, hashedPassword, 1],
     };
@@ -79,7 +80,6 @@ module.exports = class User {
   }
 
   /**
-   * TODO
    * Méthode pour modifier le profil d'un user
    * @param {number} id
    */
@@ -99,11 +99,7 @@ module.exports = class User {
     if (!this.avatar_url || this.avatar_url.length === 0) {
       this.avatar_url = this.userById[0].avatar_url;
     }
-    if (
-      !this.home_phone ||
-      this.home_phone === undefined ||
-      typeof +this.home_phone !== "number"
-    ) {
+    if (!this.home_phone || typeof +this.home_phone !== "number") {
       this.home_phone = this.userById[0].home_phone;
     }
     if (!this.mobile_phone || typeof +this.mobile_phone !== "number") {

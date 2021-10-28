@@ -30,7 +30,6 @@ router.get("/user/:id(\\d+)", userController.getOneUser);
 router.post("/register", userController.createNewUser);
 
 /**
- * TODO
  * Modifier le profil d'un user
  * @route PATCH /user/:id
  * @returns {User} 201 - created
