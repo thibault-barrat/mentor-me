@@ -35,17 +35,21 @@ export default function Connect() {
         onSubmit={handleSubmit}
       >
         <Field
+          type="email"
           name="email"
           placeholder="Email"
           value={email}
           onChange={handleChange}
+          required
 
         />
         <Field
+          type="password"
           name="password"
           placeholder="Mot de passe"
           value={password}
           onChange={handleChange}
+          required
 
         />
         <button
