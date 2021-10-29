@@ -1,5 +1,6 @@
+/* eslint-disable object-curly-newline */
 import axios from 'axios';
-import { saveUser, SUBMIT_LOGIN } from '../../actions/user';
+import { saveUser, submitNewUserSuccess, SUBMIT_LOGIN, SUBMIT_NEW_USER } from '../../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -35,27 +36,34 @@ const userMiddleware = (store) => (next) => (action) => {
 
       break;
     }
-    /*     case SUBMIT_LOGIN: {
-          const state = store.getState();
+    case SUBMIT_NEW_USER: {
+      // const state = store.getState();
+      // const { email, password } = state.user;
 
-          const config = {
-            method: 'post',
-            url: 'http://localhost:3000/login',
-            data: {
-              email: state.user.email,
-              password: state.user.password,
-            },
-          };
-          axios(config)
-            .then((response) => {
-              console.log('on va dispatch saveUser');
-              store.dispatch(saveUser(response.data.logged, response.data.token, response.data.id));
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-          break;
-        } */
+      // on peut destructurer directement le state retourné par le store
+      const { user: { register: { email, password, firstname, lastname } } } = store.getState();
+
+      const submitNewUser = async () => {
+        try {
+          const response = await axios.post('https://api-mentorme.herokuapp.com/v1/register', {
+            email,
+            password,
+            firstname,
+            lastname,
+          });
+          // une fois qu'on a la réponse, on peut venir stocker les infos du user
+          // dans le state => modifier le state => dispatch d'action
+          store.dispatch(submitNewUserSuccess());
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+
+      submitNewUser();
+
+      break;
+    }
     default:
       next(action);
   }

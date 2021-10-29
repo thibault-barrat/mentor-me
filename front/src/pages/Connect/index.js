@@ -2,7 +2,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeLoginField, submitLogin } from '../../actions/user';
-import Field from './Field';
+import Field from '../../components/Field';
 
 import './style.scss';
 
@@ -35,17 +35,21 @@ export default function Connect() {
         onSubmit={handleSubmit}
       >
         <Field
+          type="email"
           name="email"
           placeholder="Email"
           value={email}
           onChange={handleChange}
+          required
 
         />
         <Field
+          type="password"
           name="password"
           placeholder="Mot de passe"
           value={password}
           onChange={handleChange}
+          required
 
         />
         <button
