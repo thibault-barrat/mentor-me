@@ -17,7 +17,7 @@ CREATE TABLE "users" (
   biography TEXT,
   home_phone INT,
   mobile_phone INT,
-  role_id INT NOT NULL,
+  role_id INT NOT NULL DEFAULT 1,
   -- par défaut, l'avatar du user sera le logo de mentor.me
   avatar_url TEXT NOT NULL DEFAULT 'https://i.imgur.com/Z9fVYeP.png',
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),

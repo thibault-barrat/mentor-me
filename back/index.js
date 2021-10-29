@@ -13,8 +13,7 @@ app.use(cors());
 //   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
 
-const router = require("./app/router");
-app.use(router);
+app.use("/v1", require("./app/router"));
 
 const PORT = process.env.PORT || 3000;
 

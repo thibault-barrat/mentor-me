@@ -79,6 +79,17 @@ INSERT INTO
   )
 VALUES
   (
+    'Admin',
+    'Mentorme',
+    'admin@mentorme.fr',
+    '$2b$10$VWPLkNQM6ZHsT2AvKzZILemRgGxZc048bOvv4YHSyv2dcRp3pjcdu',
+    null,
+    null,
+    null,
+    DEFAULT,
+    2
+  ),
+  (
     'Jaymee',
     'Hankin',
     'jhankin0@ca.gov',
