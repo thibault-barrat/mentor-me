@@ -27,18 +27,23 @@ module.exports = class User {
    */
   async checkUserByEmail(email) {
     const query = {
-      text: "SELECT * FROM users WHERE email=$1",
+      text: "SELECT users.id, users.email, users.password, role.name as role_name FROM users JOIN role ON users.role_id = role.id WHERE email=$1",
       values: [email],
     };
     const data = await pool.query(query);
     // si le mail existe, le tableau data.rows n'est pas vide, on renvoie un true (qu'on traitera dans le userController pour empêcher la création du compte)
     if (data.rows.length !== 0) {
-      return (
-        (this.checkEmail = true),
-        (this.hashedPasswordInDb = data.rows[0].password)
-      );
+      console.log("checkEmail: true");
+
+      this.checkEmail = true;
+      this.hashedPasswordInDb = data.rows[0].password;
+      this.role_name = data.rows[0].role_name;
+      this.id = data.rows[0].id;
+      console.log(this.checkEmail);
+      return;
     } else {
       // le mail n'existe pas, on retourne false
+      console.log("checkEmail: false");
       return (this.checkEmail = false);
     }
   }
@@ -79,13 +84,16 @@ module.exports = class User {
    */
   async createOne() {
     await this.checkUserByEmail(this.email);
+    if (this.checkEmail) return;
     // on hash le password pour le stocker hashé en bdd
     const hashedPassword = await bcrypt.hash(this.password, this.saltRounds);
+
     const query = {
       //TODO RETURNING
       text: `INSERT INTO users ("firstname","lastname","email","password","role_id") VALUES ($1, $2, $3, $4, $5)`,
       values: [this.firstname, this.lastname, this.email, hashedPassword, 1],
     };
+
     await pool.query(query);
   }
 

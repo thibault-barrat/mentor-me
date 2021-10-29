@@ -1,6 +1,8 @@
 const { Router } = require("express");
 // import des controllers
 const userController = require("./controllers/userController");
+// import des middlewares
+const { withAuth, isAdmin } = require("./middlewares/auth");
 
 const router = Router();
 
@@ -10,7 +12,7 @@ const router = Router();
  * @returns {Users} 200 - OK
  * @returns {string} 500 - Server error
  */
-router.get("/allUsers", userController.getAllUsers);
+router.get("/allUsers", isAdmin, userController.getAllUsers);
 
 /**
  * Récupérer un user par son id
@@ -19,10 +21,10 @@ router.get("/allUsers", userController.getAllUsers);
  * @returns {User} 200 - OK
  * @returns {string} 500 - Server error
  */
-router.get("/user/:id(\\d+)", userController.getOneUser);
+router.get("/user/:id(\\d+)", withAuth, userController.getOneUser);
 
 /**
- * Ajouter un user
+ * S'inscrire
  * @route POST /user/:id
  * @returns {User} 201 - created
  * @returns {string} 500 - Server error
@@ -36,7 +38,7 @@ router.post("/register", userController.createNewUser);
  * @returns {User} 200 - OK
  * @returns {string} 500 - Server error
  */
-router.patch("/user/:id(\\d+)", userController.modifyUserProfile);
+router.patch("/user/:id(\\d+)", withAuth, userController.modifyUserProfile);
 
 /**
  * Supprimer un user par son id
@@ -45,7 +47,7 @@ router.patch("/user/:id(\\d+)", userController.modifyUserProfile);
  * @returns {User} 200 - OK
  * @returns {string} 500 - Server error
  */
-router.delete("/user/:id(\\d+)", userController.deleteOneUser);
+router.delete("/user/:id(\\d+)", withAuth, userController.deleteOneUser);
 
 /**
  * Connecter un user
@@ -61,6 +63,6 @@ router.post("/login", userController.connectUser);
  * @returns {User} 200
  * @returns {string} 500 - Server error
  */
-router.get("/logout", userController.disconnectUser);
+router.get("/logout", withAuth, userController.disconnectUser);
 
 module.exports = router;

@@ -33,7 +33,6 @@ const userController = {
           .status(404)
           .send({ errorMessage: "This user does not exist" });
       }
-      //TODO : error 401 unauthorized
       // on renvoie le json du user
       res.status(200).send(user.userById);
     } catch (err) {
@@ -76,7 +75,6 @@ const userController = {
 
       const user = new User(req.body);
       await user.createOne();
-
       // on vérifie si le user existe déjà en base de données ou pas
       if (user.checkEmail) {
         // un user a déjà été inscrit avec cette adresse mail, on retourne une erreur 409 : Conflict
@@ -84,6 +82,7 @@ const userController = {
           .status(409)
           .send({ errorMessage: "This user already exists!" });
       }
+
       // le user n'existe pas encore, on le crée
       res.status(201).send({ created: true });
     } catch (err) {
@@ -120,6 +119,11 @@ const userController = {
           .status(406)
           .send({ errorMessage: `Mobile phone is not a number!` });
       }
+      // si l'id du user ne correspond pas à l'id du user connecté, il ne peut pas modifier les données du profil ! n admin le peut
+      if (req.session.user.role !== "admin" && req.session.user.id !== +id) {
+        return res.status(401).send({ errorMessage: `Unauthorized!` });
+      }
+
       const user = new User(req.body);
       await user.modifyOne(+id);
 
@@ -145,6 +149,10 @@ const userController = {
         return res
           .status(404)
           .send({ errorMessage: "This user does not exist!" });
+      }
+      // si l'id du user ne correspond pas à l'id du user connecté, il ne peut pas supprimer le profil d'un autre user ! Un admin le peut
+      if (req.session.user.role !== "admin" && req.session.user.id !== +id) {
+        return res.status(401).send({ errorMessage: `Unauthorized!` });
       }
       await user.deleteOne(+id);
       // on mentionne que la suppression a bien eu lieu
@@ -177,7 +185,12 @@ const userController = {
       }
 
       // si email existe et le mdp est correct, OK
-      res.status(200).send({ connected: true });
+      req.session.user = {
+        email: user.email,
+        role: user.role_name,
+        id: user.id,
+      };
+      res.status(200).send({ connected: true, user: req.session.user });
     } catch (err) {
       res.status(500).send(err);
     }
@@ -190,6 +203,7 @@ const userController = {
    */
   disconnectUser: (req, res) => {
     res.status(200).send({ connected: false });
+    req.session.destroy();
   },
 };
 
