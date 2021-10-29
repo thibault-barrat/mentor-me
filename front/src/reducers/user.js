@@ -3,7 +3,7 @@ import {
 } from '../actions/user';
 
 export const initialState = {
-  logged: false,
+  logged: true,
   isAdmin: false,
   email: '',
   password: '',
