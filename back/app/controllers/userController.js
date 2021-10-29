@@ -153,6 +153,44 @@ const userController = {
       res.status(500).send(err);
     }
   },
+
+  /**
+   * Processus de connexion d'un user
+   * @param  {Object} req
+   * @param  {Object} res
+   */
+  connectUser: async (req, res) => {
+    try {
+      const user = new User(req.body);
+      await user.login();
+      // on vérifie si le user existe déjà en base de données ou pas
+      if (!user.checkEmail) {
+        // un user a déjà été inscrit avec cette adresse mail, on retourne une erreur 409 : Conflict
+        return res
+          .status(409)
+          .send({ errorMessage: "This user does not exist!" });
+      }
+      // on vérifie si le mdp correspond
+      if (!user.checkPassword) {
+        // ce n'est pas le bon mdp
+        return res.status(400).send({ errorMessage: "Wrong password!" });
+      }
+
+      // si email existe et le mdp est correct, OK
+      res.status(200).send({ connected: true });
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  },
+
+  /**
+   * Processus de déconnexion d'un user
+   * @param  {Object} req
+   * @param  {Object} res
+   */
+  disconnectUser: (req, res) => {
+    res.status(200).send({ connected: false });
+  },
 };
 
 module.exports = userController;

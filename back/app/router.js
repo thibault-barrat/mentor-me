@@ -7,7 +7,7 @@ const router = Router();
 /**
  * Récupérer tous les users
  * @route GET /allUsers
- * @returns {Users} 200
+ * @returns {Users} 200 - OK
  * @returns {string} 500 - Server error
  */
 router.get("/allUsers", userController.getAllUsers);
@@ -16,7 +16,7 @@ router.get("/allUsers", userController.getAllUsers);
  * Récupérer un user par son id
  * @route GET /user/:id
  * @param {number} id du user
- * @returns {User} 200
+ * @returns {User} 200 - OK
  * @returns {string} 500 - Server error
  */
 router.get("/user/:id(\\d+)", userController.getOneUser);
@@ -32,7 +32,8 @@ router.post("/register", userController.createNewUser);
 /**
  * Modifier le profil d'un user
  * @route PATCH /user/:id
- * @returns {User} 201 - created
+ * @param {number} id du user
+ * @returns {User} 200 - OK
  * @returns {string} 500 - Server error
  */
 router.patch("/user/:id(\\d+)", userController.modifyUserProfile);
@@ -41,9 +42,25 @@ router.patch("/user/:id(\\d+)", userController.modifyUserProfile);
  * Supprimer un user par son id
  * @route DELETE /user/:id
  * @param {number} id du user
- * @returns {User} 200
+ * @returns {User} 200 - OK
  * @returns {string} 500 - Server error
  */
 router.delete("/user/:id(\\d+)", userController.deleteOneUser);
+
+/**
+ * Connecter un user
+ * @route post /login
+ * @returns {User} 200
+ * @returns {string} 500 - Server error
+ */
+router.post("/login", userController.connectUser);
+
+/**
+ * Déconnecter un user
+ * @route get /logout
+ * @returns {User} 200
+ * @returns {string} 500 - Server error
+ */
+router.get("/logout", userController.disconnectUser);
 
 module.exports = router;

@@ -33,7 +33,10 @@ module.exports = class User {
     const data = await pool.query(query);
     // si le mail existe, le tableau data.rows n'est pas vide, on renvoie un true (qu'on traitera dans le userController pour empêcher la création du compte)
     if (data.rows.length !== 0) {
-      return (this.checkEmail = true);
+      return (
+        (this.checkEmail = true),
+        (this.hashedPasswordInDb = data.rows[0].password)
+      );
     } else {
       // le mail n'existe pas, on retourne false
       return (this.checkEmail = false);
@@ -140,5 +143,23 @@ module.exports = class User {
       values: [id],
     };
     await pool.query(query);
+  }
+
+  /**
+   * Méthode pour connecter un user
+   */
+  async login() {
+    // on vérifie si l'email est en bdd
+    await this.checkUserByEmail(this.email);
+
+    const passwordbcrypt = await bcrypt.compare(
+      this.password,
+      this.hashedPasswordInDb
+    );
+    if (!passwordbcrypt) {
+      return (this.checkPassword = false);
+    } else {
+      return (this.checkPassword = true);
+    }
   }
 };
