@@ -3,99 +3,115 @@ const Category = require("../models/category");
 const categoryController = {
 
     //On cherche toute les catégories
-    findAll: async (req, res, next) => {
-        const categoryzz = await Category.findAllCategories();
-
-        if (categoryzz) {
-
-            res.send(categoryzz)
-
-        } else {
-            res.status(400);
+    getAllCategorizz: async (req, res) => {
+        try {
+            const categoryzz = new Category();
+            await categoryzz.findAll()
+            res.status(200).send(categoryzz.allCategories)
+        } catch (error) {
+            res.status(500).send(err)
         }
     },
 
     //On cherche l'id de la catégorie
-    findById: async (req, res, next) => {
-        const category = await Category.findCategoryById(req.params.id)
-
-        if (category.length === 0) {
-
-            return res.status(404).send({
-                errorMessage: "This user does not exist in database"
-            })
-
-        } else {
-            res.status(200).send(category)
-        }
-    },
-
-    createNewCategory: async (req, res, next) => {
+    getOneCategory: async (req, res) => {
         try {
             const {
-                name,
-                color,
-                image
-            } = req.body;
+                id
+            } = req.params;
+            const category = new Category();
 
-            let bodyError = [];
+            await category.findOne(+id);
 
-            if (!name) {
-                bodyErrors.push(`content can not be empty`);
+            if (category.categoryById.length === 0) {
+                return res
+                    .status(404)
+                    .send({
+                        errorMessage: "This user does not exist"
+                    });
             }
-            if (!image) {
-                bodyErrors.push(`image can not be empty`);
-            }
-
-            if (bodyError.length) {
-
-                res.send()
-            } else {
-
-                let newCategory = Category.build({
-                    name,
-                    image
-                });
-
-                if (color) {
-                    newCategory.color = color;
-                }
-
-                await newCategory.createCategory()
-
-                res.status(200).send({
-                    modified: true
-                });
-            }
-
+            res.status(200).send(category.categoryById);
         } catch (error) {
-            res.status(500).send(error);
+            res.status(500).send(error)
         }
-
     },
 
-    deleteCategory: async (req, res, next) => {
+    //On delete une catégorie par son rappport à son ID
+    deleteOneCategory: async (req, res) => {
+
         try {
-            // const category = await Category.findCategoryById(req.params.id);
+            const {
+                id
+            } = req.params;
+            const category = new Category();
 
-            const categoryDelete = new Category();
+            await category.findOne(+id);
 
-            // if (category.length === 0) {
-            //     return res
-            //         .status(404)
-            //         .send({
-            //             errorMessage: "This user does not exist in database"
-            //         });
-            // }
+            if (category.categoryById.length === 0) {
+                return res
+                    .status(404)
+                    .send({
+                        errorMessage: "This user does not exist"
+                    });
+            }
 
-            await categoryDelete.deleteCategoryId(req.params.id);
+            await category.deleteOne(+id);
 
             res.status(200).send({
                 deletedUser: true
-            })
+            });
 
         } catch (error) {
-            res.status(500).send(error);
+            res.status(500).send(error)
+        }
+    },
+
+    //Création d'une catégorie
+    createOneCategory: async (req, res) => {
+        try {
+
+            for (let property in req.body) {
+                if (req.body[property].length === 0) {
+                    return res
+                        .status(400)
+                        .send({
+                            errorMessage: `${property} can't be empty!`
+                        });
+                }
+            }
+
+            const category = new Category(req.body);
+
+            await category.createNewCategory();
+
+            res.status(201).send({
+                created: true
+            });
+
+        } catch (error) {
+            res.status(500).send(error)
+        }
+    },
+
+    //Modificiation d'une catégorie par Id
+    modifyCategory: async (req, res) => {
+        try {
+
+            console.log('je suis dans le controller')
+            const {
+                id
+            } = req.params;
+
+            const category = new Category(req.body);
+
+            await category.modifyOne(+id)
+
+            res.status(200).send({
+                modified: true
+            });
+
+        } catch (error) {
+            res.status(500).send(error)
         }
     }
 };

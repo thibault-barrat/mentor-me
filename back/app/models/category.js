@@ -1,91 +1,75 @@
-const client = require("../database");
+const pool = require("../database");
 
-const Category = {
+module.exports = class Category {
 
-    //Méthode pour trouver toute les catégories
-    findAllCategories: async () => {
+    constructor(object) {
+        for (const property in object) {
+            this[property] = object[property];
+        }
+    };
 
+    async findAll() {
         const query = {
             text: "SELECT * FROM category"
         };
 
-        try {
-            const result = await client.query(query);
+        const data = await pool.query(query);
 
-            if (result.error) {
-                console.log(result.error);
-            } else {
-                const data = result.rows;
-            }
+        this.allCategories = data.rows;
+    };
 
-            return result;
-
-        } catch (error) {
-            console.log(error.stack);
-        }
-
-    },
-
-    //Méthode pour trouver une catégorie par son ID
-    findCategoryById: async (categoryId) => {
-
+    async findOne(id) {
         const query = {
             text: "SELECT * FROM category WHERE id=$1",
-            value: [categoryId]
+            values: [id]
         };
 
-        try {
+        const data = await pool.query(query.text, query.values);
 
-            const result = await client.query(query.text, query.value);
+        this.categoryById = data.rows;
 
-            if (result.error) {
-                console.log(result.error);
-            } else {
-                const data = result.rows;
-            }
+    };
 
-            return result.rows;
-
-        } catch (error) {
-            console.log(error.stack);
-        }
-
-    },
-
-    //Méthode pour créer une catégorie
-    createCategory: async () => {
-        const query = {
-            text: `INSERT INTO category ("name","color","image") VALUES ($1,$2,$3)`,
-            values: [category.name, category.color, category.image]
-        };
-
-        try {
-
-            const result = await client.query(query.text, query.value);
-
-            if (result.error) {
-                console.log(result.error);
-            } else {
-                const data = result.rows;
-            }
-
-            return result.rows;
-
-        } catch (error) {
-            console.log(error.stack);
-        }
-    },
-
-    // Méthode pour supprimer une catégorie par son ID
-    deleteCategoryId: async (id) => {
-
+    async deleteOne(id) {
         const query = {
             text: "DELETE FROM category WHERE id=$1",
             values: [id]
+        };
+
+        await pool.query(query.text, query.values);
+    };
+
+    async createNewCategory() {
+        const query = {
+            text: `INSERT INTO category ("name" , "color" ,"image") VALUES ($1,$2,$3)`,
+            values: [this.name, this.color, this.image]
+        };
+
+        await pool.query(query);
+    };
+
+    async modifyOne(id) {
+
+        await this.findOne(id);
+
+        if (!this.name || this.name.lenght === 0) {
+            this.name = this.categoryById[0].name;
         }
 
-        await client.query(query);
+        if (!this.color || this.color.lenght === 0) {
+            this.color = this.categoryById[0].color;
+        }
+
+        if (!this.image || this.image.lenght === 0) {
+            this.image = this.categoryById[0].image;
+        }
+
+        const query = {
+            text: `UPDATE category
+            SET "name"=$1, "color"=$2, "image"=$3 WHERE id=$4;`,
+            values: [this.name, this.color, this.image, id]
+        };
+
+        await pool.query(query);
     }
 };
-
-module.exports = Category;

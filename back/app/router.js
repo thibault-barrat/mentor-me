@@ -21,9 +21,11 @@ const router = Router();
 //router.get("/register", mainController.init);
 
 /* Category */
-router.get("/categorys", categoryController.findAll); // Route pour toutes les catégories
-router.get("/categorys/:id(\\d+)", categoryController.findById); // Route pour un ID de catégorie
-router.post("/categorys", categoryController.createNewCategory); // Route pour ajouter une catégorie
-router.delete("/categorys/:id(\\d+)", categoryController.deleteCategory); // Route pour suppirmer une catégorie
+router.get("/categorys", categoryController.getAllCategorizz); // Route pour toutes les catégories
+router.get("/categorys/:id(\\d+)", categoryController.getOneCategory); // Route pour un ID de catégorie
+router.delete("/categorys/:id(\\d+)", categoryController.deleteOneCategory); // Route pour suppirmer une catégorie
+router.post("/categorys", categoryController.createOneCategory); // Route pour ajouter une catégorie
+router.patch("/categorys/:id(\\d+)", categoryController.modifyCategory) // Route pour modifier une catégorie
+
 
 module.exports = router;

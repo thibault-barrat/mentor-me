@@ -1,15 +1,24 @@
-POST http://localhost:3001/categorys
-Content-Type: application/x-www-form-urlencoded
-
-name=Peche
-&color=#f0f
-&position=1
-
 ### suppression d'une catégorie
-DELETE http://localhost:3001/categorys/6
+DELETE http://localhost:3001/categorys/13
 
 ### Récupération des catégories
 GET http://localhost:3001/categorys
 
 ### Récupération d'une catégorie par ID
-GET http://localhost:3001/categorys/6
+GET http://localhost:3001/categorys/2
+
+### Enregister une catégorie dans la BDD
+POST http://localhost:3001/categorys
+Content-Type: application/x-www-form-urlencoded
+
+name=abc
+&color=test
+&image=123
+
+### Modifier une catégorie dans la BDD
+PATCH  http://localhost:3001/categorys/2
+Content-Type: application/x-www-form-urlencoded
+
+name=abc
+&color=blue
+&image=yellow
