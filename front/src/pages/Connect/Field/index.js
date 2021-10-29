@@ -13,7 +13,7 @@ export default function Field({
     <div className="field">
       <label
         className="field-label"
-        htmlFor=""
+        htmlFor={name}
       >
         {placeholder}
       </label>

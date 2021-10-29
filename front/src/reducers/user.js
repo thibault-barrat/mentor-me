@@ -1,7 +1,7 @@
 import { CHANGE_LOGIN_FIELD, SAVE_USER } from '../actions/user';
 
 export const initialState = {
-  logged: false,
+  logged: true,
   isAdmin: false,
   email: '',
   password: '',
