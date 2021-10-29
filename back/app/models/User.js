@@ -1,5 +1,12 @@
 const pool = require("../database.js");
 const bcrypt = require("bcrypt");
+// const cloudinary = require("cloudinary");
+
+// cloudinary.config({
+//   cloud_name: process.env.NAME_CLOUDINARY,
+//   api_key: process.env.API_KEY_CLOUDINARY,
+//   api_secret: process.env.API_SECRET_CLOUDINARY,
+// });
 
 module.exports = class User {
   // on définit le nombre de saltRounds pour hash le password
