@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Register from './pages/Register';
 import Connect from './pages/Connect';
+import Profil from './pages/Profil';
 import NavBaar from './components/NavBaar';
 import Footer from './components/Footer';
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/a-propos" component={About} />
         <Route path="/inscription" component={Register} />
         <Route path="/connexion" component={Connect} />
+        <Route path="/profil" component={Profil} />
       </Switch>
       <Footer />
     </Router>

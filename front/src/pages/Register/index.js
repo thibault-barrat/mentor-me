@@ -40,14 +40,14 @@ export default function Register() {
   const [validConfirmedPassword, setValidConfirmedPassword] = useState(true);
 
   const handleSubmit = (event) => {
-    console.log(`
+    /* console.log(`
       Email: ${email}
       Password: ${password}
       Firstname: ${firstname}
       LastName: ${lastname}
       Accepted Terms: ${acceptedTerms}
       Accepted Emaildiff: ${acceptedEmailDiff}
-    `);
+    `); */
 
     event.preventDefault();
     if (validPassword && validConfirmedPassword && validEmail) {
