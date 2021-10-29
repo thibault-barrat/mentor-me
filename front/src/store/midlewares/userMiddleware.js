@@ -61,7 +61,7 @@ const userMiddleware = (store) => (next) => (action) => {
       };
 
       submitNewUser();
-
+      next(action);
       break;
     }
     default:
