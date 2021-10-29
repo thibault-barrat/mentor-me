@@ -1,4 +1,6 @@
-import { CHANGE_LOGIN_FIELD, SAVE_USER, CHANGE_REGISTER_FIELD, SUBMIT_NEW_USER_SUCCESS } from '../actions/user';
+import {
+  CHANGE_LOGIN_FIELD, SAVE_USER, CHANGE_REGISTER_FIELD, SUBMIT_NEW_USER_SUCCESS,
+} from '../actions/user';
 
 export const initialState = {
   logged: false,

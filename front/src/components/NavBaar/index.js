@@ -1,7 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import logo from 'src/assets/images/LogoMentorMe-maxi.svg';
-import { MenuItems } from './MenuItems';
 import './NavBar.scss';
 
 /* creation d'un composant NavBar le composant est
@@ -9,6 +10,8 @@ a update au moment de gérer la connexion !  */
 
 const NavBaar = () => {
   const [clicked, setClicked] = useState(false);
+  const isLogged = useSelector((state) => state.user.logged);
+  const isAdmin = useSelector((state) => state.user.isAdmin);
 
   /* handleClick here set 'clicked' to the opposite value */
   const handleClick = () => {
@@ -22,14 +25,51 @@ const NavBaar = () => {
         <i className={clicked ? 'fas fa-times' : 'fas fa-bars'} />
       </div>
       <ul className={`NavMenu ${clicked ? 'navMenuActive' : ''}`}>
-        {MenuItems.map((item) => (
-          <li key={item.id}>
-            <NavLink className={item.cName} to={item.url}>
-              {item.title}
+        <li>
+          <NavLink className="navLinks" to="/">
+            Accueil
+          </NavLink>
+        </li>
+        <li>
+          <NavLink className="navLinks" to="/a-propos">
+            A propos
+          </NavLink>
+        </li>
+        {!isLogged && !isAdmin && (
+          <li>
+            <NavLink className="navLinks" to="/connexion">
+              Se connecter
             </NavLink>
           </li>
-        ))}
-
+        )}
+        {!isLogged && !isAdmin && (
+          <li>
+            <NavLink className="navLinks" to="/inscription">
+              S'inscrire
+            </NavLink>
+          </li>
+        )}
+        {isLogged && isAdmin && (
+          <li>
+            <NavLink className="navLinks" to="/categories">
+              Catégories
+            </NavLink>
+          </li>
+        )}
+        {isLogged && isAdmin && (
+          <li>
+            <NavLink className="navLinks" to="/profil">
+              Mon profil
+            </NavLink>
+          </li>
+        )}
+        {isAdmin && (
+          <li>
+            <NavLink className="navLinks" to="/admin">
+              Dashboard
+            </NavLink>
+          </li>
+        )}
       </ul>
     </nav>
   );
