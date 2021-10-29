@@ -35,35 +35,35 @@ const NavBaar = () => {
             A propos
           </NavLink>
         </li>
-        {!isLogged && !isAdmin && (
+        {!isLogged && (
           <li>
             <NavLink className="navLinks" to="/connexion">
               Se connecter
             </NavLink>
           </li>
         )}
-        {!isLogged && !isAdmin && (
+        {!isLogged && (
           <li>
             <NavLink className="navLinks" to="/inscription">
               S'inscrire
             </NavLink>
           </li>
         )}
-        {isLogged && isAdmin && (
+        {isLogged && (
           <li>
             <NavLink className="navLinks" to="/categories">
               Catégories
             </NavLink>
           </li>
         )}
-        {isLogged && isAdmin && (
+        {isLogged && (
           <li>
             <NavLink className="navLinks" to="/profil">
               Mon profil
             </NavLink>
           </li>
         )}
-        {isAdmin && (
+        {isAdmin && isLogged && (
           <li>
             <NavLink className="navLinks" to="/admin">
               Dashboard
