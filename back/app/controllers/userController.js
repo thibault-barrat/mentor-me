@@ -202,8 +202,8 @@ const userController = {
    * @param  {Object} res
    */
   disconnectUser: (req, res) => {
-    res.status(200).send({ connected: false });
     req.session.destroy();
+    res.status(200).send({ connected: false });
   },
 };
 
