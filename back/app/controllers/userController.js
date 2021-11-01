@@ -1,4 +1,7 @@
 const User = require("../models/User");
+const cloudinary = require("../cloudinary");
+// fs est un module natif à node (pas besoin de npm i)
+const fs = require("fs");
 
 const userController = {
   /**
@@ -206,6 +209,53 @@ const userController = {
   disconnectUser: (req, res) => {
     req.session.destroy();
     res.status(200).send({ connected: false });
+  },
+
+  /**
+   * Processus de modification de l'avatar du user
+   * @param  {Object} req
+   * @param  {Object} res
+   */
+  modifyUserAvatar: async (req, res) => {
+    try {
+      const { id } = req.params;
+      // on récupère l'image envoyée par le user et on la stocke dans le dossier temporaire
+      const avatar = req.files.avatar.tempFilePath;
+      console.log(req.files.avatar);
+
+      // on l'envoie ensuite dans cloudinary
+      cloudinary.uploader.upload(
+        avatar,
+        { public_id: `mentorme_${id}`, tags: "MentorMe", folder: "avatars" },
+        async (err, result) => {
+          if (err) {
+            return res.status(503).send({
+              message: "Cannot reach Cloudinary server",
+              err,
+            });
+          }
+          if (result) {
+            fs.unlink(
+              `${__dirname}/../../tmp/${result.original_filename}`,
+              (err) => {
+                if (err) {
+                  console.error(err);
+                  return;
+                }
+              }
+            );
+            const url = result.secure_url;
+            const user = new User();
+            await user.modifyAvatar(id, url);
+            res.status(200).send({ message: "Avatar modified" });
+          }
+        }
+      );
+
+      // res.status(200).send({ message: "Avatar modified" });
+    } catch (err) {
+      res.status(500).send(err);
+    }
   },
 };
 

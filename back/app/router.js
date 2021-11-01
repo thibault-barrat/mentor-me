@@ -41,6 +41,15 @@ router.get("/user/:id(\\d+)", withAuth, userController.getOneUser);
  * @route PATCH /user/:id
  */
 router.patch("/user/:id(\\d+)", withAuth, userController.modifyUserProfile);
+/**
+ * Modifier l'avatar d'un user
+ * @route PATCH /user/:id/avatar
+ */
+router.patch(
+  "/user/:id(\\d+)/avatar",
+  withAuth,
+  userController.modifyUserAvatar
+);
 
 /**
  * Supprimer un user par son id

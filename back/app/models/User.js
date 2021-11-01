@@ -1,12 +1,5 @@
 const pool = require("../database.js");
 const bcrypt = require("bcrypt");
-// const cloudinary = require("cloudinary");
-
-// cloudinary.config({
-//   cloud_name: process.env.NAME_CLOUDINARY,
-//   api_key: process.env.API_KEY_CLOUDINARY,
-//   api_secret: process.env.API_SECRET_CLOUDINARY,
-// });
 
 module.exports = class User {
   // on définit le nombre de saltRounds pour hash le password
@@ -110,9 +103,6 @@ module.exports = class User {
     if (!this.biography || this.biography.length === 0) {
       this.biography = this.userById[0].biography;
     }
-    if (!this.avatar_url || this.avatar_url.length === 0) {
-      this.avatar_url = this.userById[0].avatar_url;
-    }
     if (!this.home_phone || typeof +this.home_phone !== "number") {
       this.home_phone = this.userById[0].home_phone;
     }
@@ -122,17 +112,24 @@ module.exports = class User {
 
     const query = {
       text: `UPDATE users
-      SET "firstname"=$1, "lastname"=$2, "biography"=$3, "home_phone"=$4, "mobile_phone"=$5, "avatar_url"=$6
-      WHERE id=$7;`,
+      SET "firstname"=$1, "lastname"=$2, "biography"=$3, "home_phone"=$4, "mobile_phone"=$5
+      WHERE id=$6;`,
       values: [
         this.firstname,
         this.lastname,
         this.biography,
         +this.home_phone,
         +this.mobile_phone,
-        this.avatar_url,
         id,
       ],
+    };
+    await pool.query(query);
+  }
+
+  async modifyAvatar(id, url) {
+    const query = {
+      text: `UPDATE users SET "avatar_url"=$1 WHERE id=$2;`,
+      values: [url, id],
     };
     await pool.query(query);
   }
