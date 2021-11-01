@@ -238,7 +238,6 @@ const userController = {
       const { id } = req.params;
       // on récupère l'image envoyée par le user et on la stocke dans le dossier temporaire
       const avatar = req.files.avatar.tempFilePath;
-      console.log(req.files.avatar);
 
       // on l'envoie ensuite dans cloudinary
       cloudinary.uploader.upload(

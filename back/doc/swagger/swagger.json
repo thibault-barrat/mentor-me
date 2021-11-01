@@ -208,6 +208,34 @@
           }
         }
       }
+    },
+    "/user/{id}/avatar": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Get all users",
+        "description": "only available for admins",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "id of the user we want to modify the avatar",
+            "type": "number"
+          },
+          {
+            "name": "avatar",
+            "in": "formData",
+            "required": "true",
+            "description": "the image the user wants to set as his avatar",
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "all users"
+          }
+        }
+      }
     }
   }
 }

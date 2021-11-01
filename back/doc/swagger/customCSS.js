@@ -16,4 +16,8 @@ module.exports = `
     text-align: right;
     margin-right: 1rem;
   }
+
+  .swagger-ui section.models.is-open {
+    display: none;
+  }
 `;
