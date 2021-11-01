@@ -15,21 +15,29 @@ module.exports = class User {
   }
 
   /**
-   * Méthode pour récup un user par son email
+   * Méthode pour récupérer un user par son email
    * @param {text} email
    */
-  async checkUserByEmail(email) {
+  async findUserByEmail(email) {
     const query = {
       text: "SELECT users.id, users.email, users.password, role.name as role_name FROM users JOIN role ON users.role_id = role.id WHERE email=$1",
       values: [email],
     };
     const data = await pool.query(query);
+    this.userByEmail = data.rows;
+  }
+
+  /**
+   * Méthode pour vérifier si l'user existe par son email
+   */
+  async checkUserEmail(email) {
+    await this.findUserByEmail(email);
     // si le mail existe, le tableau data.rows n'est pas vide, on renvoie un true (qu'on traitera dans le userController pour empêcher la création du compte)
-    if (data.rows.length !== 0) {
+    if (this.userByEmail.length !== 0) {
       this.checkEmail = true;
-      this.hashedPasswordInDb = data.rows[0].password;
-      this.role_name = data.rows[0].role_name;
-      this.id = data.rows[0].id;
+      this.hashedPasswordInDb = this.userByEmail[0].password;
+      this.role_name = this.userByEmail[0].role_name;
+      this.id = this.userByEmail[0].id;
       return;
     } else {
       // le mail n'existe pas, on retourne false
@@ -87,7 +95,7 @@ module.exports = class User {
    * Méthode pour créer un user
    */
   async createOne() {
-    await this.checkUserByEmail(this.email);
+    await this.checkUserEmail(this.email);
     if (this.checkEmail) return;
     // on hash le password pour le stocker hashé en bdd
     const hashedPassword = await bcrypt.hash(this.password, this.saltRounds);

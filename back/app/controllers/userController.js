@@ -196,7 +196,7 @@ const userController = {
       // on vérifie si le user existe déjà en base de données ou pas
 
       // on vérifie si l'email est en bdd
-      await user.checkUserByEmail(req.body.email);
+      await user.checkUserEmail(req.body.email);
 
       if (!user.checkEmail) {
         // un user a déjà été inscrit avec cette adresse mail, on retourne une erreur 409 : Conflict
