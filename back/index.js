@@ -32,6 +32,8 @@ app.use(
 
 app.use("/v1", require("./app/router"));
 
+app.use("/v1", require("./doc/swagger/swagger"));
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
