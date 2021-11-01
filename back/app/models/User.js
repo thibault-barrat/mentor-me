@@ -1,12 +1,5 @@
 const pool = require("../database.js");
 const bcrypt = require("bcrypt");
-// const cloudinary = require("cloudinary");
-
-// cloudinary.config({
-//   cloud_name: process.env.NAME_CLOUDINARY,
-//   api_key: process.env.API_KEY_CLOUDINARY,
-//   api_secret: process.env.API_SECRET_CLOUDINARY,
-// });
 
 module.exports = class User {
   // on définit le nombre de saltRounds pour hash le password
@@ -22,25 +15,48 @@ module.exports = class User {
   }
 
   /**
-   * Méthode pour récup un user par son email
+   * Méthode pour récupérer un user par son email
    * @param {text} email
    */
-  async checkUserByEmail(email) {
+  async findUserByEmail(email) {
     const query = {
       text: "SELECT users.id, users.email, users.password, role.name as role_name FROM users JOIN role ON users.role_id = role.id WHERE email=$1",
       values: [email],
     };
     const data = await pool.query(query);
+    this.userByEmail = data.rows;
+  }
+
+  /**
+   * Méthode pour vérifier si l'user existe par son email
+   */
+  async checkUserEmail(email) {
+    await this.findUserByEmail(email);
     // si le mail existe, le tableau data.rows n'est pas vide, on renvoie un true (qu'on traitera dans le userController pour empêcher la création du compte)
-    if (data.rows.length !== 0) {
+    if (this.userByEmail.length !== 0) {
       this.checkEmail = true;
-      this.hashedPasswordInDb = data.rows[0].password;
-      this.role_name = data.rows[0].role_name;
-      this.id = data.rows[0].id;
+      this.hashedPasswordInDb = this.userByEmail[0].password;
+      this.role_name = this.userByEmail[0].role_name;
+      this.id = this.userByEmail[0].id;
       return;
     } else {
       // le mail n'existe pas, on retourne false
       return (this.checkEmail = false);
+    }
+  }
+
+  /**
+   * Méthode pour vérifier le password
+   */
+  async checkUserPassword() {
+    const passwordbcrypt = await bcrypt.compare(
+      this.password,
+      this.hashedPasswordInDb
+    );
+    if (!passwordbcrypt) {
+      return (this.checkPassword = false);
+    } else {
+      return (this.checkPassword = true);
     }
   }
 
@@ -79,7 +95,7 @@ module.exports = class User {
    * Méthode pour créer un user
    */
   async createOne() {
-    await this.checkUserByEmail(this.email);
+    await this.checkUserEmail(this.email);
     if (this.checkEmail) return;
     // on hash le password pour le stocker hashé en bdd
     const hashedPassword = await bcrypt.hash(this.password, this.saltRounds);
@@ -110,9 +126,6 @@ module.exports = class User {
     if (!this.biography || this.biography.length === 0) {
       this.biography = this.userById[0].biography;
     }
-    if (!this.avatar_url || this.avatar_url.length === 0) {
-      this.avatar_url = this.userById[0].avatar_url;
-    }
     if (!this.home_phone || typeof +this.home_phone !== "number") {
       this.home_phone = this.userById[0].home_phone;
     }
@@ -122,17 +135,29 @@ module.exports = class User {
 
     const query = {
       text: `UPDATE users
-      SET "firstname"=$1, "lastname"=$2, "biography"=$3, "home_phone"=$4, "mobile_phone"=$5, "avatar_url"=$6
-      WHERE id=$7;`,
+      SET "firstname"=$1, "lastname"=$2, "biography"=$3, "home_phone"=$4, "mobile_phone"=$5
+      WHERE id=$6;`,
       values: [
         this.firstname,
         this.lastname,
         this.biography,
         +this.home_phone,
         +this.mobile_phone,
-        this.avatar_url,
         id,
       ],
+    };
+    await pool.query(query);
+  }
+
+  /**
+   * Méthode pour modifier l'avatar d'un user
+   * @param {number} id
+   * @param {string} url
+   */
+  async modifyAvatar(id, url) {
+    const query = {
+      text: `UPDATE users SET "avatar_url"=$1 WHERE id=$2;`,
+      values: [url, id],
     };
     await pool.query(query);
   }
@@ -147,23 +172,5 @@ module.exports = class User {
       values: [id],
     };
     await pool.query(query);
-  }
-
-  /**
-   * Méthode pour connecter un user
-   */
-  async login() {
-    // on vérifie si l'email est en bdd
-    await this.checkUserByEmail(this.email);
-
-    const passwordbcrypt = await bcrypt.compare(
-      this.password,
-      this.hashedPasswordInDb
-    );
-    if (!passwordbcrypt) {
-      return (this.checkPassword = false);
-    } else {
-      return (this.checkPassword = true);
-    }
   }
 };
