@@ -194,8 +194,7 @@ const userController = {
       const user = new User(req.body);
 
       // on vérifie si le user existe déjà en base de données ou pas
-
-      // on vérifie si l'email est en bdd
+      // 1. on vérifie si l'email est en bdd
       await user.checkUserEmail(req.body.email);
 
       if (!user.checkEmail) {
@@ -204,6 +203,8 @@ const userController = {
           .status(409)
           .send({ errorMessage: "This user does not exist!" });
       }
+
+      // 2. on vérifie le mot de passe du user
       await user.checkUserPassword();
       // on vérifie si le mdp correspond
       if (!user.checkPassword) {
