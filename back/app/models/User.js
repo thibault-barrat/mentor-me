@@ -38,6 +38,21 @@ module.exports = class User {
   }
 
   /**
+   * Méthode pour vérifier le password
+   */
+  async checkUserPassword() {
+    const passwordbcrypt = await bcrypt.compare(
+      this.password,
+      this.hashedPasswordInDb
+    );
+    if (!passwordbcrypt) {
+      return (this.checkPassword = false);
+    } else {
+      return (this.checkPassword = true);
+    }
+  }
+
+  /**
    * Méthode pour récup tous les users
    */
   async findAll() {
@@ -126,6 +141,11 @@ module.exports = class User {
     await pool.query(query);
   }
 
+  /**
+   * Méthode pour modifier l'avatar d'un user
+   * @param {number} id
+   * @param {string} url
+   */
   async modifyAvatar(id, url) {
     const query = {
       text: `UPDATE users SET "avatar_url"=$1 WHERE id=$2;`,
@@ -144,23 +164,5 @@ module.exports = class User {
       values: [id],
     };
     await pool.query(query);
-  }
-
-  /**
-   * Méthode pour connecter un user
-   */
-  async login() {
-    // on vérifie si l'email est en bdd
-    await this.checkUserByEmail(this.email);
-
-    const passwordbcrypt = await bcrypt.compare(
-      this.password,
-      this.hashedPasswordInDb
-    );
-    if (!passwordbcrypt) {
-      return (this.checkPassword = false);
-    } else {
-      return (this.checkPassword = true);
-    }
   }
 };
