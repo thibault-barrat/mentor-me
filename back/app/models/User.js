@@ -33,17 +33,13 @@ module.exports = class User {
     const data = await pool.query(query);
     // si le mail existe, le tableau data.rows n'est pas vide, on renvoie un true (qu'on traitera dans le userController pour empêcher la création du compte)
     if (data.rows.length !== 0) {
-      console.log("checkEmail: true");
-
       this.checkEmail = true;
       this.hashedPasswordInDb = data.rows[0].password;
       this.role_name = data.rows[0].role_name;
       this.id = data.rows[0].id;
-      console.log(this.checkEmail);
       return;
     } else {
       // le mail n'existe pas, on retourne false
-      console.log("checkEmail: false");
       return (this.checkEmail = false);
     }
   }

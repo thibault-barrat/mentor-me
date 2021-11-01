@@ -1,5 +1,4 @@
 const withAuth = (req, res, next) => {
-  console.log("middleware connecté :", req.session);
   if (!req.session.user) {
     return res.status(401).send({
       message: "No connected",
@@ -10,7 +9,6 @@ const withAuth = (req, res, next) => {
   }
 };
 const isAdmin = (req, res, next) => {
-  console.log("middleware admin :", req.session);
   if (!req.session.user) {
     return res.status(401).send({
       message: "No connected",

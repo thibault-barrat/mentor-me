@@ -155,6 +155,8 @@ const userController = {
         return res.status(401).send({ errorMessage: `Unauthorized!` });
       }
       await user.deleteOne(+id);
+      // quand on supprime, on déconnecte le user
+      req.session.destroy();
       // on mentionne que la suppression a bien eu lieu
       res.status(200).send({ deletedUser: true });
     } catch (err) {
