@@ -157,6 +157,23 @@ const userController = {
       if (req.session.user.role !== "admin" && req.session.user.id !== +id) {
         return res.status(401).send({ errorMessage: `Unauthorized!` });
       }
+      // quand on supprime le user, on souhaite supprimer son avatar sur cloudinary aussi!
+      // on récupère le nom de l'avatar dans cloudinary à partir de avatar_url (on split le string contenant l'url)
+      const avatarSplitUrl = user.userById[0].avatar_url.split("/");
+      const avatarName =
+        avatarSplitUrl[avatarSplitUrl.length - 1].split(".")[0];
+
+      await cloudinary.uploader.destroy(
+        `avatars/${avatarName}`,
+        (err, result) => {
+          if (err) {
+            return res.status(503).send({
+              message: "Cannot reach Cloudinary server",
+              err,
+            });
+          }
+        }
+      );
       await user.deleteOne(+id);
       // quand on supprime, on déconnecte le user
       req.session.destroy();
