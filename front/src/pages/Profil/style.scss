@@ -40,7 +40,7 @@ p {
 .container__prof {
   @media (min-width: vars.$breakpoint-sm){
     display: flex;
-    flex-direction: row
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
   }
