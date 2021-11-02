@@ -9,7 +9,11 @@ const userMiddleware = (store) => (next) => (action) => {
       // const { email, password } = state.user;
 
       // on peut destructurer directement le state retourné par le store
-      const { user: { email, password, id, token } } = store.getState();
+      const {
+        user: {
+          email, password, id, token,
+        },
+      } = store.getState();
 
       const submitLogin = async () => {
         try {
@@ -57,7 +61,7 @@ const userMiddleware = (store) => (next) => (action) => {
       };
 
       submitNewUser();
-
+      next(action);
       break;
     }
     default:

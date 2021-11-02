@@ -1,5 +1,5 @@
 import {
-  CHANGE_LOGIN_FIELD, SAVE_USER, CHANGE_REGISTER_FIELD, SUBMIT_NEW_USER_SUCCESS,
+  CHANGE_LOGIN_FIELD, SAVE_USER, CHANGE_REGISTER_FIELD, SUBMIT_NEW_USER_SUCCESS, SUBMIT_NEW_USER,
 } from '../actions/user';
 
 export const initialState = {
@@ -15,6 +15,7 @@ export const initialState = {
     firstname: '',
     lastname: '',
     redirect: false,
+    loading: false,
   },
 };
 
@@ -43,6 +44,15 @@ const reducer = (state = initialState, action = {}) => {
         },
       };
     }
+    case SUBMIT_NEW_USER: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+          loading: true,
+        },
+      };
+    }
     case SUBMIT_NEW_USER_SUCCESS: {
       return {
         ...state,
@@ -53,6 +63,7 @@ const reducer = (state = initialState, action = {}) => {
           firstname: '',
           lastname: '',
           redirect: true,
+          loading: false,
         },
       };
     }

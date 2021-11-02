@@ -1,4 +1,7 @@
 const User = require("../models/User");
+const cloudinary = require("../cloudinary");
+// fs est un module natif à node (pas besoin de npm i)
+const fs = require("fs");
 
 const userController = {
   /**
@@ -33,7 +36,6 @@ const userController = {
           .status(404)
           .send({ errorMessage: "This user does not exist" });
       }
-      //TODO : error 401 unauthorized
       // on renvoie le json du user
       res.status(200).send(user.userById);
     } catch (err) {
@@ -76,7 +78,6 @@ const userController = {
 
       const user = new User(req.body);
       await user.createOne();
-
       // on vérifie si le user existe déjà en base de données ou pas
       if (user.checkEmail) {
         // un user a déjà été inscrit avec cette adresse mail, on retourne une erreur 409 : Conflict
@@ -84,6 +85,7 @@ const userController = {
           .status(409)
           .send({ errorMessage: "This user already exists!" });
       }
+
       // le user n'existe pas encore, on le crée
       res.status(201).send({ created: true });
     } catch (err) {
@@ -120,6 +122,11 @@ const userController = {
           .status(406)
           .send({ errorMessage: `Mobile phone is not a number!` });
       }
+      // si l'id du user ne correspond pas à l'id du user connecté, il ne peut pas modifier les données du profil ! n admin le peut
+      if (req.session.user.role !== "admin" && req.session.user.id !== +id) {
+        return res.status(401).send({ errorMessage: `Unauthorized!` });
+      }
+
       const user = new User(req.body);
       await user.modifyOne(+id);
 
@@ -146,9 +153,135 @@ const userController = {
           .status(404)
           .send({ errorMessage: "This user does not exist!" });
       }
+      // si l'id du user ne correspond pas à l'id du user connecté, il ne peut pas supprimer le profil d'un autre user ! Un admin le peut
+      if (req.session.user.role !== "admin" && req.session.user.id !== +id) {
+        return res.status(401).send({ errorMessage: `Unauthorized!` });
+      }
+      // quand on supprime le user, on souhaite supprimer son avatar sur cloudinary aussi!
+      // on récupère le nom de l'avatar dans cloudinary à partir de avatar_url (on split le string contenant l'url)
+      const avatarSplitUrl = user.userById[0].avatar_url.split("/");
+      const avatarName =
+        avatarSplitUrl[avatarSplitUrl.length - 1].split(".")[0];
+
+      await cloudinary.uploader.destroy(
+        `avatars/${avatarName}`,
+        (err, result) => {
+          if (err) {
+            return res.status(503).send({
+              message: "Cannot reach Cloudinary server",
+              err,
+            });
+          }
+        }
+      );
       await user.deleteOne(+id);
+      // quand on supprime, on déconnecte le user
+      req.session.destroy();
       // on mentionne que la suppression a bien eu lieu
       res.status(200).send({ deletedUser: true });
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  },
+
+  /**
+   * Processus de connexion d'un user
+   * @param  {Object} req
+   * @param  {Object} res
+   */
+  connectUser: async (req, res) => {
+    try {
+      const user = new User(req.body);
+
+      // on vérifie si le user existe déjà en base de données ou pas
+      // 1. on vérifie si l'email est en bdd
+      await user.checkUserEmail(req.body.email);
+
+      if (!user.checkEmail) {
+        // un user a déjà été inscrit avec cette adresse mail, on retourne une erreur 409 : Conflict
+        return res
+          .status(409)
+          .send({ errorMessage: "This user does not exist!" });
+      }
+
+      // 2. on vérifie le mot de passe du user
+      await user.checkUserPassword();
+      // on vérifie si le mdp correspond
+      if (!user.checkPassword) {
+        // ce n'est pas le bon mdp
+        return res.status(400).send({ errorMessage: "Wrong password!" });
+      }
+      if (user.checkEmail && user.checkPassword) {
+        // si email existe et le mdp est correct, OK
+        req.session.user = {
+          email: user.email,
+          role: user.role_name,
+          id: user.id,
+        };
+        res.status(200).send({ connected: true, user: req.session.user });
+      }
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  },
+
+  /**
+   * Processus de déconnexion d'un user
+   * @param  {Object} req
+   * @param  {Object} res
+   */
+  disconnectUser: (req, res) => {
+    req.session.destroy();
+    res.status(200).send({ connected: false });
+  },
+
+  /**
+   * Processus de modification de l'avatar du user
+   * @param  {Object} req
+   * @param  {Object} res
+   */
+  modifyUserAvatar: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      // si l'id du user ne correspond pas à l'id du user connecté, il ne peut pas modifier les données du profil ! n admin le peut
+      if (req.session.user.role !== "admin" && req.session.user.id !== +id) {
+        return res.status(401).send({ errorMessage: `Unauthorized!` });
+      }
+
+      // on récupère l'image envoyée par le user et on la stocke dans le dossier temporaire
+      const avatar = req.files.avatar.tempFilePath;
+
+      // on l'envoie ensuite dans cloudinary
+      cloudinary.uploader.upload(
+        avatar,
+        { public_id: `mentorme_${id}`, tags: "MentorMe", folder: "avatars" },
+        async (err, result) => {
+          if (err) {
+            return res.status(503).send({
+              message: "Cannot reach Cloudinary server",
+              err,
+            });
+          }
+          if (result) {
+            fs.unlink(
+              `${__dirname}/../../tmp/${result.original_filename}`,
+              (err) => {
+                if (err) {
+                  console.error(err);
+                  return;
+                }
+              }
+            );
+            const url = result.secure_url;
+            const user = new User();
+            await user.modifyAvatar(id, url);
+            res.status(200).send({ message: "Avatar modified" });
+          }
+        }
+      );
+
+      // res.status(200).send({ message: "Avatar modified" });
     } catch (err) {
       res.status(500).send(err);
     }
