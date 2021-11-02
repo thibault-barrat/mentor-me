@@ -16,7 +16,7 @@ export default function profil() {
     <div className="container__prof">
       <div className="container__top">
         <h1>Mon profil</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing
+        <p className="p__text">Lorem ipsum dolor sit amet consectetur adipisicing
           elit. Sint accusantium reiciendis quos officia
           repudiandae harum, consequuntur delectus doloribus numquam,
           expedita minima non nisi laboriosam quidem qui ad
