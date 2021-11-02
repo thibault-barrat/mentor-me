@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+/* eslint-disable import/no-extraneous-dependencies */
+import categoryData from 'src/data/category.json';
+import servicesData from 'src/data/services.json';
+=======
+>>>>>>> dev
 import PopCatWave from 'src/assets/images/popular-cat-wave.svg';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
