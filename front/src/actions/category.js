@@ -1,8 +1,12 @@
-export const CHANGE_LOGIN_FIELD = 'CHANGE_LOGIN_FIELD';
+export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+export const SAVE_CATEGORIES = 'SAVE_CATEGORIES';
 
 
-export const changeLoginField = (value, name) => ({
-  type: CHANGE_LOGIN_FIELD,
-  value,
-  name,
+export const loadCategories = () => ({
+  type: LOAD_CATEGORIES,
+});
+
+export const saveCategories = (categories) => ({
+  type: SAVE_CATEGORIES,
+  categories,
 });

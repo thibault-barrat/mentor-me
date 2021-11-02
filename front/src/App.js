@@ -8,6 +8,7 @@ import Connect from './pages/Connect';
 import Categories from './pages/Categories';
 import NavBaar from './components/NavBaar';
 import Footer from './components/Footer';
+import { loadCategories } from 'src/actions/category';
 
 function App() {
   // We need to know if the user is logged and if is admin
@@ -15,6 +16,14 @@ function App() {
   const isLogged = useSelector((state) => state.user.logged);
   const isAdmin = useSelector((state) => state.user.isAdmin);
   const dispatch = useDispatch();
+
+  
+  useEffect(() => {
+
+    dispatch(loadCategories());
+    
+  }, []);
+
   return (
     <Router>
       <NavBaar />
