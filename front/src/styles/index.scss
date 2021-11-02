@@ -13,3 +13,10 @@ body {
 h1,h2,h3{ 
   font-family: 'Asap', sans-serif;
 }
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}

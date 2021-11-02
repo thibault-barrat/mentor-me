@@ -70,6 +70,18 @@ const serviceController = {
         } catch (error) {
             res.status(500).send(error)
         }
+    },
+
+    modifyService: async (req, res) => {
+        try {
+            const {
+                id
+            } = req.params
+
+            const service = ne
+        } catch (error) {
+            res.status(500).send(error)
+        }
     }
 };
 

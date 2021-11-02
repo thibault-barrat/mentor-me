@@ -1,0 +1,118 @@
+@use 'src/styles/vars';
+
+@media (min-width: vars.$breakpoint-sm){
+  .container {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+/* Partie gauche de la page */
+.left__container {
+  width: 50%;
+  text-align: center;
+
+    @media (min-width: vars.$breakpoint-sm){
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  }
+}
+
+.desc__img {
+  width : 300px; 
+  height : 300px;
+  border: none;
+  -moz-border-radius : 150px;
+  -webkit-border-radius : 150px;
+  border-radius : 150px;
+   //text-align: center;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  margin-left: 25%;
+  @media (min-width: vars.$breakpoint-sm){
+    margin-left: 0%;
+  }
+}
+
+.left__text__container {
+  background-color: #faded7;
+  width: 55%;
+  height: auto;
+  margin: 3rem;
+
+  //sur smarthpone le text n'appraît pas
+  visibility: hidden; 
+  display: none; 
+  @media (min-width: vars.$breakpoint-sm){
+    visibility: visible;
+    display: block;
+  }
+}
+
+.left__text {
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  padding: 1.5rem;
+}
+
+/* Partie droite de la page ici le form */ 
+
+.right__container {
+  
+  text-align: center;
+  margin: 2rem 2rem 5rem 2rem;
+  background-color: #FFF;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  @media (min-width: vars.$breakpoint-sm){
+    margin: 2rem 2rem 5rem 8rem;
+  }
+
+}
+
+.form__title {
+  font-size: 2rem;
+  padding: 1.4rem;
+
+}
+
+.right__container input {
+  display: block;
+  padding: vars.$gutter;
+    margin-bottom: calc(vars.$gutter*3);
+    border: solid 2px #dcdcdc;
+}
+
+.form__input {
+  margin: 1rem;
+}
+
+.connect-button {
+  margin-top: 1.5rem;
+  background-color: rgb(255, 112, 87);
+}
+
+.checkbox__container {
+  display: flex;
+}
+
+.checkbox {
+  padding: 1rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.form__error {
+  margin-bottom: 1rem;
+  color: rgb(248, 93, 82);
+  padding: 1rem;
+}
+
+
+
+
