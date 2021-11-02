@@ -7,7 +7,9 @@ import Field from '../../components/Field';
 import './style.scss';
 
 export default function Connect() {
-  const { email, password, logged } = useSelector((state) => state.user);
+  const {
+    email, password, logged, errors,
+  } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -34,6 +36,7 @@ export default function Connect() {
       <form
         onSubmit={handleSubmit}
       >
+        {errors.mail && <span className="connect__error">Cet utilisateur n'existe pas.</span>}
         <Field
           type="email"
           name="email"
@@ -43,6 +46,7 @@ export default function Connect() {
           required
 
         />
+        {errors.password && <span className="connect__error">Mauvais mot de passe;</span>}
         <Field
           type="password"
           name="password"
@@ -58,13 +62,13 @@ export default function Connect() {
         >
           Me connecter
         </button>
+        <Link
+          className="connect-link"
+          to="/inscription"
+        >
+          Vous n'avez pas de compte ?
+        </Link>
       </form>
-      <Link
-        className="connect-link"
-        to="/inscription"
-      >
-        Vous n'avez pas de compte ?
-      </Link>
     </div>
   );
 }
