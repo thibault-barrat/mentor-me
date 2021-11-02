@@ -26,6 +26,7 @@ router.get("/categorys/:id(\\d+)", categoryController.getOneCategory); // Route 
 router.delete("/categorys/:id(\\d+)", categoryController.deleteOneCategory); // Route pour suppirmer une catégorie
 router.post("/categorys", categoryController.createOneCategory); // Route pour ajouter une catégorie
 router.patch("/categorys/:id(\\d+)", categoryController.modifyCategory) // Route pour modifier une catégorie
+router.get("/categorys/:id(\\d+)/services", categoryController.getAllServicebyCategoryId) // Route pour modifier une catégorie
 
 
 module.exports = router;

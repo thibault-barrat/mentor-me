@@ -22,3 +22,6 @@ Content-Type: application/x-www-form-urlencoded
 name=abc
 &color=blue
 &image=yellow
+
+### Récupérer tout les services d'une catégorie par ID
+GET http://localhost:3001/categorys/7/services

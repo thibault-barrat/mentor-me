@@ -71,5 +71,22 @@ module.exports = class Category {
         };
 
         await pool.query(query);
+    };
+
+
+    async findAllServicebyCategoryId(id) {
+
+        console.log("je suis dans modele")
+
+        await this.findOne(id);
+
+        const query = {
+            text: "SELECT * FROM category JOIN service ON category_id = category.id WHERE category.id=$1;",
+            values: [id]
+        };
+
+        const data = await pool.query(query);
+
+        this.AllServicebyCategoryId = data.rows;
     }
 };

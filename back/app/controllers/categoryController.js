@@ -97,7 +97,6 @@ const categoryController = {
     modifyCategory: async (req, res) => {
         try {
 
-            console.log('je suis dans le controller')
             const {
                 id
             } = req.params;
@@ -113,7 +112,27 @@ const categoryController = {
         } catch (error) {
             res.status(500).send(error)
         }
-    }
+    },
+
+    getAllServicebyCategoryId: async (req, res) => {
+        try {
+
+            console.log('je suis dans le controller')
+            const {
+                id
+            } = req.params;
+
+            const category = new Category()
+
+            await category.findAllServicebyCategoryId(+id)
+
+            res.status(200).send(category.AllServicebyCategoryId)
+
+        } catch (error) {
+            res.status(500).send(error)
+        }
+    },
+
 };
 
 module.exports = categoryController;
