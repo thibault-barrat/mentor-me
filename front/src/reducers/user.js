@@ -1,10 +1,16 @@
 import {
-  CHANGE_LOGIN_FIELD, SAVE_USER, CHANGE_REGISTER_FIELD, SUBMIT_NEW_USER_SUCCESS, SUBMIT_NEW_USER,
+  CHANGE_LOGIN_FIELD,
+  SAVE_USER,
+  CHANGE_REGISTER_FIELD,
+  SUBMIT_NEW_USER_SUCCESS,
+  SUBMIT_NEW_USER,
+  CREATE_MAIL_ERROR,
+  CREATE_PASSWORD_ERROR,
 } from '../actions/user';
 
 export const initialState = {
   logged: false,
-  isAdmin: false,
+  role: '',
   email: '',
   password: '',
   token: null,
@@ -17,6 +23,10 @@ export const initialState = {
     redirect: false,
     loading: false,
   },
+  errors: {
+    mail: false,
+    password: false,
+  },
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -24,15 +34,55 @@ const reducer = (state = initialState, action = {}) => {
     case CHANGE_LOGIN_FIELD: {
       return {
         ...state,
+        register: {
+          ...state.register,
+        },
+        errors: {
+          ...state.errors,
+        },
         [action.name]: action.value,
       };
     }
     case SAVE_USER: {
       return {
         ...state,
-        logged: action.logged,
+        register: {
+          ...state.register,
+        },
+        errors: {
+          ...state.errors,
+          mail: false,
+          password: false,
+        },
+        logged: action.connected,
+        role: action.role,
         id: action.id,
-        token: action.token,
+      };
+    }
+    case CREATE_MAIL_ERROR: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+        },
+        errors: {
+          ...state.errors,
+          mail: true,
+          password: false,
+        },
+      };
+    }
+    case CREATE_PASSWORD_ERROR: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+        },
+        errors: {
+          ...state.errors,
+          mail: false,
+          password: true,
+        },
       };
     }
     case CHANGE_REGISTER_FIELD: {
@@ -42,6 +92,9 @@ const reducer = (state = initialState, action = {}) => {
           ...state.register,
           [action.name]: action.value,
         },
+        errors: {
+          ...state.errors,
+        },
       };
     }
     case SUBMIT_NEW_USER: {
@@ -50,6 +103,9 @@ const reducer = (state = initialState, action = {}) => {
         register: {
           ...state.register,
           loading: true,
+        },
+        errors: {
+          ...state.errors,
         },
       };
     }
@@ -64,6 +120,9 @@ const reducer = (state = initialState, action = {}) => {
           lastname: '',
           redirect: true,
           loading: false,
+        },
+        errors: {
+          ...state.errors,
         },
       };
     }
