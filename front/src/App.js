@@ -7,6 +7,7 @@ import About from './pages/About';
 import Register from './pages/Register';
 import Connect from './pages/Connect';
 import Profil from './pages/Profil';
+import Categories from './pages/Categories';
 import NavBaar from './components/NavBaar';
 import Footer from './components/Footer';
 import { fetchCategories } from './actions/category';
@@ -45,6 +46,7 @@ function App() {
             <Route path="/inscription" component={Register} />
             <Route path="/connexion" component={Connect} />
             <Route path="/profil" component={Profil} />
+            <Route path="/categories" component={Categories} />
           </Switch>
         )}
       <Footer />

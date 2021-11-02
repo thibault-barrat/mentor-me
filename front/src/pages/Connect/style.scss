@@ -2,7 +2,7 @@
 
 .connect{
   background-color: white;
-  width: 350px;
+  width: 300px;
   height: 400px;
   border-radius: 30px;
   margin: auto;
@@ -33,7 +33,7 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 576px) {
   .connect{
     width: 470px;
   }
