@@ -76,8 +76,6 @@ module.exports = class Category {
 
     async findAllServicebyCategoryId(id) {
 
-        console.log("je suis dans modele")
-
         await this.findOne(id);
 
         const query = {

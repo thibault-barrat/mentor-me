@@ -25,3 +25,13 @@ name=abc
 
 ### Récupérer tout les services d'une catégorie par ID
 GET http://localhost:3001/categorys/7/services
+
+
+### Récupération des services
+GET http://localhost:3001/services
+
+### Récupération d'un service
+GET http://localhost:3001/services/2
+
+### Suppression d'un service
+DELETE http://localhost:3001/services/2

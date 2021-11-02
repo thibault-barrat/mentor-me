@@ -27,7 +27,7 @@ const categoryController = {
                 return res
                     .status(404)
                     .send({
-                        errorMessage: "This user does not exist"
+                        errorMessage: "This category does not exist"
                     });
             }
             res.status(200).send(category.categoryById);
@@ -51,14 +51,14 @@ const categoryController = {
                 return res
                     .status(404)
                     .send({
-                        errorMessage: "This user does not exist"
+                        errorMessage: "This category does not exist"
                     });
             }
 
             await category.deleteOne(+id);
 
             res.status(200).send({
-                deletedUser: true
+                deletedCategory: true
             });
 
         } catch (error) {
@@ -117,7 +117,6 @@ const categoryController = {
     getAllServicebyCategoryId: async (req, res) => {
         try {
 
-            console.log('je suis dans le controller')
             const {
                 id
             } = req.params;

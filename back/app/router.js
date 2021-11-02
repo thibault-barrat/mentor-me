@@ -1,10 +1,13 @@
 const {
     Router
 } = require("express");
+
 // import des controllers
 const mainController = require("./controllers/mainController");
 
 const categoryController = require("./controllers/categoryController");
+
+const serviceController = require("./controllers/serviceController");
 
 const router = Router();
 
@@ -28,5 +31,10 @@ router.post("/categorys", categoryController.createOneCategory); // Route pour a
 router.patch("/categorys/:id(\\d+)", categoryController.modifyCategory) // Route pour modifier une catégorie
 router.get("/categorys/:id(\\d+)/services", categoryController.getAllServicebyCategoryId) // Route pour modifier une catégorie
 
+/* Services */
+router.get("/services", serviceController.getAllServicezz);
+router.get("/services/:id(\\d+)", serviceController.getOneService);
+router.delete("/services/:id(\\d+)", serviceController.deleteOneService)
+router.patch("/services/:id(\\d+)", serviceController.modifyService);
 
 module.exports = router;
