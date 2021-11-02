@@ -4,15 +4,17 @@ const {
 
 // import des controllers
 const userController = require("./controllers/userController");
+
+const categoryController = require("./controllers/categoryController");
+
+const serviceController = require("./controllers/serviceController");
+
 // import des middlewares
 const {
   withAuth,
   isAdmin
 } = require("./middlewares/auth");
 
-const categoryController = require("./controllers/categoryController");
-
-const serviceController = require("./controllers/serviceController");
 
 const router = Router();
 
@@ -31,10 +33,15 @@ router.patch("/categorys/:id(\\d+)", categoryController.modifyCategory) // Route
 router.get("/categorys/:id(\\d+)/services", categoryController.getAllServicebyCategoryId) // Route pour modifier une catégorie
 
 /* Services */
-router.get("/services", serviceController.getAllServicezz);
-router.get("/services/:id(\\d+)", serviceController.getOneService);
-router.delete("/services/:id(\\d+)", serviceController.deleteOneService)
-router.patch("/services/:id(\\d+)", serviceController.modifyService);
+router.get("/allServices", serviceController.getAllServicezz); // Route pour tout les services
+router.get("/service/:id(\\d+)", serviceController.getOneService); // Route pour un service
+router.delete("/service/:id(\\d+)", serviceController.deleteOneService); // Route pour supprimer un service
+router.patch("/service/:id(\\d+)", serviceController.modifyService); // Route pour modifier un service
+router.post("/service/", serviceController.createService); // Route pour creer un service
+
+
+
+
 router.post("/register", userController.createNewUser);
 
 /**
