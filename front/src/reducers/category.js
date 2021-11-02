@@ -1,21 +1,26 @@
-import { LOAD_CATEGORIES, SAVE_CATEGORIES } from 'src/actions/category';
+import { ADD_CATEGORIES, FETCH_CATEGORIES } from '../actions/category';
 
 export const initialState = {
-  categories: [],
+  items: [],
+  loading: true,
 };
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case LOAD_CATEGORIES:
+    case FETCH_CATEGORIES: {
       return {
         ...state,
+        items: [...state.items],
+        loading: true,
       };
-    case SAVE_CATEGORIES:
+    }
+    case ADD_CATEGORIES: {
       return {
         ...state,
-        categories: action.categories
+        items: action.categories,
+        loading: false,
       };
-    
+    }
     default:
       return state;
   }

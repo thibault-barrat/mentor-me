@@ -1,4 +1,6 @@
-import { CHANGE_LOGIN_FIELD, SAVE_USER } from '../actions/user';
+import {
+  CHANGE_LOGIN_FIELD, SAVE_USER, CHANGE_REGISTER_FIELD, SUBMIT_NEW_USER_SUCCESS, SUBMIT_NEW_USER,
+} from '../actions/user';
 
 export const initialState = {
   logged: false,
@@ -6,9 +8,15 @@ export const initialState = {
   email: '',
   password: '',
   token: null,
-  firstname: '',
-  lastname: '',
   id: null,
+  register: {
+    email: '',
+    password: '',
+    firstname: '',
+    lastname: '',
+    redirect: false,
+    loading: false,
+  },
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -25,6 +33,38 @@ const reducer = (state = initialState, action = {}) => {
         logged: action.logged,
         id: action.id,
         token: action.token,
+      };
+    }
+    case CHANGE_REGISTER_FIELD: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+          [action.name]: action.value,
+        },
+      };
+    }
+    case SUBMIT_NEW_USER: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+          loading: true,
+        },
+      };
+    }
+    case SUBMIT_NEW_USER_SUCCESS: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+          email: '',
+          password: '',
+          firstname: '',
+          lastname: '',
+          redirect: true,
+          loading: false,
+        },
       };
     }
     default:

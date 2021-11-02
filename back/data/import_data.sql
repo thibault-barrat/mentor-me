@@ -66,7 +66,7 @@ VALUES
   (44.50522, 2.23951),
   (45.99509, 2.52986);
 INSERT INTO
-  "user" (
+  "users" (
     "firstname",
     "lastname",
     "email",
@@ -79,6 +79,17 @@ INSERT INTO
   )
 VALUES
   (
+    'Admin',
+    'Mentorme',
+    'admin@mentorme.fr',
+    '$2b$10$VWPLkNQM6ZHsT2AvKzZILemRgGxZc048bOvv4YHSyv2dcRp3pjcdu',
+    null,
+    null,
+    null,
+    DEFAULT,
+    2
+  ),
+  (
     'Jaymee',
     'Hankin',
     'jhankin0@ca.gov',
@@ -86,7 +97,7 @@ VALUES
     'Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.',
     0804904413,
     0939534832,
-    '',
+    DEFAULT,
     1
   ),
   (
@@ -97,7 +108,7 @@ VALUES
     '',
     0117645913,
     0204517172,
-    '',
+    DEFAULT,
     1
   ),
   (
@@ -108,7 +119,7 @@ VALUES
     'Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.',
     0779837770,
     0695986349,
-    '',
+    DEFAULT,
     1
   ),
   (

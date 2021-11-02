@@ -1,12 +1,11 @@
-export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
-export const SAVE_CATEGORIES = 'SAVE_CATEGORIES';
+export const FETCH_CATEGORIES = 'FETCH_CATEGORIES';
+export const ADD_CATEGORIES = 'ADD_CATEGORIES';
 
-
-export const loadCategories = () => ({
-  type: LOAD_CATEGORIES,
+export const fetchCategories = () => ({
+  type: FETCH_CATEGORIES,
 });
 
-export const saveCategories = (categories) => ({
-  type: SAVE_CATEGORIES,
+export const addCategories = (categories) => ({
+  type: ADD_CATEGORIES,
   categories,
 });
