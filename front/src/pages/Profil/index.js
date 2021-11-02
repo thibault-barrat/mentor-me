@@ -11,9 +11,11 @@ export default function profil() {
   );
   return (
 
-    <div className="container">
+  //  TODO RENDRE LA PAGE DYNAMIQUE
+
+    <div className="container__prof">
       <div className="container__top">
-        <h1>A propos</h1>
+        <h1>Mon profil</h1>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing
           elit. Sint accusantium reiciendis quos officia
           repudiandae harum, consequuntur delectus doloribus numquam,
@@ -69,9 +71,9 @@ export default function profil() {
           required
         />
 
-        <button type="submit" className="connect-button">Modifier le profil</button>
+        <button type="submit" className="connect-button-p">Modifier le profil</button>
         <br />
-        <button type="submit" className="connect-button">Supprimer mon profil</button>
+        <button type="submit" className="connect-button-p">Supprimer mon profil</button>
       </div>
 
       <div className="container_ann">
