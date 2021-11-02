@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import categoryData from 'src/data/category.json';
 import servicesData from 'src/data/services.json';
 import PopCatWave from 'src/assets/images/popular-cat-wave.svg';

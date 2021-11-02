@@ -1,5 +1,16 @@
 @use 'src/styles/vars';
 
+h1 {
+  text-align: center;
+  margin:2rem 0 2rem 0 ;
+  font-size: 1.7rem;
+}
+p {
+  text-align: center;
+  margin:2rem 0 2rem 0 ;
+  font-size: 1.2rem;
+}
+
 .prof__img {
   width : 300px; 
   height : 300px;
@@ -10,15 +21,33 @@
    //text-align: center;
    margin-left: 14%;
   padding: 1.5rem;
-  margin-top: 2rem;
   
   @media (min-width: vars.$breakpoint-sm){
     margin-left: 0%;
   }
 }
 
+.container__bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .container_ann {
-  background-color: aqua;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container__ann__fav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card__name {
+  margin-left: 32%;
 }
 
 .proposed__img {
@@ -31,7 +60,7 @@
    //text-align: center;
    margin-left: 14%;
   padding: 1.5rem;
-  margin-top: 2rem;
+  margin-bottom: 1rem;
   
   @media (min-width: vars.$breakpoint-sm){
     margin-left: 0%;

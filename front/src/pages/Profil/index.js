@@ -75,19 +75,36 @@ export default function profil() {
       </div>
 
       <div className="container_ann">
-        <h2>J'ai proposé :</h2>
+        <h1>J'ai proposé :</h1>
         <div className="proposed__card">
-          <span>card Name</span>
+          <span className="card__name">card Name</span>
           <img src={DecImage} alt="montrant un pannel de compétences" className="proposed__img" />
         </div>
         <div className="proposed__card">
-          <span>card Name</span>
+          <span className="card__name">card Name</span>
           <img src={DecImage} alt="montrant un pannel de compétences" className="proposed__img" />
         </div>
         <div className="proposed__card">
-          <span>card Name</span>
+          <span className="card__name">card Name</span>
           <img src={DecImage} alt="montrant un pannel de compétences" className="proposed__img" />
         </div>
+        <button type="submit" className="connect-button">voir plus</button>
+      </div>
+      <div className="container__ann__fav">
+        <h1>Mes annonces favorites :</h1>
+        <div className="proposed__card">
+          <span className="card__name">card Name</span>
+          <img src={DecImage} alt="montrant un pannel de compétences" className="proposed__img" />
+        </div>
+        <div className="proposed__card">
+          <span className="card__name">card Name</span>
+          <img src={DecImage} alt="montrant un pannel de compétences" className="proposed__img" />
+        </div>
+        <div className="proposed__card">
+          <span className="card__name">card Name</span>
+          <img src={DecImage} alt="montrant un pannel de compétences" className="proposed__img" />
+        </div>
+        <button type="submit" className="connect-button">voir plus</button>
       </div>
     </div>
   );
