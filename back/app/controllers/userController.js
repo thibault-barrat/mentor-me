@@ -2,6 +2,7 @@ const User = require("../models/User");
 const cloudinary = require("../cloudinary");
 // fs est un module natif à node (pas besoin de npm i)
 const fs = require("fs");
+const sharp = require("sharp");
 
 const userController = {
   /**
@@ -37,7 +38,7 @@ const userController = {
           .send({ errorMessage: "This user does not exist" });
       }
       // on renvoie le json du user
-      res.status(200).send(user.userById);
+      res.status(200).send(user.userById[0]);
     } catch (err) {
       res.status(500).send(err);
     }
@@ -251,35 +252,48 @@ const userController = {
 
       // on récupère l'image envoyée par le user et on la stocke dans le dossier temporaire
       const avatar = req.files.avatar.tempFilePath;
+      const buffer = req.files.avatar.data;
+
+      const metaData = await sharp(req.files.avatar.name.split(".")[0])
+        .resize({
+          width: 300,
+          height: 300,
+        })
+        .toFormat("jpeg")
+        .toFile(
+          `${req.files.avatar.name.split(".")[0]}-resized-compressed.jpeg`
+        );
+
+      console.log(">>sharp: ", metaData);
 
       // on l'envoie ensuite dans cloudinary
-      cloudinary.uploader.upload(
-        avatar,
-        { public_id: `mentorme_${id}`, tags: "MentorMe", folder: "avatars" },
-        async (err, result) => {
-          if (err) {
-            return res.status(503).send({
-              message: "Cannot reach Cloudinary server",
-              err,
-            });
-          }
-          if (result) {
-            fs.unlink(
-              `${__dirname}/../../tmp/${result.original_filename}`,
-              (err) => {
-                if (err) {
-                  console.error(err);
-                  return;
-                }
-              }
-            );
-            const url = result.secure_url;
-            const user = new User();
-            await user.modifyAvatar(id, url);
-            res.status(200).send({ message: "Avatar modified" });
-          }
-        }
-      );
+      // cloudinary.uploader.upload(
+      //   avatar,
+      //   { public_id: `mentorme_${id}`, tags: "MentorMe", folder: "avatars" },
+      //   async (err, result) => {
+      //     if (err) {
+      //       return res.status(503).send({
+      //         message: "Cannot reach Cloudinary server",
+      //         err,
+      //       });
+      //     }
+      //     if (result) {
+      //       fs.unlink(
+      //         `${__dirname}/../../tmp/${result.original_filename}`,
+      //         (err) => {
+      //           if (err) {
+      //             console.error(err);
+      //             return;
+      //           }
+      //         }
+      //       );
+      //       const url = result.secure_url;
+      //       const user = new User();
+      //       await user.modifyAvatar(id, url);
+      //       res.status(200).send({ message: "Avatar modified" });
+      //     }
+      //   }
+      // );
 
       // res.status(200).send({ message: "Avatar modified" });
     } catch (err) {
