@@ -10,7 +10,18 @@ import './style.scss';
 
 export default function Services() {
 
-  
+  const jsxServiceCard = data.map((item)=>(
+    <ServicesCard 
+      key={item.id}
+
+      title={item.title}
+      duration={item.duration}
+      description={item.description}
+      disponibility={item.disponibility}
+
+    />
+  ));
+
   return (
     <div className="services">
       <h1 className="services-title">Voici les offres correspondantes à la catégorie </h1>
@@ -30,7 +41,7 @@ export default function Services() {
         </div>
         <article className="services-cards">
           <ul>
-            <ServicesCard />
+            {jsxServiceCard}
           </ul>
         </article>
       </main>

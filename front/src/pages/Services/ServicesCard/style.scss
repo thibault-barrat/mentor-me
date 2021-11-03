@@ -1,0 +1,12 @@
+@use 'src/styles/vars';
+
+.card{
+
+  &-image-container{
+    width: 100px; 
+    height: 100px;
+  }
+  &-image{
+
+  }
+}
