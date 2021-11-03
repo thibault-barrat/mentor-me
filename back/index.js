@@ -26,7 +26,7 @@ app.use(
 const corsOptions = {
   origin: [
     "https://angry-mayer-669f9a.netlify.app/",
-    "https://localhost:8080",
+    "http://localhost:8080",
     "http://localhost:3000",
   ],
   methods: ["GET", "POST", "HEAD", "PUT", "PATCH", "DELETE"],
@@ -51,7 +51,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.set("trust proxy", 1);
 // config session
 app.use(
   session({
