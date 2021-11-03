@@ -7,6 +7,9 @@ import {
   CREATE_MAIL_ERROR,
   CREATE_PASSWORD_ERROR,
   SAVE_USER_DETAILS,
+  CHANGE_PROFILE_FIELD,
+  SAVE_PROFILE,
+  SAVE_PROFILE_SUCCESS,
 } from '../actions/user';
 
 export const initialState = {
@@ -29,14 +32,16 @@ export const initialState = {
     password: false,
   },
   details: {
+    loading: false,
     email: '',
     firstname: '',
     lastname: '',
     bio: '',
     phone: '',
     fix: '',
-    avatar: '',
+    avatar: 'https://i.imgur.com/Z9fVYeP.png',
   },
+  likedServices: [],
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -50,6 +55,12 @@ const reducer = (state = initialState, action = {}) => {
         errors: {
           ...state.errors,
         },
+        details: {
+          ...state.details,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
         [action.name]: action.value,
       };
     }
@@ -59,11 +70,17 @@ const reducer = (state = initialState, action = {}) => {
         register: {
           ...state.register,
         },
+        details: {
+          ...state.details,
+        },
         errors: {
           ...state.errors,
           mail: false,
           password: false,
         },
+        likedServices: [
+          ...state.likedServices,
+        ],
         logged: action.connected,
         role: action.role,
         id: action.id,
@@ -75,11 +92,17 @@ const reducer = (state = initialState, action = {}) => {
         register: {
           ...state.register,
         },
+        details: {
+          ...state.details,
+        },
         errors: {
           ...state.errors,
           mail: true,
           password: false,
         },
+        likedServices: [
+          ...state.likedServices,
+        ],
       };
     }
     case CREATE_PASSWORD_ERROR: {
@@ -88,11 +111,17 @@ const reducer = (state = initialState, action = {}) => {
         register: {
           ...state.register,
         },
+        details: {
+          ...state.details,
+        },
         errors: {
           ...state.errors,
           mail: false,
           password: true,
         },
+        likedServices: [
+          ...state.likedServices,
+        ],
       };
     }
     case CHANGE_REGISTER_FIELD: {
@@ -102,9 +131,15 @@ const reducer = (state = initialState, action = {}) => {
           ...state.register,
           [action.name]: action.value,
         },
+        details: {
+          ...state.details,
+        },
         errors: {
           ...state.errors,
         },
+        likedServices: [
+          ...state.likedServices,
+        ],
       };
     }
     case SUBMIT_NEW_USER: {
@@ -117,6 +152,12 @@ const reducer = (state = initialState, action = {}) => {
         errors: {
           ...state.errors,
         },
+        details: {
+          ...state.details,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
       };
     }
     case SUBMIT_NEW_USER_SUCCESS: {
@@ -134,6 +175,12 @@ const reducer = (state = initialState, action = {}) => {
         errors: {
           ...state.errors,
         },
+        details: {
+          ...state.details,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
       };
     }
     case SAVE_USER_DETAILS: {
@@ -155,6 +202,63 @@ const reducer = (state = initialState, action = {}) => {
         errors: {
           ...state.errors,
         },
+        likedServices: [
+          ...state.likedServices,
+        ],
+      };
+    }
+    case CHANGE_PROFILE_FIELD: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+        },
+        details: {
+          ...state.details,
+          [action.name]: action.value,
+        },
+        errors: {
+          ...state.errors,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
+      };
+    }
+    case SAVE_PROFILE: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+        },
+        details: {
+          ...state.details,
+          loading: true,
+        },
+        errors: {
+          ...state.errors,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
+      };
+    }
+    case SAVE_PROFILE_SUCCESS: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+        },
+        details: {
+          ...state.details,
+          loading: false,
+        },
+        errors: {
+          ...state.errors,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
       };
     }
     default:

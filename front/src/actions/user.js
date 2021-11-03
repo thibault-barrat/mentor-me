@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable max-len */
 export const CHANGE_LOGIN_FIELD = 'CHANGE_LOGIN_FIELD';
 export const SUBMIT_LOGIN = 'SUBMIT_LOGIN';
 export const CREATE_MAIL_ERROR = 'CREATE_MAIL_ERROR';
@@ -10,6 +8,9 @@ export const SUBMIT_NEW_USER = 'SUBMIT_NEW_USER';
 export const SUBMIT_NEW_USER_SUCCESS = 'SUBMIT_NEW_USER_SUCCESS';
 export const GET_USER_DETAILS = 'GET_USER_DETAILS';
 export const SAVE_USER_DETAILS = 'SAVE_USER_DETAILS';
+export const CHANGE_PROFILE_FIELD = 'CHANGE_PROFILE_FIELD';
+export const SAVE_PROFILE = 'SAVE_PROFILE';
+export const SAVE_PROFILE_SUCCESS = 'SAVE_PROFILE_SUCCESS';
 
 export const changeLoginField = (value, name) => ({
   type: CHANGE_LOGIN_FIELD,
@@ -55,6 +56,7 @@ export const getUserDetails = () => ({
 });
 
 export const saveUserDetails = ({
+  // eslint-disable-next-line camelcase
   email, firstname, lastname, biography, mobile_phone, home_phone, avatar_url,
 }) => ({
   type: SAVE_USER_DETAILS,
@@ -65,4 +67,18 @@ export const saveUserDetails = ({
   phone: mobile_phone,
   fix: home_phone,
   avatar: avatar_url,
+});
+
+export const changeProfileField = (value, name) => ({
+  type: CHANGE_PROFILE_FIELD,
+  value,
+  name,
+});
+
+export const saveProfile = () => ({
+  type: SAVE_PROFILE,
+});
+
+export const saveProfileSuccess = () => ({
+  type: SAVE_PROFILE_SUCCESS,
 });

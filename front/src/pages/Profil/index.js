@@ -1,113 +1,197 @@
-/* eslint-disable object-curly-newline */
-/* eslint-disable import/no-absolute-path */
-/* eslint-disable import/no-unresolved */
 import { useSelector, useDispatch } from 'react-redux';
-import { GetUserDetails } from '../../actions/user';
+import { useState } from 'react';
 import './style.scss';
-import DecImage from '/src/assets/images/business-gfb594ee9b_1280.jpg';
+import { Link } from 'react-router-dom';
 import Field from '../../components/Field';
+import { changeProfileField, saveProfile } from '../../actions/user';
 
 export default function profil() {
-  const { email, firstname, lastname } = useSelector(
-    (state) => state.user.register,
-  );
+  // TODO Ajouter loader pendant la reqête POST
+
+  // We take the details user info from the state
+  const {
+    email, firstname, lastname, bio, phone, fix, avatar,
+  } = useSelector((state) => state.user.details);
+
+  // We also need to know the services and the user id to find the services proposed by the user
+  const services = useSelector((state) => state.services.items);
+  const id = useSelector((state) => state.user.id);
+  const proposedServices = services.filter((service) => service.user_id === id);
+
+  // We also need to know the liked services of the user
+  const likedServices = useSelector((state) => state.user.likedServices);
+
+  // We also need the categories to display the category image on the service cards
+  const categories = useSelector((state) => state.categories.items);
+
+  // Variable readOnly will let us know if the user is modifying his profile or not
+  // When readOnly is true all the fields are disabled
+  const [readOnly, setReadOnly] = useState(true);
+
+  // Variable validEmail to know if the field is conform to regex
+  // When this is false, we can not validate the new data
+  const [validEmail, setValidEmail] = useState(true);
+
+  // function to verify that the email matches the regex rule
+  const checkEmail = (event) => {
+    if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(event.target.value)) {
+      setValidEmail(false);
+    }
+    else setValidEmail(true);
+  };
+
   const dispatch = useDispatch();
 
   const handleChange = (value, name) => {
-    // dispatch(getUserDetails(value, name));
+    dispatch(changeProfileField(value, name));
+  };
+
+  const handleSubmit = () => {
+    if (validEmail) {
+      setReadOnly(!readOnly);
+      dispatch(saveProfile());
+    }
   };
 
   return (
 
-  //  TODO RENDRE LA PAGE DYNAMIQUE
-
-    <div className="container__prof">
-      <div className="container__top">
-        <h1>Mon profil</h1>
-        <p className="p__text">Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Sint accusantium reiciendis quos officia
-          repudiandae harum, consequuntur delectus doloribus numquam,
-          expedita minima non nisi laboriosam quidem qui ad
-          impedit! Reprehenderit, quae?
-        </p>
-        <img src={DecImage} alt="montrant un pannel de compétences" className="prof__img" />
+    <div className="profil">
+      <div className="profil__container-top">
+        <h1 className="profil__title">Mon profil</h1>
+        <div className="profil__bio">
+          <label
+            className="bio__label"
+            htmlFor="bio"
+          >
+            <span className="bio__label-text">Votre biographie</span>
+            <textarea
+              type="text"
+              placeholder="Votre biographie"
+              className="bio__textarea"
+              value={bio}
+              name="bio"
+              onChange={(event) => handleChange(event.target.value, 'bio')}
+              disabled={readOnly}
+            />
+          </label>
+        </div>
+        <img src={avatar} alt="Avatar du profil" className="profil__avatar" />
       </div>
-      <div className="container__bottom">
-        <Field
-          type="text"
-          name="email"
-          placeholder={email}
-          value={email}
-          disabled
-          required
-        />
-        <Field
-          type="text"
-          name="firstname"
-          placeholder="Votre prénom"
-          value={firstname}
-          disabled
-          required
-        />
-        <Field
-          type="text"
-          name="lastname"
-          placeholder="Votre Nom"
-          value={lastname}
-          disabled
-          required
-        />
-        <Field
-          type="text"
-          name="Tel.fixe"
-          placeholder="Votre numéro de teléphone fixe"
-          disabled
-          required
-        />
-        <Field
-          type="text"
-          name="Tel"
-          placeholder="Votre numéro de téléphone portable"
-          disabled
-          required
-        />
+      <div className="profil__container-bottom">
+        <div className="profil__container-form">
+          {!validEmail && (
+            <span className="profil__error">Ce champ doit contenir un email valide.</span>
+          )}
+          <Field
+            type="text"
+            name="email"
+            placeholder="Votre email"
+            value={email}
+            disabled={readOnly}
+            onChange={handleChange}
+            onBlur={checkEmail}
+          />
+          <Field
+            type="text"
+            name="firstname"
+            placeholder="Votre prénom"
+            value={firstname}
+            disabled={readOnly}
+            onChange={handleChange}
+          />
+          <Field
+            type="text"
+            name="lastname"
+            placeholder="Votre Nom"
+            value={lastname}
+            disabled={readOnly}
+            onChange={handleChange}
+          />
+          <Field
+            type="text"
+            name="fix"
+            placeholder="Votre numéro de teléphone fixe"
+            value={fix}
+            disabled={readOnly}
+            onChange={handleChange}
+          />
+          <Field
+            type="text"
+            name="phone"
+            placeholder="Votre numéro de téléphone portable"
+            value={phone}
+            disabled={readOnly}
+            onChange={handleChange}
+          />
 
-        <button type="submit" className="connect-button-p">Modifier le profil</button>
-        <br />
-        <button type="submit" className="connect-button-p">Supprimer mon profil</button>
-      </div>
+          {/* We display button "Valider when readOnly is false
+        and we display button "Modifier" when readOnly is true" */}
+          {!readOnly && (
+            <button
+              type="submit"
+              className="connect-button-p"
+              onClick={handleSubmit}
+            >
+              Valider
+            </button>
+          )}
+          {readOnly && (
+            <button
+              type="submit"
+              className="connect-button-p"
+              onClick={() => setReadOnly(!readOnly)}
+            >
+              Modifier le profil
+            </button>
+          )}
+          <br />
+          {/* TODO SUPPRESSION D'UN PROFIL */}
+          <button type="submit" className="connect-button-p">Supprimer mon profil</button>
+        </div>
 
-      <div className="container_ann">
-        <h1>J'ai proposé :</h1>
-        <div className="proposed__card">
-          <span className="card__name">card Name</span>
-          <img src={DecImage} alt="montrant un pannel de compétences" className="proposed__img" />
-        </div>
-        <div className="proposed__card">
-          <span className="card__name">card Name</span>
-          <img src={DecImage} alt="montrant un pannel de compétences" className="proposed__img" />
-        </div>
-        <div className="proposed__card">
-          <span className="card__name">card Name</span>
-          <img src={DecImage} alt="montrant un pannel de compétences" className="proposed__img" />
-        </div>
-        <button type="submit" className="connect-button">voir plus</button>
-      </div>
-      <div className="container__ann__fav">
-        <h1>Mes annonces favorites :</h1>
-        <div className="proposed__card">
-          <span className="card__name">card Name</span>
-          <img src={DecImage} alt="montrant un pannel de compétences" className="proposed__img" />
-        </div>
-        <div className="proposed__card">
-          <span className="card__name">card Name</span>
-          <img src={DecImage} alt="montrant un pannel de compétences" className="proposed__img" />
-        </div>
-        <div className="proposed__card">
-          <span className="card__name">card Name</span>
-          <img src={DecImage} alt="montrant un pannel de compétences" className="proposed__img" />
-        </div>
-        <button type="submit" className="connect-button">voir plus</button>
+        {/* We display proposed services only if proposedServices contains items */}
+        {proposedServices.length > 0 && (
+          <div className="profil__container-ann">
+            <h1 className="profil__subtitle">J'ai proposé :</h1>
+
+            {proposedServices.map((service) => (
+              <Link key={service.id} to={`/services/${service.id}`}>
+                <div className="proposed__card">
+                  <span className="card__name">{service.title}</span>
+                  <img
+                    className="proposed__img"
+                    // Here we will use the image of the category of the service
+                    src={categories.find((category) => category.id === service.category_id).image}
+                    alt={service.title}
+                  />
+                </div>
+              </Link>
+            ))}
+
+            {/* <button type="submit" className="connect-button">voir plus</button> */}
+          </div>
+        )}
+
+        {/* We display liked services only if likedServices contains items */}
+        {likedServices.length > 0 && (
+          <div className="profil__container-ann-fav">
+            <h1 className="profil__subtitle">Mes annonces favorites :</h1>
+            {likedServices.map((service) => (
+              <Link key={service.id} to={`/services/${service.id}`}>
+                <div className="proposed__card">
+                  <span className="card__name">{service.title}</span>
+                  <img
+                    className="proposed__img"
+                    // Here we will use the image of the category of the service
+                    src={categories.find((category) => category.id === service.category_id).image}
+                    alt={service.title}
+                  />
+                </div>
+              </Link>
+            ))}
+            {/* <button type="submit" className="connect-button">voir plus</button> */}
+          </div>
+        )}
       </div>
     </div>
   );

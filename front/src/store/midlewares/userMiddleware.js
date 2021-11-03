@@ -1,6 +1,6 @@
 /* eslint-disable object-curly-newline */
 import axios from 'axios';
-import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, getUserDetails, saveUserDetails, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS } from '../../actions/user';
+import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE } from '../../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -82,7 +82,6 @@ const userMiddleware = (store) => (next) => (action) => {
             },
             withCredentials: true,
           });
-          console.log(response.data);
           store.dispatch(saveUserDetails(response.data));
         }
         catch (error) {
@@ -90,6 +89,31 @@ const userMiddleware = (store) => (next) => (action) => {
         }
       };
       getUser();
+      break;
+    }
+    case SAVE_PROFILE: {
+      const { user:
+        { id, details: { email, firstname, lastname, bio, phone, fix } } } = store.getState();
+      const saveProfile = async () => {
+        try {
+          await axios.post(`https://api-mentorme.herokuapp.com/v1/user/${id}`, {
+            email,
+            firstname,
+            lastname,
+            biography: bio,
+            home_phone: fix,
+            mobile_phone: phone,
+          });
+          // une fois qu'on a la réponse, on peut venir stocker les infos du user
+          // dans le state => modifier le state => dispatch d'action
+          store.dispatch(saveProfileSuccess());
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+      saveProfile();
+      next(action);
       break;
     }
     default:
