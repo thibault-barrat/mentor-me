@@ -30,7 +30,6 @@ export const initialState = {
   },
   details: {
     email: '',
-    password: '',
     firstname: '',
     lastname: '',
     bio: '',

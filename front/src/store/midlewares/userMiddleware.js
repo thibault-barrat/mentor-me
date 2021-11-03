@@ -82,6 +82,7 @@ const userMiddleware = (store) => (next) => (action) => {
             },
             withCredentials: true,
           });
+          console.log(response.data);
           store.dispatch(saveUserDetails(response.data));
         }
         catch (error) {
