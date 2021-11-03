@@ -3,7 +3,7 @@ const cloudinary = require("../cloudinary");
 // fs est un module natif à node (pas besoin de npm i)
 const fs = require("fs");
 const sharp = require("sharp");
-const { Readable } = require("stream");
+const { Readable } = require("readable-stream");
 
 const userController = {
   /**
