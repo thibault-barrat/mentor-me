@@ -1,9 +1,15 @@
+//Npm import
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+//Style
 import './style.scss';
 
 export default function Category({result}) {
 
+  //Here we need to map on the datas we got from the Props 'result'
+  //And create each card we got from the API
+  //And we also need to link our category's cards to their service's page
   const jsxcategory = result.map((item)=>(
     <Link
         to={`/categories/${item.id}`}
@@ -35,6 +41,7 @@ export default function Category({result}) {
   );
 }
 
+// Prop validation
 Category.propTypes = {
   result: PropTypes.arrayOf(
     PropTypes.shape({
