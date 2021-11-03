@@ -75,7 +75,17 @@ export default function profil() {
             />
           </label>
         </div>
-        <img src={avatar} alt="Avatar du profil" className="profil__avatar" />
+        <div className="profil__container-avatar">
+          <img src={avatar} alt="Avatar du profil" className="profil__avatar" />
+          <form>
+            <label htmlFor="avatar" className="profil__label-avatar">
+              <span className="connect-button-p">Modifier l'avatar</span>
+              <input id="avatar" type="file" accept="image/png, image/jpeg" className="profil__input-avatar" />
+            </label>
+            <button type="submit" className="connect-button-p">Valider</button>
+          </form>
+        </div>
+
       </div>
       <div className="profil__container-bottom">
         <div className="profil__container-form">
