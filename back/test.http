@@ -44,7 +44,10 @@ title=Peche artisanal
 &description=Peche à la truite
 &online=oui
 &irl=oui
-&is_published=oui
+&is_published=false
+&category_id=1
+&location_id=2
+
 
 ### register
 POST http://localhost:3001/v1/register

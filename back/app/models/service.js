@@ -1,6 +1,7 @@
 const pool = require("../database");
 
 module.exports = class Service {
+
   constructor(object) {
     for (const property in object) {
       this[property] = object[property];
@@ -38,6 +39,7 @@ module.exports = class Service {
   }
 
   async modifyOne(id) {
+
     await this.findOne(id);
 
     if (!this.title || this.title.lenght === 0) {
@@ -64,9 +66,17 @@ module.exports = class Service {
       this.is_published = this.serviceById[0].is_published;
     }
 
+    if (!this.category_id || this.category_id.lenght === 0) {
+      this.category_id = this.serviceById[0].category_id;
+    }
+
+    if (!this.location_id || this.location_id.lenght === 0) {
+      this.location_id = this.serviceById[0].location_id;
+    }
+
     const query = {
       text: `UPDATE service
-            SET "title"=$1, "duration"=$2, "description"=$3, "online"=$4, "irl"=$5, "is_published"=$6 ,"category_id"=$7, "location_id"=$8" WHERE id=$9;`,
+            SET "title"=$1, "duration"=$2, "description"=$3, "online"=$4, "irl"=$5, "is_published"=$6 ,"category_id"=$7, "location_id"=$8 WHERE id=$9;`,
       values: [
         this.title,
         this.duration,
@@ -75,7 +85,8 @@ module.exports = class Service {
         this.irl,
         this.is_published,
         this.category_id,
-        this.location_id
+        this.location_id,
+        id
       ],
     };
 
@@ -85,7 +96,7 @@ module.exports = class Service {
   async createOne() {
 
     const query = {
-      text: `INSERT INTO service("title", "duration", "description", "online", "irl", "is_published") VALUES ($1,$2,$3,$4,$5,$6)`,
+      text: `INSERT INTO service ("title", "duration", "description", "online", "irl", "is_published","user_id", "category_id","location_id" ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
       values: [
         this.title,
         this.duration,
@@ -93,9 +104,12 @@ module.exports = class Service {
         this.online,
         this.irl,
         this.is_published,
+        this.user_id,
+        this.category_id,
+        this.location_id
       ],
     };
 
     await pool.query(query);
-  }
+  };
 };

@@ -96,6 +96,7 @@ const serviceController = {
     },
 
     createService: async (req, res) => {
+
         try {
 
             for (let property in req.body) {
