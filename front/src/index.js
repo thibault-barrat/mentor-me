@@ -1,6 +1,9 @@
 // == Import : npm
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 // == Import : local
 // Composants

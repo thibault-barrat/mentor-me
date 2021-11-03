@@ -1,6 +1,6 @@
 /* eslint-disable object-curly-newline */
 import axios from 'axios';
-import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, SUBMIT_LOGIN, SUBMIT_NEW_USER } from '../../actions/user';
+import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, getUserDetails, saveUserDetails, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS } from '../../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -23,7 +23,8 @@ const userMiddleware = (store) => (next) => (action) => {
           });
           // une fois qu'on a la réponse, on peut venir stocker les infos du user
           // dans le state => modifier le state => dispatch d'action
-          store.dispatch(saveUser(response.data));
+          await store.dispatch(saveUser(response.data));
+          store.dispatch(getUserDetails());
         }
         catch (error) {
           if (error.response.data.errorMessage === 'This user does not exist!') {
@@ -68,6 +69,26 @@ const userMiddleware = (store) => (next) => (action) => {
 
       submitNewUser();
       next(action);
+      break;
+    }
+    case GET_USER_DETAILS: {
+      const { user: { id } } = store.getState();
+
+      const getUser = async () => {
+        try {
+          const response = await axios.get(`https://api-mentorme.herokuapp.com/v1/user/${id}`, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+          });
+          store.dispatch(saveUserDetails(response.data));
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+      getUser();
       break;
     }
     default:

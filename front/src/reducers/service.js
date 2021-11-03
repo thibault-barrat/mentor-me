@@ -2,7 +2,7 @@ import { FETCH_SERVICES, ADD_SERVICES } from '../actions/service';
 
 export const initialState = {
   items: [],
-  loading: true,
+  loading: false,
 };
 
 const reducer = (state = initialState, action = {}) => {

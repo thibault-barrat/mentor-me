@@ -26,10 +26,10 @@ function App() {
   const dispatch = useDispatch();
 
   // At the first render of App, we fetch categories and services
-  useEffect(() => {
-    dispatch(fetchCategories());
-    dispatch(fetchServices());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchCategories());
+  //   dispatch(fetchServices());
+  // }, []);
 
   return (
     <Router>

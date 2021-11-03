@@ -6,6 +6,7 @@ import {
   SUBMIT_NEW_USER,
   CREATE_MAIL_ERROR,
   CREATE_PASSWORD_ERROR,
+  SAVE_USER_DETAILS,
 } from '../actions/user';
 
 export const initialState = {
@@ -26,6 +27,16 @@ export const initialState = {
   errors: {
     mail: false,
     password: false,
+  },
+  details: {
+    email: '',
+    password: '',
+    firstname: '',
+    lastname: '',
+    bio: '',
+    phone: '',
+    fix: '',
+    avatar: '',
   },
 };
 
@@ -120,6 +131,27 @@ const reducer = (state = initialState, action = {}) => {
           lastname: '',
           redirect: true,
           loading: false,
+        },
+        errors: {
+          ...state.errors,
+        },
+      };
+    }
+    case SAVE_USER_DETAILS: {
+      return {
+        ...state,
+        details: {
+          ...state.details,
+          email: action.email,
+          firstname: action.firstname,
+          lastname: action.lastname,
+          bio: action.bio,
+          phone: action.phone,
+          fix: action.fix,
+          avatar: action.avatar,
+        },
+        register: {
+          ...state.register,
         },
         errors: {
           ...state.errors,

@@ -1,14 +1,22 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable import/no-absolute-path */
 /* eslint-disable import/no-unresolved */
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { GetUserDetails } from '../../actions/user';
 import './style.scss';
 import DecImage from '/src/assets/images/business-gfb594ee9b_1280.jpg';
 import Field from '../../components/Field';
 
 export default function profil() {
-  const { email, password, firstname, lastname } = useSelector(
+  const { email, firstname, lastname } = useSelector(
     (state) => state.user.register,
   );
+  const dispatch = useDispatch();
+
+  const handleChange = (value, name) => {
+    // dispatch(getUserDetails(value, name));
+  };
+
   return (
 
   //  TODO RENDRE LA PAGE DYNAMIQUE
@@ -28,7 +36,7 @@ export default function profil() {
         <Field
           type="text"
           name="email"
-          placeholder="Votre adresse email"
+          placeholder={email}
           value={email}
           disabled
           required
@@ -46,13 +54,6 @@ export default function profil() {
           name="lastname"
           placeholder="Votre Nom"
           value={lastname}
-          disabled
-          required
-        />
-        <Field
-          type="text"
-          name="ville"
-          placeholder="Votre ville"
           disabled
           required
         />

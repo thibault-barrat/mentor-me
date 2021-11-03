@@ -2,7 +2,7 @@ import { ADD_CATEGORIES, FETCH_CATEGORIES } from '../actions/category';
 
 export const initialState = {
   items: [],
-  loading: true,
+  loading: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
