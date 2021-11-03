@@ -200,7 +200,7 @@ const userController = {
       if (!user.checkEmail) {
         // un user a déjà été inscrit avec cette adresse mail, on retourne une erreur 409 : Conflict
         return res
-          .status(409)
+          .status(404)
           .send({ errorMessage: "This user does not exist!" });
       }
 
@@ -213,11 +213,13 @@ const userController = {
       }
       if (user.checkEmail && user.checkPassword) {
         // si email existe et le mdp est correct, OK
-        req.session.user = {
-          email: user.email,
-          role: user.role_name,
-          id: user.id,
-        };
+        // req.session.user = {
+        //   email: user.email,
+        //   role: user.role_name,
+        //   id: user.id,
+        // };
+        const accessToken = generateAccessToken({ user: req.body.email });
+        const refreshToken = generateRefreshToken({ user: req.body.email });
         res.status(200).send({ connected: true, user: req.session.user });
       }
     } catch (err) {

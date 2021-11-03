@@ -11,10 +11,6 @@ const serviceController = require("./controllers/serviceController");
 
 const router = Router();
 
-/**
- * S'inscrire
- * @route POST /user/:id
- */
 //router.get("/register", mainController.init);
 
 /* Category */
@@ -38,6 +34,11 @@ router.get("/services", serviceController.getAllServicezz);
 router.get("/services/:id(\\d+)", serviceController.getOneService);
 router.delete("/services/:id(\\d+)", serviceController.deleteOneService);
 router.patch("/services/:id(\\d+)", serviceController.modifyService);
+
+/**
+ * S'inscrire
+ * @route POST /user/:id
+ */
 router.post("/register", userController.createNewUser);
 
 /**
