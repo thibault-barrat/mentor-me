@@ -8,6 +8,7 @@ const { withAuth, isAdmin } = require("./middlewares/auth");
 const categoryController = require("./controllers/categoryController");
 
 const serviceController = require("./controllers/serviceController");
+const tokenController = require("./controllers/tokenController");
 
 const router = Router();
 
@@ -51,7 +52,7 @@ router.post("/login", userController.connectUser);
  * Déconnecter un user
  * @route get /logout
  */
-router.get("/logout", withAuth, userController.disconnectUser);
+router.post("/logout", userController.disconnectUser);
 
 /**
  * Récupérer tous les users
@@ -85,5 +86,10 @@ router.patch(
  * @route DELETE /user/:id
  */
 router.delete("/user/:id(\\d+)", withAuth, userController.deleteOneUser);
+
+/**
+ * Refresh token
+ */
+router.post("/refreshToken", tokenController.verifyRefreshToken);
 
 module.exports = router;

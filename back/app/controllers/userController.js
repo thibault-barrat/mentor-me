@@ -1,7 +1,12 @@
 const User = require("../models/User");
+const RefreshToken = require("../models/RefreshToken");
 const cloudinary = require("../cloudinary");
 // fs est un module natif à node (pas besoin de npm i)
 const fs = require("fs");
+const {
+  generateAccessToken,
+  generateRefreshToken,
+} = require("../../utils/jwt");
 
 const userController = {
   /**
@@ -212,15 +217,20 @@ const userController = {
         return res.status(400).send({ errorMessage: "Wrong password!" });
       }
       if (user.checkEmail && user.checkPassword) {
-        // si email existe et le mdp est correct, OK
-        // req.session.user = {
-        //   email: user.email,
-        //   role: user.role_name,
-        //   id: user.id,
-        // };
-        const accessToken = generateAccessToken({ user: req.body.email });
-        const refreshToken = generateRefreshToken({ user: req.body.email });
-        res.status(200).send({ connected: true, user: req.session.user });
+        const newAccessToken = generateAccessToken({
+          role: user.userByEmail[0].role_name,
+        });
+        const newRefreshToken = generateRefreshToken({
+          role: user.userByEmail[0].role_name,
+        });
+        const refreshToken = new RefreshToken();
+        await refreshToken.insertRefreshToken(newRefreshToken);
+
+        res.status(200).send({
+          connected: true,
+          accessToken: newAccessToken,
+          refreshToken: newRefreshToken,
+        });
       }
     } catch (err) {
       res.status(500).send(err);
@@ -232,8 +242,9 @@ const userController = {
    * @param  {Object} req
    * @param  {Object} res
    */
-  disconnectUser: (req, res) => {
-    req.session.destroy();
+  disconnectUser: async (req, res) => {
+    const token = new RefreshToken();
+    await token.deleteRefreshToken(req.body.refreshToken);
     res.status(200).send({ connected: false });
   },
 
