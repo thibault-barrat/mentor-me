@@ -30,7 +30,7 @@ router.get(
 ); // Route pour avoir tous les services d'une catégorie
 
 /* Services */
-router.get("/services", serviceController.getAllServicezz);
+router.get("/allServices", serviceController.getAllServicezz);
 router.get("/services/:id(\\d+)", serviceController.getOneService);
 router.delete("/services/:id(\\d+)", serviceController.deleteOneService);
 router.patch("/services/:id(\\d+)", serviceController.modifyService);
