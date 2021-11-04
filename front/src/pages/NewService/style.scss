@@ -1,1 +1,104 @@
 @use 'src/styles/vars';
+
+.new-service {
+	flex-grow: 1;
+	&__container {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+	&__slogan {
+		background-color: vars.$primary-color;
+		padding: calc(vars.$gutter * 0.3) 0;
+	}
+	&__form {
+		padding: vars.$gutter;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	&__form-row {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		.field {
+			flex-grow: 1;
+		}
+		@media (min-width: vars.$breakpoint-sm) {
+			width: 75%;
+			flex-direction: row;
+		}
+	}
+	&__cat-select {
+		padding: vars.$gutter;
+		margin-bottom: calc(vars.$gutter * 3);
+		border: solid 2px #dcdcdc;
+		font-weight: bold;
+		background: white;
+		width: 75%;
+		text-align: center;
+	}
+	&__checkbox-container {
+		display: flex;
+		margin-bottom: calc(vars.$gutter * 1.1);
+		padding: 0 calc(vars.$gutter * 1);
+		align-items: center;
+		@media (min-width: vars.$breakpoint-sm) {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+		@media (min-width: vars.$breakpoint-md) {
+			flex-direction: row;
+		}
+	}
+	&__checkbox-label {
+		padding: calc(vars.$gutter * 0.2);
+		display: flex;
+		align-items: center;
+	}
+	&__description {
+		display: flex;
+		flex-direction: column;
+		margin: auto;
+		width: 75%;
+	}
+	&__description-textarea {
+		padding: vars.$gutter;
+		margin-bottom: calc(vars.$gutter * 3);
+		border: solid 2px #dcdcdc;
+		min-height: 150px;
+		resize: vertical;
+		font-family: 'Montserrat', sans-serif;
+		&::placeholder {
+			font-family: 'Montserrat', sans-serif;
+		}
+		&:focus-visible {
+			outline: none;
+		}
+	}
+	&__description-label {
+		margin-bottom: calc(vars.$gutter/2);
+	}
+	&__label {
+		margin-bottom: calc(vars.$gutter/2);
+		text-align: left;
+		width: 75%;
+	}
+	&__button {
+		color: white;
+		padding: calc(vars.$gutter/1.5) calc(vars.$gutter * 2);
+		font-size: vars.$gutter;
+		background-color: rgb(255, 112, 87);
+		border: none;
+		border-radius: 5px;
+		font-weight: bold;
+		margin-bottom: calc(vars.$gutter * 2);
+		transition: 0.3s;
+		display: inline-block;
+		cursor: pointer;
+		line-height: calc(vars.$gutter * 1.4);
+		&:hover {
+			background-color: lighten($color: rgb(255, 112, 87), $amount: 10%);
+		}
+	}
+}
