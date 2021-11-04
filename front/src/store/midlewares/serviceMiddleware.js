@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { addServices, FETCH_SERVICES } from '../../actions/service';
+import {
+  addServices, submitServiceSuccess, FETCH_SERVICES, SUBMIT_SERVICE,
+} from '../../actions/service';
 
 const serviceMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -15,6 +17,40 @@ const serviceMiddleware = (store) => (next) => (action) => {
       };
 
       fetchServices();
+      next(action);
+      break;
+    }
+    case SUBMIT_SERVICE: {
+      const {
+        user: {
+          id,
+        },
+        services: {
+          new: {
+            category, title, duration, irl, online, description, location,
+          },
+        },
+      } = store.getState();
+      const submitService = async () => {
+        try {
+          await axios.post('https://api-mentorme.herokuapp.com/v1/nouveau-service', {
+            title,
+            duration,
+            description,
+            online,
+            irl,
+            user_id: id,
+            category_id: category,
+            location,
+          });
+          store.dispatch(submitServiceSuccess());
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+
+      submitService();
       next(action);
       break;
     }

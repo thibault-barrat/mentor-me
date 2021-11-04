@@ -13,9 +13,11 @@ import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import NewServiceMarker from 'src/components/NewServiceMarker';
-import { changeServiceField } from '../../actions/service';
+import { changeServiceField, submitService } from '../../actions/service';
 
 const NewService = () => {
+  // TODO gestion des erreurs (champ vide)
+
   // we need categories to populate the select field
   const categories = useSelector((state) => state.categories.items);
 
@@ -29,6 +31,12 @@ const NewService = () => {
   // function to handle the change value in controlled fields
   const handleChange = (value, name) => {
     dispatch(changeServiceField(value, name));
+  };
+
+  // function to handle submission of new service
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(submitService());
   };
 
   // We need to re-define the markers in order to correctly import them
@@ -57,6 +65,7 @@ const NewService = () => {
             className="new-service__cat-select"
             value={category}
             onChange={(e) => handleChange(e.target.value, e.target.name)}
+            required
           >
             <option value="">-- Nom de la catégorie --</option>
             {categories.map((cat) => (
@@ -118,6 +127,7 @@ const NewService = () => {
               value={description}
               name="description"
               onChange={(event) => handleChange(event.target.value, event.target.name)}
+              required
             />
           </label>
           <span className="new-service__label">Localisation (cliquez sur la carte là où vous souhaitez localiser votre service)</span>
@@ -132,6 +142,7 @@ const NewService = () => {
           <button
             type="submit"
             className="new-service__button"
+            onClick={handleSubmit}
           >
             Je propose
           </button>

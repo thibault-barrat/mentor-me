@@ -1,5 +1,5 @@
 import {
-  FETCH_SERVICES, ADD_SERVICES, CHANGE_SERVICE_FIELD, CHANGE_LOCATION,
+  FETCH_SERVICES, ADD_SERVICES, CHANGE_SERVICE_FIELD, CHANGE_LOCATION, SUBMIT_SERVICE_SUCCESS,
 } from '../actions/service';
 
 export const initialState = {
@@ -64,6 +64,22 @@ const reducer = (state = initialState, action = {}) => {
         new: {
           ...state.new,
           location: action.location,
+        },
+      };
+    }
+    case SUBMIT_SERVICE_SUCCESS: {
+      return {
+        ...state,
+        items: [...state.items],
+        new: {
+          ...state.new,
+          category: '',
+          title: '',
+          duration: '',
+          irl: false,
+          online: false,
+          description: '',
+          location: {},
         },
       };
     }

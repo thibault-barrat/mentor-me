@@ -2,6 +2,16 @@ export const FETCH_SERVICES = 'FETCH_SERVICES';
 export const ADD_SERVICES = 'ADD_SERVICES';
 export const CHANGE_SERVICE_FIELD = 'CHANGE_SERVICE_FIELD';
 export const CHANGE_LOCATION = 'CHANGE_LOCATION';
+export const SUBMIT_SERVICE = 'SUBMIT_SERVICE';
+export const SUBMIT_SERVICE_SUCCESS = 'SUBMIT_SERVICE_SUCCESS';
+
+export const submitServiceSuccess = () => ({
+  type: SUBMIT_SERVICE_SUCCESS,
+});
+
+export const submitService = () => ({
+  type: SUBMIT_SERVICE,
+});
 
 export const changeLocation = (location) => ({
   type: CHANGE_LOCATION,
