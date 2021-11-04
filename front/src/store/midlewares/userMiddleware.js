@@ -151,36 +151,19 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       const form = new FormData();
       form.append('avatar', uploadedImage);
-      const options = {
-        method: 'PATCH',
-        url: `https://api-mentorme.herokuapp.com/v1/user/${id}/avatar`,
-        headers: headers.headers,
-        data: form,
-      };
 
-      axios.request(options).then(() => {
-        store.dispatch(getUserDetails());
-      }).catch((error) => {
-        console.error(error);
-      });
-      // const sendImage = async () => {
-      //   try {
-      //     await axios.patch(`https://api-mentorme.herokuapp.com/v1/user/${id}/avatar`, {
-      //       data: [data],
-      //     }, {
-      //       headers: {
-      //         'Content-Type': 'multipart/form-data',
-      //       },
-      //     });
-      //     // after sending the image we need to do a new get request
-      //     // to obtain the new url of avatar on cloudinary
-      //     store.dispatch(getUserDetails());
-      //   }
-      //   catch (error) {
-      //     console.log(error);
-      //   }
-      // };
-      // sendImage();
+      const sendImage = async () => {
+        try {
+          await axios.patch(`https://api-mentorme.herokuapp.com/v1/user/${id}/avatar`, form, headers);
+          // after sending the image we need to do a new get request
+          // to obtain the new url of avatar on cloudinary
+          store.dispatch(getUserDetails());
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+      sendImage();
       break;
     }
     default:
