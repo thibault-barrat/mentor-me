@@ -1,16 +1,21 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './style.scss';
 import { Link } from 'react-router-dom';
 import Field from '../../components/Field';
-import { changeProfileField, saveProfile } from '../../actions/user';
+import {
+  changeProfileField,
+  saveProfile,
+  saveImage,
+  sendImage,
+} from '../../actions/user';
 
 export default function profil() {
   // TODO Ajouter loader pendant la reqête POST
 
   // We take the details user info from the state
   const {
-    email, firstname, lastname, bio, phone, fix, avatar,
+    email, firstname, lastname, bio, phone, fix, avatar, uploadedImage,
   } = useSelector((state) => state.user.details);
 
   // We also need to know the services and the user id to find the services proposed by the user
@@ -32,6 +37,9 @@ export default function profil() {
   // When this is false, we can not validate the new data
   const [validEmail, setValidEmail] = useState(true);
 
+  // Variable validImage to know if the uploaded avatar is not too big
+  const [validImage, setValidImage] = useState(true);
+
   // function to verify that the email matches the regex rule
   const checkEmail = (event) => {
     if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(event.target.value)) {
@@ -42,10 +50,36 @@ export default function profil() {
 
   const dispatch = useDispatch();
 
+  // function to handle new avatar image upload
+  const handleImageUpload = (event) => {
+    const file = event.target.files;
+    if (file) {
+      if (file[0].size > 500000) {
+        setValidImage(false);
+      }
+      else {
+        setValidImage(true);
+        // if image is valid, we dispatch an action to put image in state
+        dispatch(saveImage(file[0]));
+      }
+    }
+  };
+
+  // when uploadedImage is modified in state, we dispatch an action to do the patch request
+  useEffect(() => {
+    // we check that uploaded image is not null before to send it
+    if (uploadedImage !== null) {
+      dispatch(sendImage());
+    }
+  }, [uploadedImage]);
+
+  // function to handle the change value in input controlled fields
   const handleChange = (value, name) => {
     dispatch(changeProfileField(value, name));
   };
 
+  // function to handle submission of new profile data
+  // we need to check that email is valid before submission
   const handleSubmit = () => {
     if (validEmail) {
       setReadOnly(!readOnly);
@@ -78,11 +112,18 @@ export default function profil() {
         <div className="profil__container-avatar">
           <img src={avatar} alt="Avatar du profil" className="profil__avatar" />
           <form>
+            {!validImage && <span className="profil__error">La taille de l'image doit être inférieure à 500Ko</span>}
             <label htmlFor="avatar" className="profil__label-avatar">
               <span className="connect-button-p">Modifier l'avatar</span>
-              <input id="avatar" type="file" accept="image/png, image/jpeg" className="profil__input-avatar" />
+              <input
+                id="avatar"
+                type="file"
+                accept="image/png, image/jpeg"
+                className="profil__input-avatar"
+                onChange={handleImageUpload}
+              />
             </label>
-            <button type="submit" className="connect-button-p">Valider</button>
+            {/* <button type="submit" className="connect-button-p">Valider</button> */}
           </form>
         </div>
 

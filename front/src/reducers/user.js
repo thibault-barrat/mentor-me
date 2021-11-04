@@ -10,6 +10,7 @@ import {
   CHANGE_PROFILE_FIELD,
   SAVE_PROFILE,
   SAVE_PROFILE_SUCCESS,
+  SAVE_IMAGE,
 } from '../actions/user';
 
 export const initialState = {
@@ -40,6 +41,7 @@ export const initialState = {
     phone: '',
     fix: '',
     avatar: 'https://i.imgur.com/Z9fVYeP.png',
+    uploadedImage: null,
   },
   likedServices: [],
 };
@@ -195,6 +197,7 @@ const reducer = (state = initialState, action = {}) => {
           phone: action.phone,
           fix: action.fix,
           avatar: action.avatar,
+          uploadedImage: null,
         },
         register: {
           ...state.register,
@@ -252,6 +255,24 @@ const reducer = (state = initialState, action = {}) => {
         details: {
           ...state.details,
           loading: false,
+        },
+        errors: {
+          ...state.errors,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
+      };
+    }
+    case SAVE_IMAGE: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+        },
+        details: {
+          ...state.details,
+          uploadedImage: action.image,
         },
         errors: {
           ...state.errors,

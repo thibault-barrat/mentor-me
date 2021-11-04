@@ -1,6 +1,6 @@
 /* eslint-disable object-curly-newline */
 import axios from 'axios';
-import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE } from '../../actions/user';
+import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE, SEND_IMAGE } from '../../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -96,7 +96,7 @@ const userMiddleware = (store) => (next) => (action) => {
         { id, details: { email, firstname, lastname, bio, phone, fix } } } = store.getState();
       const saveProfile = async () => {
         try {
-          await axios.post(`https://api-mentorme.herokuapp.com/v1/user/${id}`, {
+          await axios.patch(`https://api-mentorme.herokuapp.com/v1/user/${id}`, {
             email,
             firstname,
             lastname,
@@ -114,6 +114,47 @@ const userMiddleware = (store) => (next) => (action) => {
       };
       saveProfile();
       next(action);
+      break;
+    }
+    case SEND_IMAGE: {
+      const { user:
+        { id, details: { uploadedImage } } } = store.getState();
+      const form = new FormData();
+      form.append('avatar', '/Users/thibault/Documents/Projets dev/oclock/apotheose/projet-06-mentor-me/front/src/assets/images/business-gfb594ee9b_1280.jpg');
+      console.log('uploadedImage', uploadedImage);
+      console.log('data', form.values().next());
+      const options = {
+        method: 'PATCH',
+        url: `https://api-mentorme.herokuapp.com/v1/user/${id}/avatar`,
+        headers: {
+          'Content-Type': 'multipart/form-data; boundary=---011000010111000001101001',
+        },
+        data: '[form]',
+      };
+
+      axios.request(options).then((response) => {
+        console.log(response.data);
+      }).catch((error) => {
+        console.error(error);
+      });
+      // const sendImage = async () => {
+      //   try {
+      //     await axios.patch(`https://api-mentorme.herokuapp.com/v1/user/${id}/avatar`, {
+      //       data: [data],
+      //     }, {
+      //       headers: {
+      //         'Content-Type': 'multipart/form-data',
+      //       },
+      //     });
+      //     // after sending the image we need to do a new get request
+      //     // to obtain the new url of avatar on cloudinary
+      //     store.dispatch(getUserDetails());
+      //   }
+      //   catch (error) {
+      //     console.log(error);
+      //   }
+      // };
+      // sendImage();
       break;
     }
     default:

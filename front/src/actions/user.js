@@ -11,6 +11,8 @@ export const SAVE_USER_DETAILS = 'SAVE_USER_DETAILS';
 export const CHANGE_PROFILE_FIELD = 'CHANGE_PROFILE_FIELD';
 export const SAVE_PROFILE = 'SAVE_PROFILE';
 export const SAVE_PROFILE_SUCCESS = 'SAVE_PROFILE_SUCCESS';
+export const SAVE_IMAGE = 'SAVE_IMAGE';
+export const SEND_IMAGE = 'SEND_IMAGE';
 
 export const changeLoginField = (value, name) => ({
   type: CHANGE_LOGIN_FIELD,
@@ -81,4 +83,13 @@ export const saveProfile = () => ({
 
 export const saveProfileSuccess = () => ({
   type: SAVE_PROFILE_SUCCESS,
+});
+
+export const saveImage = (image) => ({
+  type: SAVE_IMAGE,
+  image,
+});
+
+export const sendImage = () => ({
+  type: SEND_IMAGE,
 });
