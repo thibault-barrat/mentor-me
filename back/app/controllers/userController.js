@@ -219,9 +219,11 @@ const userController = {
       if (user.checkEmail && user.checkPassword) {
         const newAccessToken = generateAccessToken({
           role: user.userByEmail[0].role_name,
+          user_id: user.userByEmail[0].id,
         });
         const newRefreshToken = generateRefreshToken({
           role: user.userByEmail[0].role_name,
+          user_id: user.userByEmail[0].id,
         });
         const refreshToken = new RefreshToken();
         await refreshToken.insertRefreshToken(newRefreshToken);

@@ -2,7 +2,7 @@ const RefreshToken = require("../models/RefreshToken");
 const {
   generateAccessToken,
   generateRefreshToken,
-  decodedToken,
+  decodedRefreshToken,
 } = require("../../utils/jwt");
 
 const tokenController = {
@@ -26,8 +26,8 @@ const tokenController = {
     }
     // si refreshToken est dans tokenArr, on le supprime de la bdd et on crée un nouveau accessToken et un nouveau refreshToken
     await token.deleteRefreshToken(req.body.refreshToken);
-    // le decodedToken sert à décoder l'ancien token pour récupérer le rôle de l'utilisateur connecté
-    const userRole = decodedToken(req.body.refreshToken).role;
+    // le decodedRefreshToken sert à décoder l'ancien token pour récupérer le rôle de l'utilisateur connecté
+    const userRole = decodedRefreshToken(req.body.refreshToken).role;
 
     const newAccessToken = generateAccessToken({
       role: userRole,

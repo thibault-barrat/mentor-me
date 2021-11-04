@@ -5,16 +5,22 @@ function generateAccessToken(user) {
 }
 
 function generateRefreshToken(user) {
-  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {
+  return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: "20m",
   });
-
-  return refreshToken;
 }
 
-function decodedToken(token) {
-  const verifiedToken = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
-  return verifiedToken;
+function decodedRefreshToken(token) {
+  return jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
 }
 
-module.exports = { generateAccessToken, generateRefreshToken, decodedToken };
+function decodedAccessToken(token) {
+  return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+}
+
+module.exports = {
+  generateAccessToken,
+  generateRefreshToken,
+  decodedRefreshToken,
+  decodedAccessToken,
+};
