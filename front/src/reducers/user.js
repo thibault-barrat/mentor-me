@@ -55,7 +55,6 @@ const reducer = (state = initialState, action = {}) => {
           password: false,
         },
         logged: action.connected,
-        role: action.role,
         id: action.id,
       };
     }

@@ -26,15 +26,16 @@ const userMiddleware = (store) => (next) => (action) => {
           store.dispatch(saveUser(response.data));
         }
         catch (error) {
-          if (error.response.data.errorMessage === 'This user does not exist!') {
-            store.dispatch(createMailError());
-          }
-          else if (error.response.data.errorMessage === 'Wrong password!') {
-            store.dispatch(createPasswordError());
-          }
-          else {
-            console.log(error);
-          }
+          // if (error.response.data.errorMessage === 'This user does not exist!') {
+          //   store.dispatch(createMailError());
+          // }
+          // else if (error.response.data.errorMessage === 'Wrong password!') {
+          //   store.dispatch(createPasswordError());
+          // }
+          // else {
+          //   console.log(error);
+          // }
+          console.log(error);
         }
       };
 

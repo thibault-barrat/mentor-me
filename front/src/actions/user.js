@@ -25,11 +25,11 @@ export const createPasswordError = () => ({
   type: CREATE_PASSWORD_ERROR,
 });
 
-export const saveUser = ({ connected, user: { role, id } }) => ({
+// eslint-disable-next-line camelcase
+export const saveUser = ({ connected, user_id }) => ({
   type: SAVE_USER,
   connected,
-  role,
-  id,
+  id: user_id,
 });
 
 export const changeRegisterField = (value, name) => ({
