@@ -1,9 +1,17 @@
+//Npm import
 import PropTypes from 'prop-types';
 
+//Style
 import './style.scss';
 
 export default function Field({
-  name, placeholder, value, onChange, required, type, onBlur,
+  name, 
+  placeholder, 
+  value, 
+  onChange, 
+  required, 
+  type, 
+  onBlur,
 }) {
   const handleChange = (evt) => {
     onChange(evt.target.value, name);
@@ -31,11 +39,13 @@ export default function Field({
   );
 }
 
+//Default Prop
 Field.defaultProps = {
   required: false,
   onBlur: () => {},
 };
 
+//Prop validation
 Field.propTypes = {
   placeholder: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

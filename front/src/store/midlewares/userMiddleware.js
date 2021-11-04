@@ -1,6 +1,6 @@
 /* eslint-disable object-curly-newline */
 import axios from 'axios';
-import { saveUser, submitNewUserSuccess, SUBMIT_LOGIN, SUBMIT_NEW_USER } from '../../actions/user';
+import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, SUBMIT_LOGIN, SUBMIT_NEW_USER } from '../../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -11,24 +11,30 @@ const userMiddleware = (store) => (next) => (action) => {
       // on peut destructurer directement le state retourné par le store
       const {
         user: {
-          email, password, id, token,
+          email, password,
         },
       } = store.getState();
 
       const submitLogin = async () => {
         try {
-          const response = await axios.post('http://localhost:3000/login', {
+          const response = await axios.post('https://api-mentorme.herokuapp.com/v1/login', {
             email,
             password,
-            id,
-            token,
           });
           // une fois qu'on a la réponse, on peut venir stocker les infos du user
           // dans le state => modifier le state => dispatch d'action
           store.dispatch(saveUser(response.data));
         }
         catch (error) {
-          console.log(error);
+          if (error.response.data.errorMessage === 'This user does not exist!') {
+            store.dispatch(createMailError());
+          }
+          else if (error.response.data.errorMessage === 'Wrong password!') {
+            store.dispatch(createPasswordError());
+          }
+          else {
+            console.log(error);
+          }
         }
       };
 
@@ -45,7 +51,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
       const submitNewUser = async () => {
         try {
-          const response = await axios.post('https://api-mentorme.herokuapp.com/v1/register', {
+          await axios.post('https://api-mentorme.herokuapp.com/v1/register', {
             email,
             password,
             firstname,
