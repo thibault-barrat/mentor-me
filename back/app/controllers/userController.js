@@ -7,6 +7,8 @@ const {
   generateAccessToken,
   generateRefreshToken,
 } = require("../../utils/jwt");
+const sharp = require("sharp");
+const { Readable } = require("readable-stream");
 
 const userController = {
   /**
@@ -42,7 +44,7 @@ const userController = {
           .send({ errorMessage: "This user does not exist" });
       }
       // on renvoie le json du user
-      res.status(200).send(user.userById);
+      res.status(200).send(user.userById[0]);
     } catch (err) {
       res.status(500).send(err);
     }
@@ -258,9 +260,19 @@ const userController = {
       // on récupère l'image envoyée par le user et on la stocke dans le dossier temporaire
       const avatar = req.files.avatar.tempFilePath;
 
-      // on l'envoie ensuite dans cloudinary
-      cloudinary.uploader.upload(
-        avatar,
+      const bufferToStream = (buffer) => {
+        const readable = new Readable({
+          read() {
+            this.push(buffer);
+            this.push(null);
+          },
+        });
+        return readable;
+      };
+
+      const data = await sharp(avatar).resize(300, 300).toBuffer();
+
+      const stream = await cloudinary.uploader.upload_stream(
         { public_id: `mentorme_${id}`, tags: "MentorMe", folder: "avatars" },
         async (err, result) => {
           if (err) {
@@ -270,15 +282,13 @@ const userController = {
             });
           }
           if (result) {
-            fs.unlink(
-              `${__dirname}/../../tmp/${result.original_filename}`,
-              (err) => {
-                if (err) {
-                  console.error(err);
-                  return;
-                }
+            fs.unlink(avatar, (err) => {
+              if (err) {
+                console.error(err);
+                return;
               }
-            );
+            });
+
             const url = result.secure_url;
             const user = new User();
             await user.modifyAvatar(id, url);
@@ -287,7 +297,7 @@ const userController = {
         }
       );
 
-      // res.status(200).send({ message: "Avatar modified" });
+      bufferToStream(data).pipe(stream);
     } catch (err) {
       res.status(500).send(err);
     }
