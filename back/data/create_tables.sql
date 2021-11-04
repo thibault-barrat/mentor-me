@@ -6,7 +6,8 @@ DROP TABLE IF EXISTS "users",
 "category",
 "location",
 "user_likes_service",
-"role";
+"role",
+"refreshTokens";
 -- Création de la table user
 CREATE TABLE "users" (
   id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -69,6 +70,11 @@ CREATE TABLE "role" (
   name TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+--Création d'une table token
+CREATE TABLE "refreshtokens" (
+  id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  refreshtoken TEXT NOT NULL UNIQUE
 );
 --Ajout du type FOREIGN KEYS aux clés étrangères
 ALTER TABLE

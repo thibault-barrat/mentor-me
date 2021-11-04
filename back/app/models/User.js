@@ -102,7 +102,7 @@ module.exports = class User {
 
     const query = {
       //TODO RETURNING
-      text: `INSERT INTO users ("firstname","lastname","email","password","role_id") VALUES ($1, $2, $3, $4, $5)`,
+      text: `INSERT INTO users ("firstname","lastname","email","password","role_id") VALUES ($1, $2, $3, $4, $5) RETURNING *`,
       values: [this.firstname, this.lastname, this.email, hashedPassword, 1],
     };
 

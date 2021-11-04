@@ -1,7 +1,12 @@
 const User = require("../models/User");
+const RefreshToken = require("../models/RefreshToken");
 const cloudinary = require("../cloudinary");
 // fs est un module natif à node (pas besoin de npm i)
 const fs = require("fs");
+const {
+  generateAccessToken,
+  generateRefreshToken,
+} = require("../../utils/jwt");
 const sharp = require("sharp");
 const { Readable } = require("readable-stream");
 
@@ -124,10 +129,6 @@ const userController = {
           .status(406)
           .send({ errorMessage: `Mobile phone is not a number!` });
       }
-      // si l'id du user ne correspond pas à l'id du user connecté, il ne peut pas modifier les données du profil ! n admin le peut
-      if (req.session.user.role !== "admin" && req.session.user.id !== +id) {
-        return res.status(401).send({ errorMessage: `Unauthorized!` });
-      }
 
       const user = new User(req.body);
       await user.modifyOne(+id);
@@ -155,10 +156,6 @@ const userController = {
           .status(404)
           .send({ errorMessage: "This user does not exist!" });
       }
-      // si l'id du user ne correspond pas à l'id du user connecté, il ne peut pas supprimer le profil d'un autre user ! Un admin le peut
-      if (req.session.user.role !== "admin" && req.session.user.id !== +id) {
-        return res.status(401).send({ errorMessage: `Unauthorized!` });
-      }
       // quand on supprime le user, on souhaite supprimer son avatar sur cloudinary aussi!
       // on récupère le nom de l'avatar dans cloudinary à partir de avatar_url (on split le string contenant l'url)
       const avatarSplitUrl = user.userById[0].avatar_url.split("/");
@@ -178,7 +175,9 @@ const userController = {
       );
       await user.deleteOne(+id);
       // quand on supprime, on déconnecte le user
-      req.session.destroy();
+      const refreshToken = req.body.token || req.query.token;
+      const token = new RefreshToken();
+      await token.deleteRefreshToken(refreshToken);
       // on mentionne que la suppression a bien eu lieu
       res.status(200).send({ deletedUser: true });
     } catch (err) {
@@ -202,7 +201,7 @@ const userController = {
       if (!user.checkEmail) {
         // un user a déjà été inscrit avec cette adresse mail, on retourne une erreur 409 : Conflict
         return res
-          .status(409)
+          .status(404)
           .send({ errorMessage: "This user does not exist!" });
       }
 
@@ -214,13 +213,23 @@ const userController = {
         return res.status(400).send({ errorMessage: "Wrong password!" });
       }
       if (user.checkEmail && user.checkPassword) {
-        // si email existe et le mdp est correct, OK
-        req.session.user = {
-          email: user.email,
-          role: user.role_name,
-          id: user.id,
-        };
-        res.status(200).send({ connected: true, user: req.session.user });
+        const newAccessToken = generateAccessToken({
+          role: user.userByEmail[0].role_name,
+          user_id: user.userByEmail[0].id,
+        });
+        const newRefreshToken = generateRefreshToken({
+          role: user.userByEmail[0].role_name,
+          user_id: user.userByEmail[0].id,
+        });
+        const refreshToken = new RefreshToken();
+        await refreshToken.insertRefreshToken(newRefreshToken);
+
+        res.status(200).send({
+          connected: true,
+          user_id: user.userByEmail[0].id,
+          accessToken: newAccessToken,
+          refreshToken: newRefreshToken,
+        });
       }
     } catch (err) {
       res.status(500).send(err);
@@ -232,8 +241,10 @@ const userController = {
    * @param  {Object} req
    * @param  {Object} res
    */
-  disconnectUser: (req, res) => {
-    req.session.destroy();
+  disconnectUser: async (req, res) => {
+    const refreshToken = req.body.token || req.query.token;
+    const token = new RefreshToken();
+    await token.deleteRefreshToken(refreshToken);
     res.status(200).send({ connected: false });
   },
 
@@ -245,11 +256,6 @@ const userController = {
   modifyUserAvatar: async (req, res) => {
     try {
       const { id } = req.params;
-
-      // si l'id du user ne correspond pas à l'id du user connecté, il ne peut pas modifier les données du profil ! n admin le peut
-      if (req.session.user.role !== "admin" && req.session.user.id !== +id) {
-        return res.status(401).send({ errorMessage: `Unauthorized!` });
-      }
 
       // on récupère l'image envoyée par le user et on la stocke dans le dossier temporaire
       const avatar = req.files.avatar.tempFilePath;

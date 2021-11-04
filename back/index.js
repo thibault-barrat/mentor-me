@@ -1,9 +1,6 @@
-require("dotenv").config({
-  path: "./.env",
-});
+require("dotenv").config({ path: "./.env" });
 const express = require("express");
 const cors = require("cors");
-const session = require("express-session");
 const fileUpload = require("express-fileupload");
 const app = express();
 
@@ -50,22 +47,6 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
-
-// config session
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    proxy: true,
-    cookie: {
-      secure: false,
-      sameSite: "none",
-      httpOnly: true,
-      maxAge: 60 * 24 * 60 * 60 * 1000,
-    },
-  })
-);
 
 app.use("/v1", require("./app/router"));
 
