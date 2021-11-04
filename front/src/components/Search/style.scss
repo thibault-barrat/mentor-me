@@ -30,11 +30,11 @@
     }
   }
   &-button{
-    width: 70%;
+    width: 180px;
     border-radius: 9px;
     border: none;
     padding: calc(vars.$gutter/2);
-    font-size: calc(vars.$gutter*1.5);
+    font-size: calc(vars.$gutter*1.25);
     color: white;
     background-color: #f0613c;
     transition: .3s;
