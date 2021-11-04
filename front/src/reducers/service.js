@@ -1,4 +1,6 @@
-import { FETCH_SERVICES, ADD_SERVICES, CHANGE_SERVICE_FIELD } from '../actions/service';
+import {
+  FETCH_SERVICES, ADD_SERVICES, CHANGE_SERVICE_FIELD, CHANGE_LOCATION,
+} from '../actions/service';
 
 export const initialState = {
   items: [],
@@ -10,7 +12,7 @@ export const initialState = {
     irl: false,
     online: false,
     description: '',
-    location: null,
+    location: {},
   },
 };
 
@@ -23,6 +25,9 @@ const reducer = (state = initialState, action = {}) => {
         loading: true,
         new: {
           ...state.new,
+          location: {
+            ...state.new.location,
+          },
         },
       };
     }
@@ -33,6 +38,9 @@ const reducer = (state = initialState, action = {}) => {
         loading: false,
         new: {
           ...state.new,
+          location: {
+            ...state.new.location,
+          },
         },
       };
     }
@@ -43,6 +51,19 @@ const reducer = (state = initialState, action = {}) => {
         new: {
           ...state.new,
           [action.name]: action.value,
+          location: {
+            ...state.new.location,
+          },
+        },
+      };
+    }
+    case CHANGE_LOCATION: {
+      return {
+        ...state,
+        items: [...state.items],
+        new: {
+          ...state.new,
+          location: action.location,
         },
       };
     }

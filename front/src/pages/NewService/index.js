@@ -1,5 +1,4 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
 import Field from 'src/components/Field';
 import Location from 'src/components/Location';
 import './style.scss';
@@ -8,13 +7,12 @@ import L from 'leaflet';
 import {
   MapContainer,
   TileLayer,
-  Marker,
-  Popup,
 } from 'react-leaflet';
 // import of leaflet marker icons
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
+import NewServiceMarker from 'src/components/NewServiceMarker';
 import { changeServiceField } from '../../actions/service';
 
 const NewService = () => {
@@ -122,13 +120,14 @@ const NewService = () => {
               onChange={(event) => handleChange(event.target.value, event.target.name)}
             />
           </label>
-          <span className="new-service__label">Localisation</span>
+          <span className="new-service__label">Localisation (cliquez sur la carte là où vous souhaitez localiser votre service)</span>
           <MapContainer center={[48.856614, 2.3522219]} zoom={13} scrollWheelZoom className="new-service__map">
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <Location />
+            <NewServiceMarker />
           </MapContainer>
           <button
             type="submit"
