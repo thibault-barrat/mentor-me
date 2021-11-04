@@ -21,22 +21,23 @@ const userMiddleware = (store) => (next) => (action) => {
             email,
             password,
           });
+          // we save the accessToken in the local storage
+          localStorage.setItem('token', response.data.accessToken);
           // une fois qu'on a la réponse, on peut venir stocker les infos du user
           // dans le state => modifier le state => dispatch d'action
           await store.dispatch(saveUser(response.data));
           store.dispatch(getUserDetails());
         }
         catch (error) {
-          // if (error.response.data.errorMessage === 'This user does not exist!') {
-          //   store.dispatch(createMailError());
-          // }
-          // else if (error.response.data.errorMessage === 'Wrong password!') {
-          //   store.dispatch(createPasswordError());
-          // }
-          // else {
-          //   console.log(error);
-          // }
-          console.log(error);
+          if (error.response.data.errorMessage === 'This user does not exist!') {
+            store.dispatch(createMailError());
+          }
+          else if (error.response.data.errorMessage === 'Wrong password!') {
+            store.dispatch(createPasswordError());
+          }
+          else {
+            console.log(error);
+          }
         }
       };
 
@@ -74,15 +75,20 @@ const userMiddleware = (store) => (next) => (action) => {
     }
     case GET_USER_DETAILS: {
       const { user: { id } } = store.getState();
-
+      // we look for the token in local storage
+      const token = localStorage.getItem('token');
+      // we create headers of the request
+      let headers = {};
+      if (token) {
+        headers = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      }
       const getUser = async () => {
         try {
-          const response = await axios.get(`https://api-mentorme.herokuapp.com/v1/user/${id}`, {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            withCredentials: true,
-          });
+          const response = await axios.get(`https://api-mentorme.herokuapp.com/v1/user/${id}`, headers);
           store.dispatch(saveUserDetails(response.data));
         }
         catch (error) {
@@ -95,6 +101,17 @@ const userMiddleware = (store) => (next) => (action) => {
     case SAVE_PROFILE: {
       const { user:
         { id, details: { email, firstname, lastname, bio, phone, fix } } } = store.getState();
+      // we look for the token in local storage
+      const token = localStorage.getItem('token');
+      // we create headers of the request
+      let headers = {};
+      if (token) {
+        headers = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      }
       const saveProfile = async () => {
         try {
           await axios.patch(`https://api-mentorme.herokuapp.com/v1/user/${id}`, {
@@ -104,7 +121,7 @@ const userMiddleware = (store) => (next) => (action) => {
             biography: bio,
             home_phone: fix,
             mobile_phone: phone,
-          });
+          }, headers);
           // une fois qu'on a la réponse, on peut venir stocker les infos du user
           // dans le state => modifier le state => dispatch d'action
           store.dispatch(saveProfileSuccess());
@@ -120,21 +137,29 @@ const userMiddleware = (store) => (next) => (action) => {
     case SEND_IMAGE: {
       const { user:
         { id, details: { uploadedImage } } } = store.getState();
+      // we look for the token in local storage
+      const token = localStorage.getItem('token');
+      // we create headers of the request
+      let headers = {};
+      if (token) {
+        headers = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        };
+      }
       const form = new FormData();
-      form.append('avatar', '/Users/thibault/Documents/Projets dev/oclock/apotheose/projet-06-mentor-me/front/src/assets/images/business-gfb594ee9b_1280.jpg');
-      console.log('uploadedImage', uploadedImage);
-      console.log('data', form.values().next());
+      form.append('avatar', uploadedImage);
       const options = {
         method: 'PATCH',
         url: `https://api-mentorme.herokuapp.com/v1/user/${id}/avatar`,
-        headers: {
-          'Content-Type': 'multipart/form-data; boundary=---011000010111000001101001',
-        },
-        data: '[form]',
+        headers: headers.headers,
+        data: form,
       };
 
-      axios.request(options).then((response) => {
-        console.log(response.data);
+      axios.request(options).then(() => {
+        store.dispatch(getUserDetails());
       }).catch((error) => {
         console.error(error);
       });
