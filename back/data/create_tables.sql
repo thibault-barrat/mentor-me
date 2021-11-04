@@ -28,7 +28,7 @@ CREATE TABLE "users" (
 CREATE TABLE "service" (
   id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   title TEXT NOT NULL,
-  duration interval NOT NULL,
+  duration INT NOT NULL,
   description text NOT NULL,
   online BOOLEAN NOT NULL DEFAULT FALSE,
   irl BOOLEAN NOT NULL DEFAULT FALSE,
