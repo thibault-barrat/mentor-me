@@ -3,7 +3,12 @@ const { Router } = require("express");
 // import des controllers
 const userController = require("./controllers/userController");
 // import des middlewares
-const { verifyToken } = require("./middlewares/auth");
+const {
+  verifyToken,
+  isAdmin,
+  verifyUserById,
+  verifyRefreshToken,
+} = require("./middlewares/auth");
 
 const categoryController = require("./controllers/categoryController");
 
@@ -16,17 +21,32 @@ const router = Router();
 
 /* Category */
 router.get("/allCategories", categoryController.getAllCategorizz); // Route pour toutes les catégories
-router.get("/category/:id(\\d+)", categoryController.getOneCategory); // Route pour un ID de catégorie
+router.get(
+  "/category/:id(\\d+)",
+  verifyToken,
+  categoryController.getOneCategory
+); // Route pour un ID de catégorie
 router.delete(
   "/category/:id(\\d+)",
-
+  verifyToken,
+  isAdmin,
   categoryController.deleteOneCategory
 ); // Route pour suppirmer une catégorie
-router.post("/category", categoryController.createOneCategory); // Route pour ajouter une catégorie
-router.patch("/category/:id(\\d+)", categoryController.modifyCategory); // Route pour modifier une catégorie
+router.post(
+  "/category",
+  verifyToken,
+  isAdmin,
+  categoryController.createOneCategory
+); // Route pour ajouter une catégorie
+router.patch(
+  "/category/:id(\\d+)",
+  verifyToken,
+  isAdmin,
+  categoryController.modifyCategory
+); // Route pour modifier une catégorie
 router.get(
   "/category/:id(\\d+)/services",
-
+  verifyToken,
   categoryController.getAllServicebyCategoryId
 ); // Route pour avoir tous les services d'une catégorie
 
@@ -52,40 +72,64 @@ router.post("/login", userController.connectUser);
  * Déconnecter un user
  * @route get /logout
  */
-router.post("/logout", userController.disconnectUser);
+router.post("/logout", verifyRefreshToken, userController.disconnectUser);
 
 /**
  * Récupérer tous les users
  * @route GET /allUsers
  */
-router.get("/allUsers", verifyToken, userController.getAllUsers);
+router.get("/allUsers", verifyToken, isAdmin, userController.getAllUsers);
 
 /**
  * Récupérer un user par son id
  * @route GET /user/:id
  */
-router.get("/user/:id(\\d+)", userController.getOneUser);
+router.get(
+  "/user/:id(\\d+)",
+  verifyToken,
+  verifyUserById,
+  userController.getOneUser
+);
 
 /**
  * Modifier le profil d'un user
  * @route PATCH /user/:id
  */
-router.patch("/user/:id(\\d+)", userController.modifyUserProfile);
+router.patch(
+  "/user/:id(\\d+)",
+  verifyToken,
+  verifyUserById,
+  userController.modifyUserProfile
+);
 /**
  * Modifier l'avatar d'un user
  * @route PATCH /user/:id/avatar
  */
-router.patch("/user/:id(\\d+)/avatar", userController.modifyUserAvatar);
+router.patch(
+  "/user/:id(\\d+)/avatar",
+  verifyToken,
+  verifyUserById,
+  userController.modifyUserAvatar
+);
 
 /**
  * Supprimer un user par son id
  * @route DELETE /user/:id
  */
-router.delete("/user/:id(\\d+)", userController.deleteOneUser);
+router.delete(
+  "/user/:id(\\d+)",
+  verifyRefreshToken,
+  verifyUserById,
+  userController.deleteOneUser
+);
 
 /**
  * Refresh token
  */
-router.post("/refreshToken", tokenController.verifyRefreshToken);
+router.post(
+  "/refreshToken",
+  verifyRefreshToken,
+  tokenController.verifyRefreshToken
+);
 
 module.exports = router;
