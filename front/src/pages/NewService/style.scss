@@ -101,4 +101,9 @@
 			background-color: lighten($color: rgb(255, 112, 87), $amount: 10%);
 		}
 	}
+	&__map {
+		width: 75%;
+		height: 400px;
+    margin-bottom: calc(vars.$gutter * 3);
+	}
 }
