@@ -28,14 +28,14 @@ function App() {
   // At the first render of App, we fetch categories and services
   // we checked if there is a token in localStorage
   // if there is, we set the user as logged
-  // useEffect(() => {
-  //   dispatch(fetchCategories());
-  //   dispatch(fetchServices());
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     dispatch({ type: 'SET_LOGGED', payload: true });
-  //   }
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchCategories());
+    dispatch(fetchServices());
+    // const token = localStorage.getItem('token');
+    // if (token) {
+    //   dispatch({ type: 'SET_LOGGED', payload: true });
+    // }
+  }, []);
 
   return (
     <Router>
