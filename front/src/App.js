@@ -55,7 +55,7 @@ function App() {
             <Route path="/connexion" component={Connect} />
             <Route path="/profil" component={Profil} />
             <Route path="/categories" component={Categories} />
-            <Route path="/serviceid" component={serviceId} />
+            <Route path="/service/:id" component={serviceId} />
           </Switch>
         )}
       <Footer />
