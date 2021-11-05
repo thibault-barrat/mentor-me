@@ -89,12 +89,7 @@ router.get("/allUsers", verifyToken, isAdmin, userController.getAllUsers);
  * Récupérer un user par son id
  * @route GET /user/:id
  */
-router.get(
-  "/user/:id(\\d+)",
-  verifyToken,
-  verifyUserById,
-  userController.getOneUser
-);
+router.get("/user/:id(\\d+)", verifyToken, userController.getOneUser);
 
 /**
  * Modifier le profil d'un user
@@ -135,6 +130,26 @@ router.post(
   "/refreshToken",
   verifyRefreshToken,
   tokenController.verifyRefreshToken
+);
+
+/**
+ * Get all refresh tokens
+ */
+router.get(
+  "/refreshTokens",
+  verifyToken,
+  isAdmin,
+  tokenController.getAllRefreshTokens
+);
+
+/**
+ * Delete all refresh tokens
+ */
+router.delete(
+  "/refreshTokens",
+  verifyToken,
+  isAdmin,
+  tokenController.deleteAllRefreshTokens
 );
 
 module.exports = router;
