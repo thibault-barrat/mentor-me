@@ -54,15 +54,18 @@ const serviceController = {
 
             const service = new Service();
 
-            await service.findOne(+id);
+            if (req.session.user.role !== "admin" && req.session.user.id !== +id) {
+                return res.status(401).send({
+                    errorMessage: `Unauthorized!`
+                });
+            }
 
-            if (service.serviceById.length === 0) {
-                return res
-                    .status(404)
+            await service.findOne(+id)
+            res.status(404)
                     .send({
                         errorMessage: "This services does not exist"
                     });
-            }
+            
 
             await service.deleteOne(+id);
 
@@ -84,6 +87,12 @@ const serviceController = {
 
             const service = new Service(req.body);
 
+            if (req.session.user.role !== "admin" && req.session.user.id !== +id) {
+                return res.status(401).send({
+                    errorMessage: `Unauthorized!`
+                });
+            }
+
             await service.modifyOne(+id);
 
             res.status(200).send({
@@ -95,6 +104,7 @@ const serviceController = {
         }
     },
 
+    //Méthode pour creer un service
     createService: async (req, res) => {
 
         try {

@@ -45,6 +45,12 @@ const categoryController = {
             } = req.params;
             const category = new Category();
 
+            if (req.session.user.role !== "admin" && req.session.user.id !== +id) {
+                return res.status(401).send({
+                    errorMessage: `Unauthorized!`
+                });
+            }
+
             await category.findOne(+id);
 
             if (category.categoryById.length === 0) {
@@ -100,6 +106,12 @@ const categoryController = {
             const {
                 id
             } = req.params;
+
+            if (req.session.user.role !== "admin" && req.session.user.id !== +id) {
+                return res.status(401).send({
+                    errorMessage: `Unauthorized!`
+                });
+            }
 
             const category = new Category(req.body);
 
