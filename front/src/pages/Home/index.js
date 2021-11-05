@@ -97,7 +97,7 @@ const Home = () => {
             {servicesData.slice(-4).map((service) => (
               // We use ternary operator to transform the card to a link for logged user
               logged ? (
-                <Link key={service.id} to={`/services/${service.id}`} className="last-services__card">
+                <Link key={service.id} to={`/service/${service.id}`} className="last-services__card">
                   <img
                     className="last-services__card-image"
                     // Here we will use the image of the category of the service

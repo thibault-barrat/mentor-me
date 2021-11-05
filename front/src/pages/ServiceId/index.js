@@ -3,9 +3,10 @@ import {
   MapContainer, Marker, Popup, TileLayer, useMapEvents,
 } from 'react-leaflet';
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { useSelector } from 'react-redux';
+import { getServiceUser } from '../../actions/service';
 import avatarimg from '../../assets/images/business-gfb594ee9b_1280.jpg';
 import './style.scss';
 
@@ -13,6 +14,11 @@ export default function serviceId() {
   const services = useSelector((state) => state.services.items);
   const { id } = useParams();
   const foundService = services.find((service) => service.id === parseInt(id, 10));
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getServiceUser(id, foundService.user_id));
+  }, []);
 
   function LocationMarker() {
     const [position, setPosition] = useState(null);
@@ -43,7 +49,7 @@ export default function serviceId() {
             <h1 className="desc__item user__title">{foundService.title}</h1>
             <p className="desc__item">{foundService.description}</p>
             <span className="desc__item">{foundService.duration}</span>
-            <button className="connect-button" type="button"> Prendre contact</button>
+            <button className="connect-button" type="button"> {user.email}</button>
           </div>
         </div>
         <div className="leaflet__block">
