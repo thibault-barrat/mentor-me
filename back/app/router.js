@@ -2,10 +2,9 @@ const { Router } = require("express");
 
 // import des controllers
 const userController = require("./controllers/userController");
-
 const categoryController = require("./controllers/categoryController");
-
 const serviceController = require("./controllers/serviceController");
+const tokenController = require("./controllers/tokenController");
 
 // import des middlewares
 const {
@@ -14,11 +13,6 @@ const {
   verifyUserById,
   verifyRefreshToken,
 } = require("./middlewares/auth");
-
-const categoryController = require("./controllers/categoryController");
-
-const serviceController = require("./controllers/serviceController");
-const tokenController = require("./controllers/tokenController");
 
 const router = Router();
 
@@ -61,9 +55,6 @@ router.get("/service/:id(\\d+)", serviceController.getOneService); // Route pour
 router.delete("/service/:id(\\d+)", serviceController.deleteOneService); // Route pour supprimer un service
 router.patch("/service/:id(\\d+)", serviceController.modifyService); // Route pour modifier un service
 router.post("/service/", serviceController.createService); // Route pour creer un service
-
-
-
 
 router.post("/register", userController.createNewUser);
 
