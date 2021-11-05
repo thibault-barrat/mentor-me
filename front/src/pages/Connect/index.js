@@ -12,7 +12,7 @@ import './style.scss';
 
 export default function Connect() {
   //Here we get the initial state from the reducer with 'useSelector'
-  const { email, password, logged } = useSelector((state) => state.user);
+  const { email, password, logged, errors } = useSelector((state) => state.user);
 
   //We use dispatch to modify the state
   const dispatch = useDispatch();

@@ -1,7 +1,7 @@
 @use 'src/styles/vars';
 
 .category{
-  margin-bottom: calc(vars.$gutter*2);
+  margin-bottom: vars.$gutter;
 
   &-card{
     transition: .3s;
@@ -42,5 +42,18 @@
     top: 80%;
     width: 100%;
     z-index: 10;
+  }
+}
+
+@media (min-width: vars.$breakpoint-md){
+  .category{
+    &-container{
+      width: 280px; 
+      height: 280px;
+    }
+    &-image{
+      width: 280px; 
+      height: 280px;
+    }
   }
 }

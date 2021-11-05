@@ -1,5 +1,7 @@
+import { useState } from 'react';
+// import {FcLikePlaceholder, FcLike} from 'react-icons';
 
-//Style
+// Style
 import './style.scss';
 
 
@@ -9,8 +11,19 @@ export default function ServicesCard({
   description, 
   disponibility
 }) {
+  const [visio, setVisio] = useState(true);
+  const [presentiel, setPresentiel] = useState(true);
+
+  const classVisio = visio ? 'tag' : 'tag tag-unselected';
+  const classPresentiel = presentiel ? 'tag' : 'tag tag-unselected';
+
   return (
     <li className="card">
+      <header className="tags">
+        <div className="tag">Informatique</div>
+        <div className={classVisio}>Visio</div>
+        <div className={classPresentiel}>Présentiel</div>
+      </header>
       <div className="card-container">
         <div className="card-image-container">
           <img 
@@ -19,15 +32,17 @@ export default function ServicesCard({
             alt="Photo de profil"
           />
         </div>
-        <h2 className="card-title">
-          {title}
-        </h2>
-        <span className="card-name">
-          Nom du mentor
-        </span>
-        <span className="card-location">
-          Location
-        </span>
+        <div className="card-content-container">
+          <h2 className="card-title">
+            {title}
+          </h2>
+          <span className="card-name">
+            Nom du mentor
+          </span>
+          <span className="card-location">
+            Location
+          </span>
+        </div>
       </div>
     </li>
   );
