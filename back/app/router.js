@@ -84,12 +84,7 @@ router.get("/allUsers", verifyToken, isAdmin, userController.getAllUsers);
  * Récupérer un user par son id
  * @route GET /user/:id
  */
-router.get(
-  "/user/:id(\\d+)",
-  verifyToken,
-  verifyUserById,
-  userController.getOneUser
-);
+router.get("/user/:id(\\d+)", verifyToken, userController.getOneUser);
 
 /**
  * Modifier le profil d'un user

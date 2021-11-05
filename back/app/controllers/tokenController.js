@@ -54,7 +54,7 @@ const tokenController = {
    */
   async deleteAllRefreshTokens(req, res) {
     const token = new RefreshToken();
-    await token.deleteRefreshToken();
+    await token.deleteAllRefreshTokens();
     res.status(200).send({ deleted: true });
   },
 };
