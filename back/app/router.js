@@ -98,7 +98,6 @@ router.get("/allUsers", verifyToken, isAdmin, userController.getAllUsers);
 router.get(
   "/user/:id(\\d+)",
   verifyToken,
-  verifyUserById,
   userController.getOneUser
 );
 

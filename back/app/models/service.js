@@ -10,7 +10,7 @@ module.exports = class Service {
 
     async findAll() {
         const query = {
-            text: "SELECT * FROM service",
+            text: "SELECT * FROM service JOIN location ON location.id = service.location_id",
         };
 
         const data = await pool.query(query);
@@ -20,7 +20,7 @@ module.exports = class Service {
 
     async findOne(id) {
         const query = {
-            text: "SELECT * FROM service WHERE id=$1",
+            text: "SELECT * FROM service JOIN location ON location.id = service.location_id WHERE service.id=$1",
             values: [id],
         };
 
