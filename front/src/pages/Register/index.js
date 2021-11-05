@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable object-curly-newline */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable import/no-unresolved */
@@ -8,7 +9,6 @@ import { useHistory } from 'react-router-dom';
 import Loading from 'src/components/Loading';
 import { changeRegisterField, submitNewUser } from '../../actions/user';
 import './style.scss';
-// eslint-disable-next-line import/no-unresolved
 import DecImage from '/src/assets/images/business-gfb594ee9b_1280.jpg';
 import Field from '../../components/Field';
 
@@ -41,14 +41,14 @@ export default function Register() {
   const [validConfirmedPassword, setValidConfirmedPassword] = useState(true);
 
   const handleSubmit = (event) => {
-    console.log(`
+    /* console.log(`
       Email: ${email}
       Password: ${password}
       Firstname: ${firstname}
       LastName: ${lastname}
       Accepted Terms: ${acceptedTerms}
       Accepted Emaildiff: ${acceptedEmailDiff}
-    `);
+    `); */
 
     event.preventDefault();
     if (validPassword && validConfirmedPassword && validEmail) {

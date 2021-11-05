@@ -6,7 +6,7 @@ const categoryMiddleware = (store) => (next) => (action) => {
     case FETCH_CATEGORIES: {
       const fetchCategories = async () => {
         try {
-          const response = await axios.get('http://localhost:3000/categories');
+          const response = await axios.get('https://api-mentorme.herokuapp.com/v1/allCategories');
           store.dispatch(addCategories(response.data));
         }
         catch (error) {

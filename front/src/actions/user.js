@@ -1,9 +1,18 @@
 export const CHANGE_LOGIN_FIELD = 'CHANGE_LOGIN_FIELD';
 export const SUBMIT_LOGIN = 'SUBMIT_LOGIN';
+export const CREATE_MAIL_ERROR = 'CREATE_MAIL_ERROR';
+export const CREATE_PASSWORD_ERROR = 'CREATE_PASSWORD_ERROR';
 export const SAVE_USER = 'SAVE_USER';
 export const CHANGE_REGISTER_FIELD = 'CHANGE_REGISTER_FIELD';
 export const SUBMIT_NEW_USER = 'SUBMIT_NEW_USER';
 export const SUBMIT_NEW_USER_SUCCESS = 'SUBMIT_NEW_USER_SUCCESS';
+export const GET_USER_DETAILS = 'GET_USER_DETAILS';
+export const SAVE_USER_DETAILS = 'SAVE_USER_DETAILS';
+export const CHANGE_PROFILE_FIELD = 'CHANGE_PROFILE_FIELD';
+export const SAVE_PROFILE = 'SAVE_PROFILE';
+export const SAVE_PROFILE_SUCCESS = 'SAVE_PROFILE_SUCCESS';
+export const SAVE_IMAGE = 'SAVE_IMAGE';
+export const SEND_IMAGE = 'SEND_IMAGE';
 
 export const changeLoginField = (value, name) => ({
   type: CHANGE_LOGIN_FIELD,
@@ -15,11 +24,19 @@ export const submitLogin = () => ({
   type: SUBMIT_LOGIN,
 });
 
-export const saveUser = ({ logged, token, id }) => ({
+export const createMailError = () => ({
+  type: CREATE_MAIL_ERROR,
+});
+
+export const createPasswordError = () => ({
+  type: CREATE_PASSWORD_ERROR,
+});
+
+// eslint-disable-next-line camelcase
+export const saveUser = ({ connected, user_id }) => ({
   type: SAVE_USER,
-  logged,
-  token,
-  id,
+  connected,
+  id: user_id,
 });
 
 export const changeRegisterField = (value, name) => ({
@@ -34,4 +51,45 @@ export const submitNewUser = () => ({
 
 export const submitNewUserSuccess = () => ({
   type: SUBMIT_NEW_USER_SUCCESS,
+});
+
+export const getUserDetails = () => ({
+  type: GET_USER_DETAILS,
+});
+
+export const saveUserDetails = ({
+  // eslint-disable-next-line camelcase
+  email, firstname, lastname, biography, mobile_phone, home_phone, avatar_url,
+}) => ({
+  type: SAVE_USER_DETAILS,
+  email,
+  firstname,
+  lastname,
+  bio: biography,
+  phone: mobile_phone,
+  fix: home_phone,
+  avatar: avatar_url,
+});
+
+export const changeProfileField = (value, name) => ({
+  type: CHANGE_PROFILE_FIELD,
+  value,
+  name,
+});
+
+export const saveProfile = () => ({
+  type: SAVE_PROFILE,
+});
+
+export const saveProfileSuccess = () => ({
+  type: SAVE_PROFILE_SUCCESS,
+});
+
+export const saveImage = (image) => ({
+  type: SAVE_IMAGE,
+  image,
+});
+
+export const sendImage = () => ({
+  type: SEND_IMAGE,
 });

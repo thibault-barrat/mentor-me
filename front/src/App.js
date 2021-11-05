@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Register from './pages/Register';
 import Connect from './pages/Connect';
+import Profil from './pages/Profil';
+import Categories from './pages/Categories';
 import NavBaar from './components/NavBaar';
 import Footer from './components/Footer';
 import { fetchCategories } from './actions/category';
@@ -24,9 +26,15 @@ function App() {
   const dispatch = useDispatch();
 
   // At the first render of App, we fetch categories and services
+  // we checked if there is a token in localStorage
+  // if there is, we set the user as logged
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(fetchServices());
+    // const token = localStorage.getItem('token');
+    // if (token) {
+    //   dispatch({ type: 'SET_LOGGED', payload: true });
+    // }
   }, []);
 
   return (
@@ -43,6 +51,8 @@ function App() {
             <Route path="/a-propos" component={About} />
             <Route path="/inscription" component={Register} />
             <Route path="/connexion" component={Connect} />
+            <Route path="/profil" component={Profil} />
+            <Route path="/categories" component={Categories} />
           </Switch>
         )}
       <Footer />
