@@ -15,7 +15,10 @@ const {
 const categoryController = require("./controllers/categoryController");
 
 const serviceController = require("./controllers/serviceController");
+
 const tokenController = require("./controllers/tokenController");
+
+const userLikeServicesController = require("./controllers/userLikeServicesController")
 
 const router = Router();
 
@@ -59,6 +62,10 @@ router.delete("/service/:id(\\d+)", serviceController.deleteOneService);
 router.patch("/service/:id(\\d+)", serviceController.modifyService);
 router.post("/newService", serviceController.createService);
 router.get("/search", serviceController.searchOneService)
+
+/* Like Service */
+router.post("/user/:userId/service/:serviceId", userLikeServicesController.likeService)
+router.delete("/user/:userId/service/:serviceId", userLikeServicesController.dislikeService)
 
 /**
  * S'inscrire
