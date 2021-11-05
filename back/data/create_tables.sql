@@ -32,7 +32,7 @@ CREATE TABLE "service" (
   description text NOT NULL,
   online BOOLEAN NOT NULL DEFAULT FALSE,
   irl BOOLEAN NOT NULL DEFAULT FALSE,
-  is_published BOOLEAN NOT NULL DEFAULT FALSE,
+  is_published BOOLEAN NOT NULL DEFAULT TRUE,
   user_id int NOT NULL REFERENCES "users"("id") ON DELETE CASCADE,
   category_id INT NOT NULL,
   location_id INT NOT NULL,

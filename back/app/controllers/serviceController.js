@@ -82,7 +82,37 @@ const serviceController = {
         } catch (error) {
             res.status(500).send(error)
         }
-    }
-};
+    },
+
+    //Méthode pour creer un service
+    createService: async (req, res) => {
+
+        try {
+            console.log(req.body.location.lat, req.body.location.lng)
+            for (let property in req.body) {
+                if (req.body[property].length === 0) {
+                    return res
+                        .status(400)
+                        .send({
+                            errorMessage: `${property} can't be empty!`
+                        });
+                }
+            }
+
+            const service = new Service(req.body);
+
+            await service.insertLocation()
+
+            await service.createOne();
+
+            res.status(201).send({
+                created: true
+            });
+
+        } catch (error) {
+            res.status(500).send(error)
+        }
+    },
+}
 
 module.exports = serviceController;

@@ -1,4 +1,6 @@
-const { Router } = require("express");
+const {
+  Router
+} = require("express");
 
 // import des controllers
 const userController = require("./controllers/userController");
@@ -52,9 +54,10 @@ router.get(
 
 /* Services */
 router.get("/allServices", serviceController.getAllServicezz);
-router.get("/services/:id(\\d+)", serviceController.getOneService);
-router.delete("/services/:id(\\d+)", serviceController.deleteOneService);
-router.patch("/services/:id(\\d+)", serviceController.modifyService);
+router.get("/service/:id(\\d+)", serviceController.getOneService);
+router.delete("/service/:id(\\d+)", serviceController.deleteOneService);
+router.patch("/service/:id(\\d+)", serviceController.modifyService);
+router.post("/newService", serviceController.createService);
 
 /**
  * S'inscrire

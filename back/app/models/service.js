@@ -82,5 +82,34 @@ module.exports = class Service {
         await pool.query(query);
     };
 
+    async insertLocation() {
 
+        const query = {
+            text: `INSERT INTO location (latitude, longitude) VALUES ($1,$2) RETURNING id;`,
+            values: [this.location.lat, this.location.lng]
+        }
+
+        const result = await pool.query(query)
+
+        this.location_id = result.rows[0].id;
+    };
+
+    async createOne() {
+
+        const query = {
+            text: `INSERT INTO service ("title", "duration", "description", "online", "irl","user_id", "category_id","location_id" ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
+            values: [
+                this.title,
+                this.duration,
+                this.description,
+                this.online,
+                this.irl,
+                this.user_id,
+                this.category_id,
+                this.location_id
+            ],
+        };
+
+        await pool.query(query);
+    };
 };
