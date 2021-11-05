@@ -68,6 +68,8 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  max-width: 550px;
+  max-height: 960px;
 
   @media (min-width: vars.$breakpoint-sm){
     margin: 2rem 2rem 5rem 8rem;
