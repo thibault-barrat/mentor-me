@@ -14,7 +14,7 @@ import './style.scss';
 export default function Categories() {
   
   // Here we use 'useSelector' to get the initial state from the reducer
-  const categoriesResult = useSelector(state => state.categories.items);
+  const categoriesState = useSelector(state => state.categories.items);
 
 
   // Here the function we use to select the infos we need from the initial state
@@ -25,6 +25,7 @@ export default function Categories() {
     image: item.image,
   
   })));
+
 
 
   return (
@@ -45,7 +46,7 @@ export default function Categories() {
         >
         {/* Here we send the Prop 'result' to our page 'category'
         And executing our function on the datas we got from the state */}
-          <Category result={getAllCategories(categoriesResult)}/>
+          <Category result={getAllCategories(categoriesState)}/>
         </ul>
       </main>
     </div>)
