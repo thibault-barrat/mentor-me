@@ -1,12 +1,33 @@
 @use 'src/styles/vars';
+@media (min-width: vars.$breakpoint-sm){}
+
+.container__all {
+  @media (min-width: vars.$breakpoint-sm){
+    display: flex;
+    flex-direction: column;
+  }
+}
 
 .desc {
 
   &__container {
     display: flex;
     flex-direction: column;
-    
+    @media (min-width: vars.$breakpoint-sm){
+      width: 50%;
+      justify-content: space-between;
+      border-radius: 10px;
+      
+    }
   
+  }
+  &__block {
+    @media (min-width: vars.$breakpoint-sm){
+      display: flex;
+      flex-direction: row;
+      margin-top: 1rem;
+      background-color: #FCCDC1;
+    }
   }
 
   &__item {
@@ -15,25 +36,73 @@
 
   &__imgs {
     border: none;
-    border-radius: 150px;
-    height: 300px;
-    margin-left: 30%;
+    border-radius: 100px;
+    height: 170px;
+    margin-left: 2rem;
+    margin-right: 20rem;
     margin-top: 2rem;
     padding: 1.5rem;
     width: 300px;
+    @media (min-width: vars.$breakpoint-sm){
+      margin-left: 14rem;
+      height: 250px;
+      width: 250px;
+      border-radius: 150px;
+    }
   }
 }
 
 .leaflet-container{
-  width: 320px;
+  width: 350px;
   height: 350px;
   margin: auto;
   margin-top: 1rem;
   border-radius: 20px;
+  @media (min-width: vars.$breakpoint-sm){
+    width: 850px;
+    height: 350px;
+    margin-right: 8rem;
+  }
+}
+
+.leaflet__block {
+  @media (min-width: vars.$breakpoint-sm){
+    width: 50%;
+    margin-left: 50%;
+  }
 }
 
 .user {
   &__block {
     margin-bottom: 4rem;
+    @media (min-width: vars.$breakpoint-sm){
+      width: 50%;
+      position: relative;
+      top: -250px;
+      left: 160px;
+    }
+  }
+  &__title{
+   text-align: center;
+   margin: 1rem 0;
+   font-size: 1.3rem;
+  }
+  &__img {
+    @media (min-width: vars.$breakpoint-sm){}
+    width: 150px;
+    height: 150px;
+    border-radius: 150px;
+    
+    margin: 1rem 6.5rem;
+  }
+  &__desc {
+    text-align: center;
+    margin-top: 1rem;
+    @media (min-width: vars.$breakpoint-sm){
+      width: 80%;
+      position: relative;
+      top: -120px;
+      left: 100px;
+    }
   }
 }

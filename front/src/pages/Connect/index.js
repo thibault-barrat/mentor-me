@@ -12,23 +12,15 @@ import './style.scss';
 
 export default function Connect() {
   // Here we get the initial state from the reducer with 'useSelector'
-<<<<<<< HEAD
-  const { email, password, logged, errors } = useSelector((state) => state.user);
-=======
   const {
     email, password, logged, errors,
   } = useSelector((state) => state.user);
->>>>>>> dev
 
   // We use dispatch to modify the state
   const dispatch = useDispatch();
 
   // Here the function we use send to our Prop to change the values 'email' and 'password'
-<<<<<<< HEAD
-  // We also get the name to specify which input we want to write on 
-=======
   // We also get the name to specify which input we want to write on
->>>>>>> dev
   const handleChange = (value, name) => {
     dispatch(changeLoginField(value, name));
   };

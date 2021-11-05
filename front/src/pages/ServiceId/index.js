@@ -3,6 +3,8 @@ import {
   MapContainer, Marker, Popup, TileLayer, useMapEvents,
 } from 'react-leaflet';
 import { useState } from 'react';
+import { AiOutlineHeart } from 'react-icons/ai';
+import avatarimg from '../../assets/images/business-gfb594ee9b_1280.jpg';
 import './style.scss';
 
 const serviceId = () => {
@@ -26,11 +28,12 @@ const serviceId = () => {
   }
 
   return(
-    <div className="container">
+    <div className="container__all">
       <div className="desc__block">
-        <img className="desc__imgs" src="" alt="catégorie" />
+        <img className="desc__imgs" src={avatarimg} alt="catégorie" />
         <div className="desc__container">
-          <h1 className="desc__item">Titre</h1>
+          <AiOutlineHeart />
+          <h1 className="desc__item user__title">Titre</h1>
           <p className="desc__item">description de l'offre</p>
           <span className="desc__item">Durée :</span>
           <span className="desc__item">Disponibilité</span>
@@ -47,9 +50,9 @@ const serviceId = () => {
         </MapContainer>
       </div>
       <div className="user__block">
-        <h1>Proposé par : </h1>
-        <img src="" alt="mentor img" />
-        <p>description / bio du mentor</p>
+        <h1 className="user__title">Proposé par : </h1>
+        <img className="user__img" src={avatarimg} alt="mentor img" />
+        <p className="user__desc">description / bio du mentor</p>
       </div>
     </div>
   );
