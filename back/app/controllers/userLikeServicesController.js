@@ -1,49 +1,45 @@
 const userLikesService = require("../models/userLikesService");
 
 const userLikeServicesController = {
-    likeService: async (req, res) => {
-        try {
+  getLikedServicesByUserId: async (req, res) => {
+    const { id } = req.params;
+    const likeService = new userLikesService();
 
-            const {
-                userId,
-                serviceId
-            } = req.params;
+    await likeService.getLikedServiceForOneUser(id);
+    res.status(200).send(likeService.likedServices);
+  },
 
-            const likeService = new userLikesService();
+  likeService: async (req, res) => {
+    try {
+      const { userId, serviceId } = req.params;
 
-            await likeService.like(userId, serviceId);
+      const likeService = new userLikesService();
 
-            res.status(200).send({
-                Message: "Success like !!"
-            })
+      await likeService.like(userId, serviceId);
 
-        } catch (error) {
-            res.status(500).send(error);
-        }
-    },
+      res.status(200).send({
+        Message: "Success like !!",
+      });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  },
 
-    dislikeService: async (req, res) => {
-        
-        try {
+  dislikeService: async (req, res) => {
+    try {
+      const { userId, serviceId } = req.params;
 
-            const {
-                userId,
-                serviceId
-            } = req.params;
+      const dislikeService = new userLikesService();
 
-            const dislikeService = new userLikesService()
+      await dislikeService.dislike(userId, serviceId);
 
-            await dislikeService.dislike(userId, serviceId);
-
-            res.status(200).send({
-                Message: "Success dislike !!"
-            })
-
-
-        } catch (error) {
-            res.status(500).send(error);
-        }
-    },
-}
+      res.status(200).send({
+        Message: "Success dislike !!",
+      });
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  },
+};
 
 module.exports = userLikeServicesController;

@@ -1,6 +1,4 @@
-const {
-  Router
-} = require("express");
+const { Router } = require("express");
 
 // import des controllers
 const userController = require("./controllers/userController");
@@ -18,7 +16,7 @@ const serviceController = require("./controllers/serviceController");
 
 const tokenController = require("./controllers/tokenController");
 
-const userLikeServicesController = require("./controllers/userLikeServicesController")
+const userLikeServicesController = require("./controllers/userLikeServicesController");
 
 const router = Router();
 
@@ -61,11 +59,21 @@ router.get("/service/:id(\\d+)", serviceController.getOneService);
 router.delete("/service/:id(\\d+)", serviceController.deleteOneService);
 router.patch("/service/:id(\\d+)", serviceController.modifyService);
 router.post("/newService", serviceController.createService);
-router.get("/search", serviceController.searchOneService)
+router.get("/search", serviceController.searchOneService);
 
 /* Like Service */
-router.post("/user/:userId/service/:serviceId", userLikeServicesController.likeService)
-router.delete("/user/:userId/service/:serviceId", userLikeServicesController.dislikeService)
+router.post(
+  "/user/:userId/service/:serviceId",
+  userLikeServicesController.likeService
+);
+router.delete(
+  "/user/:userId/service/:serviceId",
+  userLikeServicesController.dislikeService
+);
+router.get(
+  "/user/:id/likedServices",
+  userLikeServicesController.getLikedServicesByUserId
+);
 
 /**
  * S'inscrire
@@ -95,11 +103,7 @@ router.get("/allUsers", verifyToken, isAdmin, userController.getAllUsers);
  * Récupérer un user par son id
  * @route GET /user/:id
  */
-router.get(
-  "/user/:id(\\d+)",
-  verifyToken,
-  userController.getOneUser
-);
+router.get("/user/:id(\\d+)", verifyToken, userController.getOneUser);
 
 /**
  * Modifier le profil d'un user
