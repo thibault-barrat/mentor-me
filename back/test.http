@@ -26,12 +26,34 @@ name=abc
 ### Récupérer tout les services d'une catégorie par ID
 GET http://localhost:3001/categorys/7/services
 
-
 ### Récupération des services
-GET http://localhost:3001/services
+GET http://localhost:3001/v1/allServices
 
 ### Récupération d'un service
-GET http://localhost:3001/services/2
+GET http://localhost:3001/v1/service/2
 
 ### Suppression d'un service
-DELETE http://localhost:3001/services/2
+DELETE http://localhost:3001/v1/service/2
+
+### Modification d'un service
+PATCH  http://localhost:3001/v1/service/2
+Content-Type: application/x-www-form-urlencoded
+
+title=Peche artisanal
+&duration=2 heures
+&description=Peche à la truite
+&online=oui
+&irl=oui
+&is_published=false
+&category_id=1
+&location_id=2
+
+
+### register
+POST http://localhost:3001/v1/register
+Content-Type: application/x-www-form-urlencoded
+
+firstname=test
+&lastname=test
+&email=test@test.com
+&password=Test001$

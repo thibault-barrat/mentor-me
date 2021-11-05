@@ -2,6 +2,11 @@ const { Router } = require("express");
 
 // import des controllers
 const userController = require("./controllers/userController");
+
+const categoryController = require("./controllers/categoryController");
+
+const serviceController = require("./controllers/serviceController");
+
 // import des middlewares
 const {
   verifyToken,
@@ -51,15 +56,15 @@ router.get(
 ); // Route pour avoir tous les services d'une catégorie
 
 /* Services */
-router.get("/allServices", serviceController.getAllServicezz);
-router.get("/services/:id(\\d+)", serviceController.getOneService);
-router.delete("/services/:id(\\d+)", serviceController.deleteOneService);
-router.patch("/services/:id(\\d+)", serviceController.modifyService);
+router.get("/allServices", serviceController.getAllServicezz); // Route pour tout les services
+router.get("/service/:id(\\d+)", serviceController.getOneService); // Route pour un service
+router.delete("/service/:id(\\d+)", serviceController.deleteOneService); // Route pour supprimer un service
+router.patch("/service/:id(\\d+)", serviceController.modifyService); // Route pour modifier un service
+router.post("/service/", serviceController.createService); // Route pour creer un service
 
-/**
- * S'inscrire
- * @route POST /user/:id
- */
+
+
+
 router.post("/register", userController.createNewUser);
 
 /**
