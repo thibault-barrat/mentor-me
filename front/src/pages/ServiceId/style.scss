@@ -1,0 +1,39 @@
+@use 'src/styles/vars';
+
+.desc {
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    
+  
+  }
+
+  &__item {
+    margin-bottom: 1rem;
+  }
+
+  &__imgs {
+    border: none;
+    border-radius: 150px;
+    height: 300px;
+    margin-left: 30%;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    width: 300px;
+  }
+}
+
+.leaflet-container{
+  width: 320px;
+  height: 350px;
+  margin: auto;
+  margin-top: 1rem;
+  border-radius: 20px;
+}
+
+.user {
+  &__block {
+    margin-bottom: 4rem;
+  }
+}
