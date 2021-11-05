@@ -132,4 +132,24 @@ router.post(
   tokenController.verifyRefreshToken
 );
 
+/**
+ * Get all refresh tokens
+ */
+router.get(
+  "/refreshTokens",
+  verifyToken,
+  isAdmin,
+  tokenController.getAllRefreshTokens
+);
+
+/**
+ * Delete all refresh tokens
+ */
+router.delete(
+  "/refreshTokens",
+  verifyToken,
+  isAdmin,
+  tokenController.deleteAllRefreshTokens
+);
+
 module.exports = router;
