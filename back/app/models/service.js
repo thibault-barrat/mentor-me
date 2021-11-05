@@ -112,4 +112,17 @@ module.exports = class Service {
 
         await pool.query(query);
     };
+
+    async searchService(fieldSearch) {
+
+        const query = {
+            text: `SELECT * FROM service WHERE "title" LIKE '%'||$1||'%';`,
+            values: [
+                fieldSearch
+            ]
+        }
+
+        const result = await pool.query(query);
+        this.searchResults = result.rows;
+    }
 };

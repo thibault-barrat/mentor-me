@@ -113,6 +113,19 @@ const serviceController = {
             res.status(500).send(error)
         }
     },
+
+    searchOneService: async (req, res) => {
+        try {
+            const fieldSearch = req.query.service;
+            const service = new Service();
+
+            await service.searchService(fieldSearch);
+
+            res.status(200).send(service.searchResults)
+        } catch (error) {
+            res.status(500).send(error)
+        }
+    }
 }
 
 module.exports = serviceController;

@@ -58,6 +58,7 @@ router.get("/service/:id(\\d+)", serviceController.getOneService);
 router.delete("/service/:id(\\d+)", serviceController.deleteOneService);
 router.patch("/service/:id(\\d+)", serviceController.modifyService);
 router.post("/newService", serviceController.createService);
+router.get("/search", serviceController.searchOneService)
 
 /**
  * S'inscrire
