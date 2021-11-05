@@ -5,13 +5,7 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 export default function Field({
-  name, 
-  placeholder, 
-  value, 
-  onChange, 
-  required, 
-  type, 
-  onBlur,
+  name, placeholder, value, onChange, required, type, onBlur, disabled,
 }) {
   const handleChange = (evt) => {
     onChange(evt.target.value, name);
@@ -34,6 +28,7 @@ export default function Field({
         onChange={handleChange}
         onBlur={onBlur}
         required={required}
+        disabled={disabled}
       />
     </div>
   );
@@ -42,6 +37,7 @@ export default function Field({
 //Default Prop
 Field.defaultProps = {
   required: false,
+  disabled: false,
   onBlur: () => {},
 };
 
@@ -53,5 +49,6 @@ Field.propTypes = {
   onChange: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   required: PropTypes.bool,
+  disabled: PropTypes.bool,
   onBlur: PropTypes.func,
 };
