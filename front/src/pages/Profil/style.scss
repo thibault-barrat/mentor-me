@@ -108,6 +108,16 @@
   &__input-avatar {
     display: none;
   }
+  // &__logout {
+  //   margin-top: vars.$gutter;
+  //   grid-row: 2;
+	// 	grid-column: 1;
+  //   text-align: center;
+  //   @media (min-width: vars.$breakpoint-sm) {
+	// 		grid-row: 2;
+	// 		grid-column: 1 / span 2;
+	// 	}
+  // }
 }
 
 .bio {
@@ -176,8 +186,5 @@ cursor: pointer;
 line-height: calc(vars.$gutter * 1.4);
 	&:hover {
 		background-color: lighten($color: rgb(255, 112, 87), $amount: 10%);
-	}
-	@media (min-width: vars.$breakpoint-sm) {
-		width: 80%;
 	}
 }

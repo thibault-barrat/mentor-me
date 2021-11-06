@@ -14,6 +14,21 @@ export const SAVE_PROFILE_SUCCESS = 'SAVE_PROFILE_SUCCESS';
 export const SAVE_IMAGE = 'SAVE_IMAGE';
 export const SEND_IMAGE = 'SEND_IMAGE';
 export const REFRESH_TOKEN = 'REFRESH_TOKEN';
+export const LOGOUT = 'LOGOUT';
+export const DELETE_TOKEN = 'DELETE_TOKEN';
+export const DELETE_PROFILE = 'DELETE_PROFILE';
+
+export const deleteProfile = () => ({
+  type: DELETE_PROFILE,
+});
+
+export const deleteToken = () => ({
+  type: DELETE_TOKEN,
+});
+
+export const logout = () => ({
+  type: LOGOUT,
+});
 
 export const refreshToken = () => ({
   type: REFRESH_TOKEN,

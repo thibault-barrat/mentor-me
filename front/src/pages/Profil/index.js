@@ -1,13 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import './style.scss';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Field from '../../components/Field';
 import {
   changeProfileField,
   saveProfile,
   saveImage,
   sendImage,
+  logout,
+  deleteProfile,
 } from '../../actions/user';
 
 export default function profil() {
@@ -17,6 +19,9 @@ export default function profil() {
   const {
     email, firstname, lastname, bio, phone, fix, avatar, uploadedImage,
   } = useSelector((state) => state.user.details);
+
+  // We take the logged boolean from the state
+  const { logged } = useSelector((state) => state.user);
 
   // We also need to know the services and the user id to find the services proposed by the user
   const services = useSelector((state) => state.services.items);
@@ -32,6 +37,9 @@ export default function profil() {
   // Variable readOnly will let us know if the user is modifying his profile or not
   // When readOnly is true all the fields are disabled
   const [readOnly, setReadOnly] = useState(true);
+
+  // Variable tryLogout will let us know if the user is trying to logout or not
+  const [tryLogout, setTryLogout] = useState(false);
 
   // Variable validEmail to know if the field is conform to regex
   // When this is false, we can not validate the new data
@@ -87,6 +95,33 @@ export default function profil() {
     }
   };
 
+  // function to handle click on log out button
+  // and dispatch an action to log out the user
+  const handleLogout = () => {
+    setTryLogout(true);
+    dispatch(logout());
+  };
+
+  // function to handle click on delete account button
+  // and dispatch an action to delete the user
+  const handleDelete = () => {
+    // whe user want to delete his account,
+    // we consider that he is trying to log out
+    setTryLogout(true);
+    dispatch(deleteProfile());
+  };
+
+  const history = useHistory();
+
+  // Redirect to home after logout
+  useEffect(() => {
+    // If the user lauched a logout action and logged is false
+    // he will be redirected to the home page
+    if (!logged && tryLogout) {
+      history.replace('/');
+    }
+  }, [logged]);
+
   return (
 
     <div className="profil">
@@ -123,7 +158,6 @@ export default function profil() {
                 onChange={handleImageUpload}
               />
             </label>
-            {/* <button type="submit" className="connect-button-p">Valider</button> */}
           </form>
         </div>
 
@@ -162,7 +196,7 @@ export default function profil() {
             type="text"
             name="fix"
             placeholder="Votre numéro de teléphone fixe"
-            value={fix}
+            value={String(fix)}
             disabled={readOnly}
             onChange={handleChange}
           />
@@ -170,7 +204,7 @@ export default function profil() {
             type="text"
             name="phone"
             placeholder="Votre numéro de téléphone portable"
-            value={phone}
+            value={String(phone)}
             disabled={readOnly}
             onChange={handleChange}
           />
@@ -196,8 +230,8 @@ export default function profil() {
             </button>
           )}
           <br />
-          {/* TODO SUPPRESSION D'UN PROFIL */}
-          <button type="submit" className="connect-button-p">Supprimer mon profil</button>
+          <button type="submit" className="connect-button-p" onClick={handleDelete}>Supprimer mon profil</button>
+          <button type="submit" className="connect-button-p" onClick={handleLogout}>Se déconnecter</button>
         </div>
 
         {/* We display proposed services only if proposedServices contains items */}

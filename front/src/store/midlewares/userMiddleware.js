@@ -2,7 +2,7 @@
 import axios from 'axios';
 // eslint-disable-next-line camelcase
 import jwt_decode from 'jwt-decode';
-import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE, SEND_IMAGE, REFRESH_TOKEN } from '../../actions/user';
+import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, deleteToken, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE, SEND_IMAGE, REFRESH_TOKEN, DELETE_TOKEN, LOGOUT, DELETE_PROFILE } from '../../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -184,15 +184,63 @@ const userMiddleware = (store) => (next) => (action) => {
           // dans le state => modifier le state => dispatch d'action
           store.dispatch(saveUser(role, user_id, response.data.accessToken));
           store.dispatch(getUserDetails());
-          return response;
         }
         catch (error) {
           console.log(error);
-          return error;
         }
       };
 
       refreshToken();
+      next(action);
+      break;
+    }
+    case LOGOUT: {
+      const token = localStorage.getItem('refreshToken');
+
+      const logout = async () => {
+        try {
+          await axios.post('https://api-mentorme.herokuapp.com/v1/logout', {
+            token,
+          });
+          store.dispatch(deleteToken());
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+      logout();
+      break;
+    }
+    case DELETE_PROFILE: {
+      const { user:
+        { id,
+          accessToken,
+        } } = store.getState();
+      // we create headers of the request
+      let headers = {};
+      if (accessToken !== null) {
+        headers = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      }
+      const deleteProfile = async () => {
+        try {
+          await axios.delete(`https://api-mentorme.herokuapp.com/v1/user/${id}`, headers);
+          // une fois qu'on a la réponse, on peut venir stocker les infos du user
+          // dans le state => modifier le state => dispatch d'action
+          store.dispatch(deleteToken());
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+      deleteProfile();
+      break;
+    }
+    case DELETE_TOKEN: {
+      localStorage.removeItem('refreshToken');
       next(action);
       break;
     }

@@ -11,6 +11,7 @@ import {
   SAVE_PROFILE,
   SAVE_PROFILE_SUCCESS,
   SAVE_IMAGE,
+  DELETE_TOKEN,
 } from '../actions/user';
 
 export const initialState = {
@@ -275,6 +276,27 @@ const reducer = (state = initialState, action = {}) => {
         details: {
           ...state.details,
           uploadedImage: action.image,
+        },
+        errors: {
+          ...state.errors,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
+      };
+    }
+    case DELETE_TOKEN: {
+      return {
+        ...state,
+        logged: false,
+        accessToken: null,
+        role: '',
+        id: null,
+        register: {
+          ...state.register,
+        },
+        details: {
+          ...state.details,
         },
         errors: {
           ...state.errors,
