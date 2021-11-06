@@ -9,7 +9,7 @@ import jwt_decode from 'jwt-decode';
 // Composants
 import App from 'src/App';
 import store from 'src/store';
-import { saveUser } from './actions/user';
+import { saveUser, deleteToken } from './actions/user';
 
 // configuration of axios interceptor
 // to handle 401 unauthorized error
@@ -26,23 +26,32 @@ axios.interceptors.response.use(
       originalRequest._retry = true;
       const token = localStorage.getItem('refreshToken');
       if (token) {
-        try {
-          const response = await axios.post('https://api-mentorme.herokuapp.com/v1/refreshToken', {
-            token,
-          });
-          // we save the new refreshToken in the local storage
-          localStorage.setItem('refreshToken', response.data.refreshToken);
-          // we dispatch saveUser action to save the new accessToken in the store
-          // eslint-disable-next-line camelcase
-          const { user_id, role } = jwt_decode(response.data.accessToken);
-          store.dispatch(saveUser(role, user_id, response.data.accessToken));
-          // we want to change headers of original request with new access token
-          originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
-          // we retry the original request
-          return axios(originalRequest);
+        // we check if the token is expired
+        // if yes we delete it
+        const decoded = jwt_decode(token);
+        if (decoded.exp * 1000 < Date.now()) {
+          store.dispatch(deleteToken());
         }
-        catch (err) {
-          console.log(err);
+        else {
+          // we get new tokens
+          try {
+            const response = await axios.post('https://api-mentorme.herokuapp.com/v1/refreshToken', {
+              token,
+            });
+            // we save the new refreshToken in the local storage
+            localStorage.setItem('refreshToken', response.data.refreshToken);
+            // we dispatch saveUser action to save the new accessToken in the store
+            // eslint-disable-next-line camelcase
+            const { user_id, role } = jwt_decode(response.data.accessToken);
+            store.dispatch(saveUser(role, user_id, response.data.accessToken));
+            // we want to change headers of original request with new access token
+            originalRequest.headers.Authorization = `Bearer ${response.data.accessToken}`;
+            // we retry the original request
+            return axios(originalRequest);
+          }
+          catch (err) {
+            console.log(err);
+          }
         }
       }
     }
