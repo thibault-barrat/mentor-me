@@ -20,6 +20,7 @@ export const initialState = {
   password: '',
   token: null,
   id: null,
+  accessToken: null,
   register: {
     email: '',
     password: '',
@@ -83,8 +84,10 @@ const reducer = (state = initialState, action = {}) => {
         likedServices: [
           ...state.likedServices,
         ],
-        logged: action.connected,
+        logged: true,
         id: action.id,
+        role: action.role,
+        accessToken: action.accessToken,
       };
     }
     case CREATE_MAIL_ERROR: {

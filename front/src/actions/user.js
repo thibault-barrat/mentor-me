@@ -13,6 +13,11 @@ export const SAVE_PROFILE = 'SAVE_PROFILE';
 export const SAVE_PROFILE_SUCCESS = 'SAVE_PROFILE_SUCCESS';
 export const SAVE_IMAGE = 'SAVE_IMAGE';
 export const SEND_IMAGE = 'SEND_IMAGE';
+export const REFRESH_TOKEN = 'REFRESH_TOKEN';
+
+export const refreshToken = () => ({
+  type: REFRESH_TOKEN,
+});
 
 export const changeLoginField = (value, name) => ({
   type: CHANGE_LOGIN_FIELD,
@@ -33,10 +38,11 @@ export const createPasswordError = () => ({
 });
 
 // eslint-disable-next-line camelcase
-export const saveUser = ({ connected, user_id }) => ({
+export const saveUser = (role, id, accessToken) => ({
   type: SAVE_USER,
-  connected,
-  id: user_id,
+  role,
+  id,
+  accessToken,
 });
 
 export const changeRegisterField = (value, name) => ({

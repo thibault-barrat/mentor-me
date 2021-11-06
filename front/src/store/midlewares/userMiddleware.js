@@ -1,6 +1,8 @@
 /* eslint-disable object-curly-newline */
 import axios from 'axios';
-import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE, SEND_IMAGE } from '../../actions/user';
+// eslint-disable-next-line camelcase
+import jwt_decode from 'jwt-decode';
+import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE, SEND_IMAGE, REFRESH_TOKEN } from '../../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -21,11 +23,14 @@ const userMiddleware = (store) => (next) => (action) => {
             email,
             password,
           });
-          // we save the accessToken in the local storage
-          localStorage.setItem('token', response.data.accessToken);
+          // we save the refreshToken in the local storage
+          localStorage.setItem('refreshToken', response.data.refreshToken);
+          // we decode the token to obtain the id and the role
+          // eslint-disable-next-line camelcase
+          const { user_id, role } = jwt_decode(response.data.accessToken);
           // une fois qu'on a la réponse, on peut venir stocker les infos du user
           // dans le state => modifier le state => dispatch d'action
-          await store.dispatch(saveUser(response.data));
+          store.dispatch(saveUser(role, user_id, response.data.accessToken));
           store.dispatch(getUserDetails());
         }
         catch (error) {
@@ -74,15 +79,13 @@ const userMiddleware = (store) => (next) => (action) => {
       break;
     }
     case GET_USER_DETAILS: {
-      const { user: { id } } = store.getState();
-      // we look for the token in local storage
-      const token = localStorage.getItem('token');
+      const { user: { id, accessToken } } = store.getState();
       // we create headers of the request
       let headers = {};
-      if (token) {
+      if (accessToken !== null) {
         headers = {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         };
       }
@@ -100,15 +103,15 @@ const userMiddleware = (store) => (next) => (action) => {
     }
     case SAVE_PROFILE: {
       const { user:
-        { id, details: { email, firstname, lastname, bio, phone, fix } } } = store.getState();
-      // we look for the token in local storage
-      const token = localStorage.getItem('token');
+        { id,
+          accessToken,
+          details: { email, firstname, lastname, bio, phone, fix } } } = store.getState();
       // we create headers of the request
       let headers = {};
-      if (token) {
+      if (accessToken !== null) {
         headers = {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         };
       }
@@ -136,15 +139,13 @@ const userMiddleware = (store) => (next) => (action) => {
     }
     case SEND_IMAGE: {
       const { user:
-        { id, details: { uploadedImage } } } = store.getState();
-      // we look for the token in local storage
-      const token = localStorage.getItem('token');
+        { id, accessToken, details: { uploadedImage } } } = store.getState();
       // we create headers of the request
       let headers = {};
-      if (token) {
+      if (accessToken !== null) {
         headers = {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${accessToken}`,
             'Content-Type': 'multipart/form-data',
           },
         };
@@ -164,6 +165,35 @@ const userMiddleware = (store) => (next) => (action) => {
         }
       };
       sendImage();
+      break;
+    }
+    case REFRESH_TOKEN: {
+      const token = localStorage.getItem('refreshToken');
+
+      const refreshToken = async () => {
+        try {
+          const response = await axios.post('https://api-mentorme.herokuapp.com/v1/refreshToken', {
+            token,
+          });
+          // we save the new refreshToken in the local storage
+          localStorage.setItem('refreshToken', response.data.refreshToken);
+          // we decode the accessToken to obtain the id and the role
+          // eslint-disable-next-line camelcase
+          const { user_id, role } = jwt_decode(response.data.accessToken);
+          // une fois qu'on a la réponse, on peut venir stocker les infos du user
+          // dans le state => modifier le state => dispatch d'action
+          store.dispatch(saveUser(role, user_id, response.data.accessToken));
+          store.dispatch(getUserDetails());
+          return response;
+        }
+        catch (error) {
+          console.log(error);
+          return error;
+        }
+      };
+
+      refreshToken();
+      next(action);
       break;
     }
     default:
