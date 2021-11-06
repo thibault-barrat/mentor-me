@@ -22,6 +22,7 @@ export const initialState = {
   token: null,
   id: null,
   accessToken: null,
+  logout: false,
   register: {
     email: '',
     password: '',
@@ -89,6 +90,7 @@ const reducer = (state = initialState, action = {}) => {
         id: action.id,
         role: action.role,
         accessToken: action.accessToken,
+        logout: false,
       };
     }
     case CREATE_MAIL_ERROR: {
@@ -292,6 +294,7 @@ const reducer = (state = initialState, action = {}) => {
         accessToken: null,
         role: '',
         id: null,
+        logout: true,
         register: {
           ...state.register,
         },

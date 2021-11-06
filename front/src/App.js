@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import Loading from 'src/components/Loading';
+import AuthVerify from 'src/components/AuthVerify';
 import Home from './pages/Home';
 import About from './pages/About';
 import Register from './pages/Register';
@@ -56,6 +57,7 @@ function App() {
             <Route path="/categories" component={Categories} />
           </Switch>
         )}
+      <AuthVerify />
       <Footer />
     </Router>
   );
