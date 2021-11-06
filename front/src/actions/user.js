@@ -13,6 +13,7 @@ export const SAVE_PROFILE = 'SAVE_PROFILE';
 export const SAVE_PROFILE_SUCCESS = 'SAVE_PROFILE_SUCCESS';
 export const SAVE_IMAGE = 'SAVE_IMAGE';
 export const SEND_IMAGE = 'SEND_IMAGE';
+export const SEND_IMAGE_SUCCESS = 'SEND_IMAGE_SUCCESS';
 export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 export const LOGOUT = 'LOGOUT';
 export const DELETE_TOKEN = 'DELETE_TOKEN';
@@ -113,4 +114,8 @@ export const saveImage = (image) => ({
 
 export const sendImage = () => ({
   type: SEND_IMAGE,
+});
+
+export const sendImageSuccess = () => ({
+  type: SEND_IMAGE_SUCCESS,
 });

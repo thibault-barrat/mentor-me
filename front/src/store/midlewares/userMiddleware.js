@@ -2,7 +2,7 @@
 import axios from 'axios';
 // eslint-disable-next-line camelcase
 import jwt_decode from 'jwt-decode';
-import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, deleteToken, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE, SEND_IMAGE, REFRESH_TOKEN, DELETE_TOKEN, LOGOUT, DELETE_PROFILE } from '../../actions/user';
+import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, sendImageSuccess, deleteToken, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE, SEND_IMAGE, REFRESH_TOKEN, DELETE_TOKEN, LOGOUT, DELETE_PROFILE } from '../../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -159,6 +159,7 @@ const userMiddleware = (store) => (next) => (action) => {
           // after sending the image we need to do a new get request
           // to obtain the new url of avatar on cloudinary
           store.dispatch(getUserDetails());
+          store.dispatch(sendImageSuccess());
         }
         catch (error) {
           console.log(error);

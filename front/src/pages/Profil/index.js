@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import './style.scss';
 import { Link, useHistory } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import Field from '../../components/Field';
 import {
   changeProfileField,
@@ -17,7 +18,7 @@ export default function profil() {
 
   // We take the details user info from the state
   const {
-    email, firstname, lastname, bio, phone, fix, avatar, uploadedImage,
+    email, firstname, lastname, bio, phone, fix, avatar, uploadedImage, notifUpdate, notifAvatar,
   } = useSelector((state) => state.user.details);
 
   // We take the logged boolean from the state
@@ -121,6 +122,20 @@ export default function profil() {
       history.replace('/');
     }
   }, [logged]);
+
+  // we display a notification when the profile has been updated
+  useEffect(() => {
+    if (notifUpdate) {
+      toast.success('Votre profil a bien été mis à jour !');
+    }
+  }, [notifUpdate]);
+
+  // we display a notification when the avatar has been updated
+  useEffect(() => {
+    if (notifAvatar) {
+      toast.success('Votre avatar a bien été mis à jour !');
+    }
+  }, [notifAvatar]);
 
   return (
 
@@ -278,6 +293,7 @@ export default function profil() {
           </div>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 }

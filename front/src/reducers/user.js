@@ -12,6 +12,7 @@ import {
   SAVE_PROFILE_SUCCESS,
   SAVE_IMAGE,
   DELETE_TOKEN,
+  SEND_IMAGE_SUCCESS,
 } from '../actions/user';
 
 export const initialState = {
@@ -45,6 +46,10 @@ export const initialState = {
     fix: '',
     avatar: 'https://i.imgur.com/Z9fVYeP.png',
     uploadedImage: null,
+    loadingAvatar: false,
+    notifUpdate: false,
+    notifAvatar: false,
+    notifDelete: false,
   },
   likedServices: [],
 };
@@ -203,6 +208,10 @@ const reducer = (state = initialState, action = {}) => {
           fix: action.fix,
           avatar: action.avatar,
           uploadedImage: null,
+          notifUpdate: false,
+          notifAvatar: false,
+          notifDelete: false,
+          loadingAvatar: false,
         },
         register: {
           ...state.register,
@@ -242,6 +251,7 @@ const reducer = (state = initialState, action = {}) => {
         details: {
           ...state.details,
           loading: true,
+          notifUpdate: false,
         },
         errors: {
           ...state.errors,
@@ -260,6 +270,7 @@ const reducer = (state = initialState, action = {}) => {
         details: {
           ...state.details,
           loading: false,
+          notifUpdate: true,
         },
         errors: {
           ...state.errors,
@@ -278,6 +289,27 @@ const reducer = (state = initialState, action = {}) => {
         details: {
           ...state.details,
           uploadedImage: action.image,
+          notifAvatar: false,
+          loadingAvatar: true,
+        },
+        errors: {
+          ...state.errors,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
+      };
+    }
+    case SEND_IMAGE_SUCCESS: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+        },
+        details: {
+          ...state.details,
+          notifAvatar: true,
+          loadingAvatar: false,
         },
         errors: {
           ...state.errors,
