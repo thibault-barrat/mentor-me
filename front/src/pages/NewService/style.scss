@@ -106,4 +106,9 @@
 		height: 400px;
     margin-bottom: calc(vars.$gutter * 3);
 	}
+  &__error {
+    margin-bottom: 0.4rem;
+		color: rgb(248, 93, 82);
+		display: inline-block;
+  }
 }
