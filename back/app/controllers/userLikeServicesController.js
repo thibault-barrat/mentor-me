@@ -11,11 +11,11 @@ const userLikeServicesController = {
 
   likeService: async (req, res) => {
     try {
-      const { userId, serviceId } = req.params;
+      const { id, serviceId } = req.params;
 
       const likeService = new userLikesService();
 
-      await likeService.like(userId, serviceId);
+      await likeService.like(id, serviceId);
 
       res.status(200).send({
         Message: "Success like !!",
@@ -27,11 +27,11 @@ const userLikeServicesController = {
 
   dislikeService: async (req, res) => {
     try {
-      const { userId, serviceId } = req.params;
+      const { id, serviceId } = req.params;
 
       const dislikeService = new userLikesService();
 
-      await dislikeService.dislike(userId, serviceId);
+      await dislikeService.dislike(id, serviceId);
 
       res.status(200).send({
         Message: "Success dislike !!",

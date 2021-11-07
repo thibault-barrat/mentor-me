@@ -2,6 +2,11 @@ const { Router } = require("express");
 
 // import des controllers
 const userController = require("./controllers/userController");
+const categoryController = require("./controllers/categoryController");
+const serviceController = require("./controllers/serviceController");
+const tokenController = require("./controllers/tokenController");
+const userLikeServicesController = require("./controllers/userLikeServicesController");
+
 // import des middlewares
 const {
   verifyToken,
@@ -9,14 +14,6 @@ const {
   verifyUserById,
   verifyRefreshToken,
 } = require("./middlewares/auth");
-
-const categoryController = require("./controllers/categoryController");
-
-const serviceController = require("./controllers/serviceController");
-
-const tokenController = require("./controllers/tokenController");
-
-const userLikeServicesController = require("./controllers/userLikeServicesController");
 
 const router = Router();
 
@@ -55,15 +52,27 @@ router.get(
 
 /* Services */
 router.get("/allServices", serviceController.getAllServicezz);
-router.get("/service/:id(\\d+)", serviceController.getOneService);
-router.delete("/service/:id(\\d+)", serviceController.deleteOneService);
-router.patch("/service/:id(\\d+)", serviceController.modifyService);
-router.post("/newService", serviceController.createService);
-router.get("/search", serviceController.searchOneService);
+router.get("/service/:id(\\d+)", verifyToken, serviceController.getOneService);
+router.delete(
+  "/service/:id(\\d+)",
+  verifyToken,
+  verifyUserById,
+  serviceController.deleteOneService
+);
+router.patch(
+  "/service/:id(\\d+)",
+  verifyToken,
+  verifyUserById,
+  serviceController.modifyService
+);
+router.post("/newService", verifyToken, serviceController.createService);
+router.get("/search", verifyToken, serviceController.searchOneService);
 
 /* Like Service */
 router.post(
-  "/user/:userId/service/:serviceId",
+  "/user/:id/service/:serviceId",
+  verifyToken,
+  verifyUserById,
   userLikeServicesController.likeService
 ); // liker un service
 router.delete(
