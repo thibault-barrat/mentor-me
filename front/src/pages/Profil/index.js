@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import './style.scss';
 import { Link, useHistory } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
 import Field from '../../components/Field';
 import {
   changeProfileField,
@@ -18,7 +17,7 @@ export default function profil() {
 
   // We take the details user info from the state
   const {
-    email, firstname, lastname, bio, phone, fix, avatar, uploadedImage, notifUpdate, notifAvatar,
+    email, firstname, lastname, bio, phone, fix, avatar, uploadedImage,
   } = useSelector((state) => state.user.details);
 
   // We take the logged boolean from the state
@@ -38,9 +37,6 @@ export default function profil() {
   // Variable readOnly will let us know if the user is modifying his profile or not
   // When readOnly is true all the fields are disabled
   const [readOnly, setReadOnly] = useState(true);
-
-  // Variable tryLogout will let us know if the user is trying to logout or not
-  const [tryLogout, setTryLogout] = useState(false);
 
   // Variable validEmail to know if the field is conform to regex
   // When this is false, we can not validate the new data
@@ -99,16 +95,12 @@ export default function profil() {
   // function to handle click on log out button
   // and dispatch an action to log out the user
   const handleLogout = () => {
-    setTryLogout(true);
     dispatch(logout());
   };
 
   // function to handle click on delete account button
   // and dispatch an action to delete the user
   const handleDelete = () => {
-    // whe user want to delete his account,
-    // we consider that he is trying to log out
-    setTryLogout(true);
     dispatch(deleteProfile());
   };
 
@@ -118,24 +110,10 @@ export default function profil() {
   useEffect(() => {
     // If the user lauched a logout action and logged is false
     // he will be redirected to the home page
-    if (!logged && tryLogout) {
+    if (!logged) {
       history.replace('/');
     }
   }, [logged]);
-
-  // we display a notification when the profile has been updated
-  useEffect(() => {
-    if (notifUpdate) {
-      toast.success('Votre profil a bien été mis à jour !');
-    }
-  }, [notifUpdate]);
-
-  // we display a notification when the avatar has been updated
-  useEffect(() => {
-    if (notifAvatar) {
-      toast.success('Votre avatar a bien été mis à jour !');
-    }
-  }, [notifAvatar]);
 
   return (
 
@@ -293,7 +271,6 @@ export default function profil() {
           </div>
         )}
       </div>
-      <ToastContainer />
     </div>
   );
 }

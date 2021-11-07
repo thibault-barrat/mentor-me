@@ -18,6 +18,11 @@ export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 export const LOGOUT = 'LOGOUT';
 export const DELETE_TOKEN = 'DELETE_TOKEN';
 export const DELETE_PROFILE = 'DELETE_PROFILE';
+export const DELETE_PROFILE_SUCCESS = 'DELETE_PROFILE_SUCCESS';
+
+export const deleteProfileSuccess = () => ({
+  type: DELETE_PROFILE_SUCCESS,
+});
 
 export const deleteProfile = () => ({
   type: DELETE_PROFILE,

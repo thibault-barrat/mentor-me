@@ -13,6 +13,7 @@ import {
   SAVE_IMAGE,
   DELETE_TOKEN,
   SEND_IMAGE_SUCCESS,
+  DELETE_PROFILE_SUCCESS,
 } from '../actions/user';
 
 export const initialState = {
@@ -332,6 +333,24 @@ const reducer = (state = initialState, action = {}) => {
         },
         details: {
           ...state.details,
+        },
+        errors: {
+          ...state.errors,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
+      };
+    }
+    case DELETE_PROFILE_SUCCESS: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+        },
+        details: {
+          ...state.details,
+          notifDelete: true,
         },
         errors: {
           ...state.errors,

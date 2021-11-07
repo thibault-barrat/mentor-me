@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import jwt_decode from 'jwt-decode';
 import Loading from 'src/components/Loading';
 import AuthVerify from 'src/components/AuthVerify';
+import Notif from 'src/components/Notif';
 import Home from './pages/Home';
 import About from './pages/About';
 import Register from './pages/Register';
@@ -68,6 +69,7 @@ function App() {
           </Switch>
         )}
       <AuthVerify />
+      <Notif />
       <Footer />
     </Router>
   );
