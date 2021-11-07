@@ -75,6 +75,7 @@
 		grid-column: 1;
 		justify-self: center;
     text-align: center;
+    width: 300px;
 		@media (min-width: vars.$breakpoint-sm) {
 			grid-row: 2;
 			grid-column: 2;
@@ -108,16 +109,6 @@
   &__input-avatar {
     display: none;
   }
-  // &__logout {
-  //   margin-top: vars.$gutter;
-  //   grid-row: 2;
-	// 	grid-column: 1;
-  //   text-align: center;
-  //   @media (min-width: vars.$breakpoint-sm) {
-	// 		grid-row: 2;
-	// 		grid-column: 1 / span 2;
-	// 	}
-  // }
 }
 
 .bio {

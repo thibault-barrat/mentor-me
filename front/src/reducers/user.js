@@ -310,7 +310,6 @@ const reducer = (state = initialState, action = {}) => {
         details: {
           ...state.details,
           notifAvatar: true,
-          loadingAvatar: false,
         },
         errors: {
           ...state.errors,
