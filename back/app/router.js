@@ -65,15 +65,15 @@ router.get("/search", serviceController.searchOneService);
 router.post(
   "/user/:userId/service/:serviceId",
   userLikeServicesController.likeService
-);
+); // liker un service
 router.delete(
   "/user/:userId/service/:serviceId",
   userLikeServicesController.dislikeService
-);
+); // dislike un service
 router.get(
   "/user/:id/likedServices",
   userLikeServicesController.getLikedServicesByUserId
-);
+); // récupérer les services likés par le user
 
 /**
  * S'inscrire
