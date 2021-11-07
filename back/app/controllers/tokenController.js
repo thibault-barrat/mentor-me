@@ -41,6 +41,22 @@ const tokenController = {
       refreshToken: newRefreshToken,
     });
   },
+  /**
+   * Obtenir tous les refresh tokens de la bdd
+   */
+  async getAllRefreshTokens(req, res) {
+    const token = new RefreshToken();
+    await token.getAllTokens();
+    res.status(200).send(token.refreshTokens);
+  },
+  /**
+   * Supprimer tous les refresh tokens de la bdd
+   */
+  async deleteAllRefreshTokens(req, res) {
+    const token = new RefreshToken();
+    await token.deleteAllRefreshTokens();
+    res.status(200).send({ deleted: true });
+  },
 };
 
 module.exports = tokenController;

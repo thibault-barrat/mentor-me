@@ -84,10 +84,6 @@ router.get(
   userLikeServicesController.getLikedServicesByUserId
 ); // récupérer les services likés par le user
 
-/**
- * S'inscrire
- * @route POST /user/:id
- */
 router.post("/register", userController.createNewUser);
 
 /**
@@ -153,6 +149,26 @@ router.post(
   "/refreshToken",
   verifyRefreshToken,
   tokenController.verifyRefreshToken
+);
+
+/**
+ * Get all refresh tokens
+ */
+router.get(
+  "/refreshTokens",
+  verifyToken,
+  isAdmin,
+  tokenController.getAllRefreshTokens
+);
+
+/**
+ * Delete all refresh tokens
+ */
+router.delete(
+  "/refreshTokens",
+  verifyToken,
+  isAdmin,
+  tokenController.deleteAllRefreshTokens
 );
 
 module.exports = router;

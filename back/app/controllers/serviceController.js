@@ -21,6 +21,7 @@ const serviceController = {
       const service = new Service();
 
       await service.findOne(+id);
+      console.log(service.serviceById);
 
       if (service.serviceById.length === 0) {
         return res.status(404).send({
@@ -61,7 +62,13 @@ const serviceController = {
     try {
       const { id } = req.params;
 
-      const service = ne;
+      const service = new Service(req.body);
+
+      await service.modifyOne(+id);
+
+      res.status(200).send({
+        modified: true,
+      });
     } catch (error) {
       res.status(500).send(error);
     }

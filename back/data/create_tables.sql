@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS "users",
 "location",
 "user_likes_service",
 "role",
-"refreshTokens";
+"refreshtokens";
 -- Création de la table user
 CREATE TABLE "users" (
   id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
