@@ -5,9 +5,6 @@ import { useSelector } from 'react-redux';
 import logo from 'src/assets/images/LogoMentorMe-maxi.svg';
 import './NavBar.scss';
 
-/* creation d'un composant NavBar le composant est
-a update au moment de gérer la connexion !  */
-
 const NavBaar = () => {
   const [clicked, setClicked] = useState(false);
   const isLogged = useSelector((state) => state.user.logged);

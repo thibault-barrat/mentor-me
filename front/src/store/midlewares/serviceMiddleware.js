@@ -8,7 +8,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
     case FETCH_SERVICES: {
       const fetchServices = async () => {
         try {
-          const response = await axios.get('http://localhost:3000/services');
+          const response = await axios.get('https://api-mentorme.herokuapp.com/v1/allServices');
           store.dispatch(addServices(response.data));
         }
         catch (error) {
