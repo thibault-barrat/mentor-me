@@ -38,6 +38,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
       };
 
       searchServices();
+      next(action);
       break;
     }
     default:

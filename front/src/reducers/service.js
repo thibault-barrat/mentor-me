@@ -1,5 +1,5 @@
 import {
-  FETCH_SERVICES, ADD_SERVICES, CHANGE_SEARCH_VALUE, SEARCH_SERVICES_SUCCESS,
+  FETCH_SERVICES, ADD_SERVICES, CHANGE_SEARCH_VALUE, SEARCH_SERVICES, SEARCH_SERVICES_SUCCESS,
 } from '../actions/service';
 
 export const initialState = {
@@ -7,6 +7,8 @@ export const initialState = {
   loading: true,
   searchValue: '',
   searchResult: [],
+  searchLoading: false,
+  searchRedirect: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -34,10 +36,19 @@ const reducer = (state = initialState, action = {}) => {
         searchResult: [...state.searchResult],
       };
     }
+    case SEARCH_SERVICES: {
+      return {
+        ...state,
+        searchLoading: true,
+        searchRedirect: false,
+      };
+    }
     case SEARCH_SERVICES_SUCCESS: {
       return {
         ...state,
         searchResult: action.services,
+        searchLoading: false,
+        searchRedirect: true,
       };
     }
     default:
