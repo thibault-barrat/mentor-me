@@ -38,15 +38,22 @@ const serviceController = {
   deleteOneService: async (req, res) => {
     try {
       const { id } = req.params;
-
       const service = new Service();
-
+      console.log(req.user);
       await service.findOne(+id);
+      console.log(service.serviceById);
 
       if (service.serviceById.length === 0) {
         return res.status(404).send({
-          errorMessage: "This services does not exist",
+          errorMessage: "This service does not exist",
         });
+      }
+
+      if (
+        service.serviceById[0].mentor_id !== req.user.user_id &&
+        req.user.role !== "admin"
+      ) {
+        return res.status(401).send({ errorMessage: "Unauthorized" });
       }
 
       await service.deleteOne(+id);
