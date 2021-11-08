@@ -8,15 +8,6 @@
     "clean": "rm -rf dist",
     "clean:all": "rm -rf dist node_modules yarn.lock package-lock.json"
   },
-  "proxy": {
-    "/api": {
-      "target": "https://api-mentorme.herokuapp.com/v1",
-      "pathRewrite": {
-        "^/api": ""
-      },
-      "changeOrigin": true
-    }
-  },
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.4",
