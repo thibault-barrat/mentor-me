@@ -22,7 +22,10 @@ app.use(
 //TODO penser à mettre cors(corsOptions) ligne 10 quand le front sera déployé
 const corsOptions = {
   origin: [
-    "https://angry-mayer-669f9a.netlify.app/",
+    "https://mentor-me-oclock.netlify.app/",
+    "/.mentor-me-oclock.netlify.app$/",
+    "https://api-mentorme.herokuapp.com/v1/api-docs/",
+    "https://api-mentorme.herokuapp.com/v1/$/",
     "http://localhost:8080",
     "http://localhost:3000",
   ],

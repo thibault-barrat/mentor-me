@@ -1,13 +1,16 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import './style.scss';
-import { Link } from 'react-router-dom';
-import Field from '../../components/Field';
+import { Link, useHistory } from 'react-router-dom';
+import Field from 'src/components/Field';
+import Spinner from 'src/components/Spinner';
 import {
   changeProfileField,
   saveProfile,
   saveImage,
   sendImage,
+  logout,
+  deleteProfile,
 } from '../../actions/user';
 
 export default function profil() {
@@ -15,13 +18,19 @@ export default function profil() {
 
   // We take the details user info from the state
   const {
-    email, firstname, lastname, bio, phone, fix, avatar, uploadedImage,
+    email, firstname, lastname, bio, phone, fix, avatar, uploadedImage, loadingAvatar,
   } = useSelector((state) => state.user.details);
+
+  // We take the logged boolean from the state
+  const { logged } = useSelector((state) => state.user);
 
   // We also need to know the services and the user id to find the services proposed by the user
   const services = useSelector((state) => state.services.items);
   const id = useSelector((state) => state.user.id);
-  const proposedServices = services.filter((service) => service.user_id === id);
+  const [proposedServices, setProposedServices] = useState([]);
+  useEffect(() => {
+    setProposedServices(services.filter((service) => service.user_id === id));
+  }, [services]);
 
   // We also need to know the liked services of the user
   const likedServices = useSelector((state) => state.user.likedServices);
@@ -87,6 +96,29 @@ export default function profil() {
     }
   };
 
+  // function to handle click on log out button
+  // and dispatch an action to log out the user
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  // function to handle click on delete account button
+  // and dispatch an action to delete the user
+  const handleDelete = () => {
+    dispatch(deleteProfile());
+  };
+
+  const history = useHistory();
+
+  // Redirect to home after logout
+  useEffect(() => {
+    // If the user lauched a logout action and logged is false
+    // he will be redirected to the home page
+    if (!logged) {
+      history.replace('/');
+    }
+  }, [logged]);
+
   return (
 
     <div className="profil">
@@ -110,23 +142,28 @@ export default function profil() {
           </label>
         </div>
         <div className="profil__container-avatar">
-          <img src={avatar} alt="Avatar du profil" className="profil__avatar" />
-          <form>
-            {!validImage && <span className="profil__error">La taille de l'image doit être inférieure à 500Ko</span>}
-            <label htmlFor="avatar" className="profil__label-avatar">
-              <span className="connect-button-p">Modifier l'avatar</span>
-              <input
-                id="avatar"
-                type="file"
-                accept="image/png, image/jpeg"
-                className="profil__input-avatar"
-                onChange={handleImageUpload}
-              />
-            </label>
-            {/* <button type="submit" className="connect-button-p">Valider</button> */}
-          </form>
+          {/* We use ternary operator to display a spinner when sending new avatar to the API */}
+          {loadingAvatar ? (
+            <Spinner />
+          ) : (
+            <>
+              <img src={avatar} alt="Avatar du profil" className="profil__avatar" />
+              <form>
+                {!validImage && <span className="profil__error">La taille de l'image doit être inférieure à 500Ko</span>}
+                <label htmlFor="avatar" className="profil__label-avatar">
+                  <span className="connect-button-p">Modifier l'avatar</span>
+                  <input
+                    id="avatar"
+                    type="file"
+                    accept="image/png, image/jpeg"
+                    className="profil__input-avatar"
+                    onChange={handleImageUpload}
+                  />
+                </label>
+              </form>
+            </>
+          )}
         </div>
-
       </div>
       <div className="profil__container-bottom">
         <div className="profil__container-form">
@@ -162,7 +199,7 @@ export default function profil() {
             type="text"
             name="fix"
             placeholder="Votre numéro de teléphone fixe"
-            value={fix}
+            value={String(fix)}
             disabled={readOnly}
             onChange={handleChange}
           />
@@ -170,7 +207,7 @@ export default function profil() {
             type="text"
             name="phone"
             placeholder="Votre numéro de téléphone portable"
-            value={phone}
+            value={String(phone)}
             disabled={readOnly}
             onChange={handleChange}
           />
@@ -196,8 +233,8 @@ export default function profil() {
             </button>
           )}
           <br />
-          {/* TODO SUPPRESSION D'UN PROFIL */}
-          <button type="submit" className="connect-button-p">Supprimer mon profil</button>
+          <button type="submit" className="connect-button-p" onClick={handleDelete}>Supprimer mon profil</button>
+          <button type="submit" className="connect-button-p" onClick={handleLogout}>Se déconnecter</button>
         </div>
 
         {/* We display proposed services only if proposedServices contains items */}

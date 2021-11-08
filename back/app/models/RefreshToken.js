@@ -31,4 +31,13 @@ module.exports = class RefreshToken {
     };
     await pool.query(query);
   }
+  /**
+   * Méthode de suppression tous les refreshTokens
+   */
+  async deleteAllRefreshTokens() {
+    const query = {
+      text: `DELETE FROM refreshtokens`,
+    };
+    await pool.query(query);
+  }
 };
