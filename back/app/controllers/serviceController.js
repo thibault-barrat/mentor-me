@@ -1,3 +1,4 @@
+const { cloudinary_js_config } = require("../cloudinary");
 const Service = require("../models/service");
 
 const serviceController = {
@@ -37,15 +38,21 @@ const serviceController = {
   deleteOneService: async (req, res) => {
     try {
       const { id } = req.params;
-
       const service = new Service();
 
       await service.findOne(+id);
 
       if (service.serviceById.length === 0) {
         return res.status(404).send({
-          errorMessage: "This services does not exist",
+          errorMessage: "This service does not exist",
         });
+      }
+
+      if (
+        service.serviceById[0].mentor_id !== req.user.user_id &&
+        req.user.role !== "admin"
+      ) {
+        return res.status(401).send({ errorMessage: "Unauthorized" });
       }
 
       await service.deleteOne(+id);
@@ -77,6 +84,8 @@ const serviceController = {
   //Méthode pour creer un service
   createService: async (req, res) => {
     try {
+      const userId = req.user.user_id;
+
       for (let property in req.body) {
         if (req.body[property].length === 0) {
           return res.status(400).send({
@@ -89,7 +98,7 @@ const serviceController = {
 
       await service.insertLocation();
 
-      await service.createOne();
+      await service.createOne(userId);
 
       res.status(201).send({
         created: true,

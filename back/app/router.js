@@ -56,7 +56,6 @@ router.get("/service/:id(\\d+)", verifyToken, serviceController.getOneService);
 router.delete(
   "/service/:id(\\d+)",
   verifyToken,
-  verifyUserById,
   serviceController.deleteOneService
 );
 router.patch(
@@ -76,7 +75,7 @@ router.post(
   userLikeServicesController.likeService
 ); // liker un service
 router.delete(
-  "/user/:userId/service/:serviceId",
+  "/user/:id/service/:serviceId",
   verifyToken,
   verifyUserById,
   userLikeServicesController.dislikeService
