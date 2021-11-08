@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {
-  addServices, submitServiceSuccess, FETCH_SERVICES, SUBMIT_SERVICE,
+  addServices, submitServiceSuccess, FETCH_SERVICES, SUBMIT_SERVICE, fetchServices,
 } from '../../actions/service';
 
 const serviceMiddleware = (store) => (next) => (action) => {
@@ -23,7 +23,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
     case SUBMIT_SERVICE: {
       const {
         user: {
-          id,
+          accessToken,
         },
         services: {
           new: {
@@ -31,6 +31,15 @@ const serviceMiddleware = (store) => (next) => (action) => {
           },
         },
       } = store.getState();
+      // we create headers of the request
+      let headers = {};
+      if (accessToken !== null) {
+        headers = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      }
       const submitService = async () => {
         try {
           await axios.post('https://api-mentorme.herokuapp.com/v1/newService', {
@@ -39,11 +48,11 @@ const serviceMiddleware = (store) => (next) => (action) => {
             description,
             online,
             irl,
-            user_id: id,
             category_id: category,
             location,
-          });
+          }, headers);
           store.dispatch(submitServiceSuccess());
+          store.dispatch(fetchServices());
         }
         catch (error) {
           console.log(error);

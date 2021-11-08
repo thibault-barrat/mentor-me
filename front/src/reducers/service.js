@@ -19,6 +19,7 @@ export const initialState = {
     description: '',
     location: {},
     loading: false,
+    notifService: false,
   },
 };
 
@@ -80,6 +81,7 @@ const reducer = (state = initialState, action = {}) => {
         new: {
           ...state.new,
           loading: true,
+          notifService: false,
         },
       };
     }
@@ -97,6 +99,7 @@ const reducer = (state = initialState, action = {}) => {
           description: '',
           location: {},
           loading: false,
+          notifService: true,
         },
       };
     }
