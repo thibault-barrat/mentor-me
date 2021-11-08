@@ -27,6 +27,7 @@ function App() {
   const isLogged = useSelector((state) => state.user.logged);
   const isAdmin = useSelector((state) => state.user.isAdmin);
 
+
   // We need to have the loading state of categories and services
   const serviceLoading = useSelector((state) => state.services.loading);
   const categoryLoading = useSelector((state) => state.categories.loading);
@@ -68,7 +69,8 @@ function App() {
             <Route path="/inscription" component={Register} />
             <Route path="/connexion" component={Connect} />
             <Route path="/profil" component={Profil} />
-            <Route path="/categories" component={Categories} />
+            <Route path="/categories" exact component={Categories} />
+            <Route path="/categories/:id/services"component={Services} />
             <Route path="/nouveau-service" component={NewService} />
             <Route path="/service/:id" component={serviceId} />
           </Switch>
