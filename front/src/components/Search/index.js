@@ -36,39 +36,35 @@ export default function Search({ placeholder, buttonValue }) {
           ...service.description.split(/[^\w]/g).filter((item) => item.length > 2),
         ]);
       });
-      // we filter suggestions to remove all duplicates
-      // setSuggestions(
-      //   suggestions.filter((item, index, self) => self.indexOf(item) === index),
-      // );
-      // we filter suggestions to remove all words with less than 3 characters
-      // setSuggestions(suggestions.filter((item) => item.length > 2));
     }
   }, [services]);
 
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  // when searchValue is changed, we need to update the filteredSuggestions
+  // and the activeSuggestionIndex
+  useEffect(() => {
+    if (searchValue !== '') {
+      const filtered = suggestions.filter(
+        // we remove duplicate and filter with the value of search input
+        (suggestion, index, self) => self.indexOf(suggestion) === index
+        && suggestion.toLowerCase().slice(0, searchValue.length) === searchValue.toLowerCase(),
+      );
+      setFilteredSuggestions(filtered);
+    }
+  }, [searchValue]);
+
+  // function to handle click on a suggestion
+  const dispatch = useDispatch();
+  const handleSuggestionClick = (suggestion) => {
+    dispatch(changeSearchValue(suggestion));
+    setFilteredSuggestions([]);
+  };
+
   // function to handle change value of search field
   // to have a controlled field
-  const dispatch = useDispatch();
   const handleChange = (e) => {
     dispatch(changeSearchValue(e.target.value));
   };
-
-  // we need some state variables to manage autocompletion of the search input
-  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
-  const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-
-  // when searchValue is changed, we need to update the filteredSuggestions
-  // and the activeSuggestionIndex
-  // useEffect(() => {
-  //   if (searchValue !== '') {
-  //     const filtered = suggestions.filter(
-  //       (suggestion) => suggestions.filter((item, index, self) => self.indexOf(item) === index)
-  //       (suggestion) => suggestion.toLowerCase().includes(searchValue.toLowerCase()),
-  //     );
-  //     setFilteredSuggestions(filtered);
-  //     setActiveSuggestionIndex(0);
-  //   }
-  // }, [searchValue]);
 
   // function to handle submit of search field
   const handleSubmit = (e) => {
@@ -86,6 +82,20 @@ export default function Search({ placeholder, buttonValue }) {
           onChange={handleChange}
           value={searchValue}
         />
+        {/* if filterredSuggestions contains items we map on it to display suggestions */}
+        {filteredSuggestions.length > 0 && (
+          <ul className="search-suggestions">
+            {filteredSuggestions.map((suggestion, index) => (
+              <li
+                key={suggestion}
+                className={`search-suggestion ${index === 0 ? 'active' : ''}`}
+                onClick={() => handleSuggestionClick(suggestion)}
+              >
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        )}
         <div
           className="search-icon"
           id="icon"
