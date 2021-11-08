@@ -104,11 +104,16 @@
 	&__map {
 		width: 75%;
 		height: 400px;
-    margin-bottom: calc(vars.$gutter * 3);
+		margin-bottom: calc(vars.$gutter * 3);
 	}
-  &__error {
-    margin-bottom: 0.4rem;
+	&__error {
+		margin-bottom: 0.4rem;
 		color: rgb(248, 93, 82);
 		display: inline-block;
-  }
+	}
+	&__title {
+		text-align: center;
+		margin: calc(vars.$gutter * 2) 0;
+		font-size: calc(vars.$gutter * 2);
+	}
 }

@@ -33,7 +33,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
       } = store.getState();
       const submitService = async () => {
         try {
-          await axios.post('https://api-mentorme.herokuapp.com/v1/nouveau-service', {
+          await axios.post('https://api-mentorme.herokuapp.com/v1/newService', {
             title,
             duration,
             description,
