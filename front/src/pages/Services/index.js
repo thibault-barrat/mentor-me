@@ -22,8 +22,7 @@ export default function Services() {
   // so we need to compare if the service's category_id is = to the category's id 
   const services = servicesState.filter((item) => item.category_id === parseInt(id, 10));
 
-
-  function LocationMarker() {
+  /* function LocationMarker() {
     const [position, setPosition] = useState(null)
     const map = useMapEvents({
       click() {
@@ -40,27 +39,49 @@ export default function Services() {
         <Popup>You are here</Popup>
       </Marker>
     )
-  }
+  } */
 
-  if (services) {
+  if (services.length == 0){
+    return (
+      <p className="empty-list">La catégorie dispose d'aucun échange de compétence pour le moment.</p>
+    )
+  }
+  else {
     return (
       <div className="services">
         <h1 className="services-title">Voici les offres correspondantes à la catégorie </h1>
         <main className="services-container">
+{/* Map section */}
           <div className="services-map">
           <MapContainer center={[48.8534, 2.3488]} zoom={13} scrollWheelZoom={true}>
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-           {/*  <Marker position={[48.8534, 2.3488]}>
+            {services.map(service => (
+              <Marker 
+                key={service.id} 
+                position={[
+                  service.latitude,
+                  service.longitude
+                ]}
+              >
               <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
+                <div>
+                  <h2>{service.title}</h2>
+                  <p>
+                    {service.firstname}
+                    {service.lastname}
+                  </p>
+                </div>
               </Popup>
-            </Marker> */}
-            <LocationMarker />
+              </Marker>
+            ))}
+            {/* <LocationMarker /> */}
           </MapContainer>
           </div>
+
+{/* Services section */}
           <article className="services-cards">
             <ul>
             {/* Here we map on services to give all the infos by prop */}

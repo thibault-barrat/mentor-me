@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 // import {FcLikePlaceholder, FcLike} from 'react-icons';
 
 // Style
@@ -8,12 +9,13 @@ import './style.scss';
 
 
 export default function ServicesCard({ result }) {
+  // Here we get the categories infos from the reducer 
+  const categoryState = useSelector(state => state.categories.items);
 
-  const [visio, setVisio] = useState(true);
-  const [presentiel, setPresentiel] = useState(true);
+  const categoryName = categoryState.filter((item) => item.id === result.category_id);
 
-  const classVisio = visio ? 'tag' : 'tag tag-unselected';
-  const classPresentiel = presentiel ? 'tag' : 'tag tag-unselected';
+  const classVisio = result.online ? 'tag' : 'tag tag-unselected';
+  const classPresentiel = result.irl ? 'tag' : 'tag tag-unselected';
 
   return (
     <Link
@@ -21,7 +23,9 @@ export default function ServicesCard({ result }) {
     >
       <li className="card">
         <header className="tags">
-          <div className="tag">Informatique</div>
+          {categoryName.map((item)=> (
+            <div className="tag" key={item.id}>{item.name}</div>
+          ))}
           <div className={classVisio}>Visio</div>
           <div className={classPresentiel}>Présentiel</div>
         </header>
@@ -29,7 +33,7 @@ export default function ServicesCard({ result }) {
           <div className="card-image-container">
             <img 
               className="card-image"
-              src="https://images.assetsdelivery.com/compings_v2/thesomeday123/thesomeday1231712/thesomeday123171200009.jpg" 
+              src={result.avatar_url} 
               alt="Photo de profil"
             />
           </div>
@@ -38,10 +42,8 @@ export default function ServicesCard({ result }) {
               {result.title}
             </h2>
             <span className="card-name">
-              Nom du mentor
-            </span>
-            <span className="card-location">
-              Location
+              {result.firstname}
+              {result.lastname}
             </span>
           </div>
         </div>
@@ -56,6 +58,7 @@ ServicesCard.propTypes = {
     PropTypes.shape({
       title: PropTypes.string,
       id: PropTypes.number,
+      category_id: PropTypes.number,
     }),
   ).isRequired,
 };
