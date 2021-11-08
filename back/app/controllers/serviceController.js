@@ -1,3 +1,4 @@
+const { cloudinary_js_config } = require("../cloudinary");
 const Service = require("../models/service");
 
 const serviceController = {
@@ -77,6 +78,8 @@ const serviceController = {
   //Méthode pour creer un service
   createService: async (req, res) => {
     try {
+      const userId = req.user.user_id;
+
       for (let property in req.body) {
         if (req.body[property].length === 0) {
           return res.status(400).send({
@@ -89,7 +92,7 @@ const serviceController = {
 
       await service.insertLocation();
 
-      await service.createOne();
+      await service.createOne(userId);
 
       res.status(201).send({
         created: true,

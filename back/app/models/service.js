@@ -87,17 +87,17 @@ module.exports = class Service {
     await pool.query(query);
   }
 
-  async createOne() {
+  async createOne(userId) {
+    console.log("model: ", userId);
     const query = {
-      text: `INSERT INTO service ("title", "duration", "description", "online", "irl", "is_published","user_id", "category_id","location_id" ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+      text: `INSERT INTO service ("title", "duration", "description", "online", "irl", "user_id", "category_id","location_id" ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
       values: [
         this.title,
         this.duration,
         this.description,
         this.online,
         this.irl,
-        this.is_published,
-        this.user_id,
+        userId,
         this.category_id,
         this.location_id,
       ],
@@ -114,24 +114,6 @@ module.exports = class Service {
     const result = await pool.query(query);
 
     this.location_id = result.rows[0].id;
-  }
-
-  async createOne() {
-    const query = {
-      text: `INSERT INTO service ("title", "duration", "description", "online", "irl","user_id", "category_id","location_id" ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
-      values: [
-        this.title,
-        this.duration,
-        this.description,
-        this.online,
-        this.irl,
-        this.user_id,
-        this.category_id,
-        this.location_id,
-      ],
-    };
-
-    await pool.query(query);
   }
 
   async searchService(fieldSearch) {
