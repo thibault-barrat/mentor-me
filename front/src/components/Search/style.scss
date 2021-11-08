@@ -2,6 +2,8 @@
 
 .search {
   padding-top: vars.$gutter;
+  max-width: 450px;
+  margin: auto;
   
   &-form{
     display: flex;
@@ -52,25 +54,41 @@
 }
 
 /* for every screens larger than 768px */
-@media (min-width: 768px) {
+@media (min-width: vars.$breakpoint-sm) {
   .search {
+    max-width: 500px;
+    margin: auto;
+
     &-form{
       display: flex;
       flex-wrap: nowrap;
-      justify-content: space-around;
+      justify-content: space-evenly;
       align-items: baseline;
     }
     &-input{
       width: 60%;
     }
     &-button{
-      width: 30%;
+      width: 130px;
       font-size: vars.$gutter;
       padding: calc(vars.$gutter/2);
     }
     &-icon{
       position: absolute;
-      left: 4.5%;
+      left: 7.5%;
+      top: 8px;
+    }
+  }
+}
+@media (min-width: vars.$breakpoint-md) {
+  .search {
+    max-width: 1000px;
+    margin: auto;
+   
+   
+    &-icon{
+      position: absolute;
+      left: 10.5%;
       top: 8px;
     }
   }
