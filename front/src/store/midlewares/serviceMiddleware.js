@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import axios from 'axios';
 import { addServices, FETCH_SERVICES } from '../../actions/service';
 
