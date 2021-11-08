@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS "users",
 "location",
 "user_likes_service",
 "role",
-"refreshTokens";
+"refreshtokens";
 -- Création de la table user
 CREATE TABLE "users" (
   id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -32,7 +32,7 @@ CREATE TABLE "service" (
   description text NOT NULL,
   online BOOLEAN NOT NULL DEFAULT FALSE,
   irl BOOLEAN NOT NULL DEFAULT FALSE,
-  is_published BOOLEAN NOT NULL DEFAULT FALSE,
+  is_published BOOLEAN NOT NULL DEFAULT TRUE,
   user_id int NOT NULL REFERENCES "users"("id") ON DELETE CASCADE,
   category_id INT NOT NULL,
   location_id INT NOT NULL,

@@ -1,7 +1,6 @@
 const pool = require("../database");
 
 module.exports = class Service {
-
   constructor(object) {
     for (const property in object) {
       this[property] = object[property];
@@ -10,22 +9,18 @@ module.exports = class Service {
 
   async findAll() {
     const query = {
-      text: "SELECT * FROM service",
+      text: "SELECT * FROM service JOIN location ON location.id = service.location_id",
     };
-
     const data = await pool.query(query);
-
     this.allServices = data.rows;
   }
 
   async findOne(id) {
     const query = {
-      text: "SELECT * FROM service WHERE id=$1",
+      text: "SELECT * FROM service JOIN location ON location.id = service.location_id JOIN users ON users.id = service.user_id WHERE service.id=$1",
       values: [id],
     };
-
     const data = await pool.query(query);
-
     this.serviceById = data.rows;
   }
 
@@ -39,11 +34,10 @@ module.exports = class Service {
   }
 
   async modifyOne(id) {
-
     await this.findOne(id);
 
     if (!this.title || this.title.lenght === 0) {
-      this.title = this.serviceById[0].name;
+      this.title = this.serviceById[0].title;
     }
 
     if (!this.duration || this.duration.lenght === 0) {
@@ -86,15 +80,14 @@ module.exports = class Service {
         this.is_published,
         this.category_id,
         this.location_id,
-        id
+        id,
       ],
     };
 
     await pool.query(query);
-  };
+  }
 
   async createOne() {
-
     const query = {
       text: `INSERT INTO service ("title", "duration", "description", "online", "irl", "is_published","user_id", "category_id","location_id" ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
       values: [
@@ -106,10 +99,48 @@ module.exports = class Service {
         this.is_published,
         this.user_id,
         this.category_id,
-        this.location_id
+        this.location_id,
+      ],
+    };
+    await pool.query(query);
+  }
+
+  async insertLocation() {
+    const query = {
+      text: `INSERT INTO location (latitude, longitude) VALUES ($1,$2) RETURNING id;`,
+      values: [this.location.lat, this.location.lng],
+    };
+
+    const result = await pool.query(query);
+
+    this.location_id = result.rows[0].id;
+  }
+
+  async createOne() {
+    const query = {
+      text: `INSERT INTO service ("title", "duration", "description", "online", "irl","user_id", "category_id","location_id" ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
+      values: [
+        this.title,
+        this.duration,
+        this.description,
+        this.online,
+        this.irl,
+        this.user_id,
+        this.category_id,
+        this.location_id,
       ],
     };
 
     await pool.query(query);
-  };
+  }
+
+  async searchService(fieldSearch) {
+    const query = {
+      text: `SELECT * FROM service WHERE "title" LIKE '%'||$1||'%';`,
+      values: [fieldSearch],
+    };
+
+    const result = await pool.query(query);
+    this.searchResults = result.rows;
+  }
 };
