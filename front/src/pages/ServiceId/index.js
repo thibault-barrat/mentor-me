@@ -57,7 +57,7 @@ export default function serviceId() {
         </div>
         <div className="user__block">
           <h1 className="user__title">Proposé par : {foundService.firstname} {foundService.lastname}</h1>
-          <img className="user__img" src={avatarimg} alt="mentor img" />
+          <img className="user__img" src={foundService.avatar_url} alt="mentor img" />
           <p className="user__desc">{foundService.biography}</p>
         </div>
       </div>
