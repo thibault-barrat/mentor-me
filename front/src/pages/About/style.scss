@@ -17,7 +17,7 @@
     margin-bottom: 1rem;
     @media (min-width: vars.$breakpoint-sm){
       width: 60%;
-      margin-left: 22%;
+      
     }
   }
 }
@@ -76,7 +76,7 @@
     align-items: center;
     @media (min-width: vars.$breakpoint-sm){
       flex-direction: row;
-
+      align-items: flex-start;
     }
   }
 
@@ -86,14 +86,21 @@
   }
   
   &__img {
-    width: 65%;
     border-radius: 30px;
+    width: 60%;
+    object-fit: cover;
+    max-height: 230px;
+    min-height: 230px;
   }
 
   &__name {
    margin-top: 1rem;
    margin-bottom: 1rem;
   }
+}
+
+.position__img {
+  object-position: top;
 }
 
 .contactform{

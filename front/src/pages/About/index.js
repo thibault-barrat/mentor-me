@@ -1,7 +1,11 @@
 /* eslint-disable max-len */
 import './style.scss';
 import { useState } from 'react';
-import avatarimg from '../../assets/images/business-gfb594ee9b_1280.jpg';
+import avatarimgf from '../../assets/images/florent.jpg';
+import avatarimgt from '../../assets/images/thibault.jpg';
+import avatarimgw from '../../assets/images/wilfried.jpg';
+import avatarimgd from '../../assets/images/david.jpg';
+import avatarimgm from '../../assets/images/marion.jpg';
 
 // component about
 
@@ -55,23 +59,23 @@ const About = () => {
       <h1 className="inter__title">L'équipe</h1>
       <div className="avatar__container">
         <div className="avatar__comp">
-          <img className="avatar__img" src={avatarimg} alt="personnes du groupe" />
-          <h2 className="avatar__name">Marion : Dev back <br />et git master</h2>
+          <img className="avatar__img" src={avatarimgm} alt="personnes du groupe" />
+          <h2 className="avatar__name position__img">Marion : Dev back <br />et git master</h2>
         </div>
         <div className="avatar__comp">
-          <img className="avatar__img" src={avatarimg} alt="personnes du groupe" />
+          <img className="avatar__img" src={avatarimgw} alt="personnes du groupe" />
           <h2 className="avatar__name">Wilfried : Lead dev back</h2>
         </div>
         <div className="avatar__comp">
-          <img className="avatar__img" src={avatarimg} alt="personnes du groupe" />
-          <h2 className="avatar__name">Florent : Product Owner <br />et dev front</h2>
+          <img className="avatar__img" src={avatarimgf} alt="personnes du groupe" />
+          <h2 className="avatar__name ">Florent : Product Owner <br />et dev front</h2>
         </div>
         <div className="avatar__comp">
-          <img className="avatar__img" src={avatarimg} alt="personnes du groupe" />
+          <img className="avatar__img" src={avatarimgt} alt="personnes du groupe" />
           <h2 className="avatar__name">Thibault : Scrum master <br /> et dev front</h2>
         </div>
         <div className="avatar__comp">
-          <img className="avatar__img" src={avatarimg} alt="personnes du groupe" />
+          <img className="avatar__img position__img" src={avatarimgd} alt="personnes du groupe" />
           <h2 className="avatar__name">David : Lead dev front</h2>
         </div>
       </div>
