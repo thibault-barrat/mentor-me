@@ -213,6 +213,7 @@ const userMiddleware = (store) => (next) => (action) => {
       break;
     }
     case DELETE_PROFILE: {
+      const token = localStorage.getItem('refreshToken');
       const { user:
         { id,
           accessToken,
@@ -228,7 +229,14 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       const deleteProfile = async () => {
         try {
-          await axios.delete(`https://api-mentorme.herokuapp.com/v1/user/${id}`, headers);
+          await axios.delete(`https://api-mentorme.herokuapp.com/v1/user/${id}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            data: {
+              token,
+            },
+          });
           // une fois qu'on a la réponse, on peut venir stocker les infos du user
           // dans le state => modifier le state => dispatch d'action
           store.dispatch(deleteToken());
