@@ -27,9 +27,18 @@ const serviceMiddleware = (store) => (next) => (action) => {
         user:
         { accessToken },
       } = store.getState();
+      // we create headers of the request
+      let headers = {};
+      if (accessToken !== null) {
+        headers = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      }
       const searchServices = async () => {
         try {
-          const response = await axios.get(`https://api-mentorme.herokuapp.com/v1/search?token=${accessToken}&service=${searchValue}`);
+          const response = await axios.get(`https://api-mentorme.herokuapp.com/v1/search?service=${searchValue}`, headers);
           store.dispatch(searchServicesSuccess(response.data));
         }
         catch (error) {

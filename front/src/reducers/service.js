@@ -40,7 +40,7 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         searchLoading: true,
-        searchRedirect: false,
+        searchRedirect: true,
       };
     }
     case SEARCH_SERVICES_SUCCESS: {
@@ -48,7 +48,7 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         searchResult: action.services,
         searchLoading: false,
-        searchRedirect: true,
+        searchRedirect: false,
       };
     }
     default:
