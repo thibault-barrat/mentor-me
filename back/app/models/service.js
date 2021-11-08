@@ -9,7 +9,7 @@ module.exports = class Service {
 
   async findAll() {
     const query = {
-      text: "SELECT * FROM service JOIN location ON location.id = service.location_id",
+      text: "SELECT * FROM service JOIN location ON location.id = service.location_id JOIN users ON users.id = service.user_id",
     };
     const data = await pool.query(query);
     this.allServices = data.rows;
