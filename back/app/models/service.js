@@ -88,7 +88,6 @@ module.exports = class Service {
   }
 
   async createOne(userId) {
-    console.log("model: ", userId);
     const query = {
       text: `INSERT INTO service ("title", "duration", "description", "online", "irl", "user_id", "category_id","location_id" ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
       values: [
