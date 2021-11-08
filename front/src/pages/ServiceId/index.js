@@ -40,7 +40,7 @@ export default function serviceId() {
           <div className="desc__container">
             <AiOutlineHeart />
             <h1 className="desc__item user__title">{foundService.title}</h1>
-            <p className="desc__item">{foundService.description}</p>
+            <p className="desc__item desc__text__s">{foundService.description}</p>
             <span className="desc__item">{foundService.duration}</span>
             <button className="connect-button" type="button"> {foundService.email}</button>
           </div>
