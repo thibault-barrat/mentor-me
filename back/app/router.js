@@ -75,7 +75,7 @@ router.post(
   userLikeServicesController.likeService
 ); // liker un service
 router.delete(
-  "/user/:userId/service/:serviceId",
+  "/user/:id/service/:serviceId",
   verifyToken,
   verifyUserById,
   userLikeServicesController.dislikeService

@@ -3,7 +3,7 @@ const pool = require("../database");
 module.exports = class UserLikesService {
   async getLikedServiceForOneUser(id) {
     const query = {
-      text: `SELECT *
+      text: `SELECT us.service_id
         FROM user_likes_service as us
         JOIN service ON service.id=us.service_id
         WHERE us.user_id = $1;`,
