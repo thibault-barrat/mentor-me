@@ -39,9 +39,8 @@ const serviceController = {
     try {
       const { id } = req.params;
       const service = new Service();
-      console.log(req.user);
+
       await service.findOne(+id);
-      console.log(service.serviceById);
 
       if (service.serviceById.length === 0) {
         return res.status(404).send({
