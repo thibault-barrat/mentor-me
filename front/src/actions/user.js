@@ -13,6 +13,32 @@ export const SAVE_PROFILE = 'SAVE_PROFILE';
 export const SAVE_PROFILE_SUCCESS = 'SAVE_PROFILE_SUCCESS';
 export const SAVE_IMAGE = 'SAVE_IMAGE';
 export const SEND_IMAGE = 'SEND_IMAGE';
+export const SEND_IMAGE_SUCCESS = 'SEND_IMAGE_SUCCESS';
+export const REFRESH_TOKEN = 'REFRESH_TOKEN';
+export const LOGOUT = 'LOGOUT';
+export const DELETE_TOKEN = 'DELETE_TOKEN';
+export const DELETE_PROFILE = 'DELETE_PROFILE';
+export const DELETE_PROFILE_SUCCESS = 'DELETE_PROFILE_SUCCESS';
+
+export const deleteProfileSuccess = () => ({
+  type: DELETE_PROFILE_SUCCESS,
+});
+
+export const deleteProfile = () => ({
+  type: DELETE_PROFILE,
+});
+
+export const deleteToken = () => ({
+  type: DELETE_TOKEN,
+});
+
+export const logout = () => ({
+  type: LOGOUT,
+});
+
+export const refreshToken = () => ({
+  type: REFRESH_TOKEN,
+});
 
 export const changeLoginField = (value, name) => ({
   type: CHANGE_LOGIN_FIELD,
@@ -33,10 +59,11 @@ export const createPasswordError = () => ({
 });
 
 // eslint-disable-next-line camelcase
-export const saveUser = ({ connected, user_id }) => ({
+export const saveUser = (role, id, accessToken) => ({
   type: SAVE_USER,
-  connected,
-  id: user_id,
+  role,
+  id,
+  accessToken,
 });
 
 export const changeRegisterField = (value, name) => ({
@@ -92,4 +119,8 @@ export const saveImage = (image) => ({
 
 export const sendImage = () => ({
   type: SEND_IMAGE,
+});
+
+export const sendImageSuccess = () => ({
+  type: SEND_IMAGE_SUCCESS,
 });
