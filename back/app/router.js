@@ -56,7 +56,6 @@ router.get("/service/:id(\\d+)", verifyToken, serviceController.getOneService);
 router.delete(
   "/service/:id(\\d+)",
   verifyToken,
-  verifyUserById,
   serviceController.deleteOneService
 );
 router.patch(
