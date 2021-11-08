@@ -5,6 +5,7 @@ const userController = require("./controllers/userController");
 const categoryController = require("./controllers/categoryController");
 const serviceController = require("./controllers/serviceController");
 const tokenController = require("./controllers/tokenController");
+const userLikeServicesController = require("./controllers/userLikeServicesController");
 
 // import des middlewares
 const {
@@ -50,11 +51,41 @@ router.get(
 ); // Route pour avoir tous les services d'une catégorie
 
 /* Services */
-router.get("/allServices", serviceController.getAllServicezz); // Route pour tout les services
-router.get("/service/:id(\\d+)", serviceController.getOneService); // Route pour un service
-router.delete("/service/:id(\\d+)", serviceController.deleteOneService); // Route pour supprimer un service
-router.patch("/service/:id(\\d+)", serviceController.modifyService); // Route pour modifier un service
-router.post("/service/", serviceController.createService); // Route pour creer un service
+router.get("/allServices", serviceController.getAllServicezz);
+router.get("/service/:id(\\d+)", verifyToken, serviceController.getOneService);
+router.delete(
+  "/service/:id(\\d+)",
+  verifyToken,
+  serviceController.deleteOneService
+);
+router.patch(
+  "/service/:id(\\d+)",
+  verifyToken,
+  verifyUserById,
+  serviceController.modifyService
+);
+router.post("/newService", verifyToken, serviceController.createService);
+router.get("/search", verifyToken, serviceController.searchOneService);
+
+/* Like Service */
+router.post(
+  "/user/:id/service/:serviceId",
+  verifyToken,
+  verifyUserById,
+  userLikeServicesController.likeService
+); // liker un service
+router.delete(
+  "/user/:id/service/:serviceId",
+  verifyToken,
+  verifyUserById,
+  userLikeServicesController.dislikeService
+); // dislike un service
+router.get(
+  "/user/:id/likedServices",
+  verifyToken,
+  verifyUserById,
+  userLikeServicesController.getLikedServicesByUserId
+); // récupérer les services likés par le user
 
 router.post("/register", userController.createNewUser);
 

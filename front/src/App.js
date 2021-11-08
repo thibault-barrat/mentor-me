@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -13,6 +14,7 @@ import Register from './pages/Register';
 import Connect from './pages/Connect';
 import Profil from './pages/Profil';
 import Categories from './pages/Categories';
+import serviceId from './pages/ServiceId';
 import NavBaar from './components/NavBaar';
 import Footer from './components/Footer';
 import { fetchCategories } from './actions/category';
@@ -67,7 +69,11 @@ function App() {
             <Route path="/connexion" component={Connect} />
             <Route path="/profil" component={Profil} />
             <Route path="/categories" component={Categories} />
+<<<<<<< HEAD
             <Route path="/nouveau-service" component={NewService} />
+=======
+            <Route path="/service/:id" component={serviceId} />
+>>>>>>> dev
           </Switch>
         )}
       <AuthVerify />
