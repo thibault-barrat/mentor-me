@@ -20,12 +20,11 @@
 	margin-bottom: calc(vars.$gutter * 2);
 	text-align: center;
 	color: vars.$text-color;
-	max-width: 700px;
 	margin: 0 auto 2rem;
 	min-height: 400px;
 	display: flex;
+  flex-direction: column;
 	justify-content: center;
-	align-items: center;
 	&__title {
 		font-size: 1.4rem;
 		margin: vars.$gutter 0;
@@ -34,6 +33,14 @@
 	&__text {
 		line-height: 1.1rem;
 	}
+  &__container {
+    max-width: 700px;
+    align-self: center;
+  }
+  &__button {
+    align-self: center;
+    line-height: 1.3rem;
+  }
 }
 
 .popular-category {

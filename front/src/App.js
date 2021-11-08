@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 // eslint-disable-next-line camelcase
 import jwt_decode from 'jwt-decode';
 import Loading from 'src/components/Loading';
+import NewService from 'src/pages/NewService';
 import AuthVerify from 'src/components/AuthVerify';
 import Notif from 'src/components/Notif';
 import Home from './pages/Home';
@@ -68,6 +69,7 @@ function App() {
             <Route path="/connexion" component={Connect} />
             <Route path="/profil" component={Profil} />
             <Route path="/categories" component={Categories} />
+            <Route path="/nouveau-service" component={NewService} />
             <Route path="/service/:id" component={serviceId} />
           </Switch>
         )}
