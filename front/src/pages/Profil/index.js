@@ -14,8 +14,6 @@ import {
 } from '../../actions/user';
 
 export default function profil() {
-  // TODO Ajouter loader pendant la reqête POST
-
   // We take the details user info from the state
   const {
     email, firstname, lastname, bio, phone, fix, avatar, uploadedImage, loadingAvatar,
@@ -29,7 +27,7 @@ export default function profil() {
   const id = useSelector((state) => state.user.id);
   const [proposedServices, setProposedServices] = useState([]);
   useEffect(() => {
-    setProposedServices(services.filter((service) => service.user_id === id));
+    setProposedServices(services.filter((service) => service.mentor_id === id));
   }, [services]);
 
   // We also need to know the liked services of the user
@@ -243,7 +241,7 @@ export default function profil() {
             <h1 className="profil__subtitle">J'ai proposé :</h1>
 
             {proposedServices.map((service) => (
-              <Link key={service.id} to={`/services/${service.id}`}>
+              <Link key={service.id} to={`/service/${service.id}`}>
                 <div className="proposed__card">
                   <span className="card__name">{service.title}</span>
                   <img
@@ -265,7 +263,7 @@ export default function profil() {
           <div className="profil__container-ann-fav">
             <h1 className="profil__subtitle">Mes annonces favorites :</h1>
             {likedServices.map((service) => (
-              <Link key={service.id} to={`/services/${service.id}`}>
+              <Link key={service.id} to={`/service/${service.id}`}>
                 <div className="proposed__card">
                   <span className="card__name">{service.title}</span>
                   <img
