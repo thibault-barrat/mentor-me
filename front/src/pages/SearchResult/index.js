@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import ServicesList from 'src/components/ServicesList';
 import Loading from 'src/components/Loading';
 import './style.scss';
 
@@ -22,13 +23,7 @@ const SearchResult = () => {
       {/* If searchLoading is true, we display the loader */}
       {searchLoading && <Loading />}
       {!searchLoading && searchResult.length > 0 && (
-        <ul>
-          {filteredServices.map((service) => (
-            <li key={service.id}>
-              <a href={`/services/${service.id}`}>{service.title}</a>
-            </li>
-          ))}
-        </ul>
+        <ServicesList services={filteredServices} />
       )}
       {!searchLoading && searchResult.length === 0 && (
         <p className="search-result__no-result">

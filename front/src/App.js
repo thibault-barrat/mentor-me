@@ -1,9 +1,11 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 // eslint-disable-next-line camelcase
 import jwt_decode from 'jwt-decode';
 import Loading from 'src/components/Loading';
+import NewService from 'src/pages/NewService';
 import AuthVerify from 'src/components/AuthVerify';
 import Notif from 'src/components/Notif';
 import Home from './pages/Home';
@@ -11,7 +13,9 @@ import About from './pages/About';
 import Register from './pages/Register';
 import Connect from './pages/Connect';
 import Profil from './pages/Profil';
+import Services from './pages/Services';
 import Categories from './pages/Categories';
+import serviceId from './pages/ServiceId';
 import NavBaar from './components/NavBaar';
 import Footer from './components/Footer';
 import { fetchCategories } from './actions/category';
@@ -66,8 +70,11 @@ function App() {
             <Route path="/inscription" component={Register} />
             <Route path="/connexion" component={Connect} />
             <Route path="/profil" component={Profil} />
-            <Route path="/categories" component={Categories} />
             <Route path="/services" component={SearchResult} />
+            <Route path="/categories" exact component={Categories} />
+            <Route path="/categories/:id/services" component={Services} />
+            <Route path="/nouveau-service" component={NewService} />
+            <Route path="/service/:id" component={serviceId} />
           </Switch>
         )}
       <AuthVerify />

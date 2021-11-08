@@ -20,10 +20,10 @@ VALUES
   (
     'sport',
     '#a7fb1c',
-    'https://cdn.pixabay.com/photo/2015/05/26/23/52/technology-785742_960_720.jpg'
+    'https://cdn.pixabay.com/photo/2017/05/25/15/08/jogging-2343558_960_720.jpg'
   ),
   (
-    'cuisine',
+    'bricolage',
     '#dad83a',
     'https://cdn.pixabay.com/photo/2015/07/11/14/53/plumbing-840835_960_720.jpg'
   ),
