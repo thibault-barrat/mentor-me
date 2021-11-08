@@ -69,11 +69,8 @@ function App() {
             <Route path="/connexion" component={Connect} />
             <Route path="/profil" component={Profil} />
             <Route path="/categories" component={Categories} />
-<<<<<<< HEAD
             <Route path="/nouveau-service" component={NewService} />
-=======
             <Route path="/service/:id" component={serviceId} />
->>>>>>> dev
           </Switch>
         )}
       <AuthVerify />
