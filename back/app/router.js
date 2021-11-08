@@ -2,6 +2,11 @@ const { Router } = require("express");
 
 // import des controllers
 const userController = require("./controllers/userController");
+const categoryController = require("./controllers/categoryController");
+const serviceController = require("./controllers/serviceController");
+const tokenController = require("./controllers/tokenController");
+const userLikeServicesController = require("./controllers/userLikeServicesController");
+
 // import des middlewares
 const {
   verifyToken,
@@ -9,11 +14,6 @@ const {
   verifyUserById,
   verifyRefreshToken,
 } = require("./middlewares/auth");
-
-const categoryController = require("./controllers/categoryController");
-
-const serviceController = require("./controllers/serviceController");
-const tokenController = require("./controllers/tokenController");
 
 const router = Router();
 
@@ -52,14 +52,42 @@ router.get(
 
 /* Services */
 router.get("/allServices", serviceController.getAllServicezz);
-router.get("/services/:id(\\d+)", serviceController.getOneService);
-router.delete("/services/:id(\\d+)", serviceController.deleteOneService);
-router.patch("/services/:id(\\d+)", serviceController.modifyService);
+router.get("/service/:id(\\d+)", verifyToken, serviceController.getOneService);
+router.delete(
+  "/service/:id(\\d+)",
+  verifyToken,
+  verifyUserById,
+  serviceController.deleteOneService
+);
+router.patch(
+  "/service/:id(\\d+)",
+  verifyToken,
+  verifyUserById,
+  serviceController.modifyService
+);
+router.post("/newService", verifyToken, serviceController.createService);
+router.get("/search", verifyToken, serviceController.searchOneService);
 
-/**
- * S'inscrire
- * @route POST /user/:id
- */
+/* Like Service */
+router.post(
+  "/user/:id/service/:serviceId",
+  verifyToken,
+  verifyUserById,
+  userLikeServicesController.likeService
+); // liker un service
+router.delete(
+  "/user/:userId/service/:serviceId",
+  verifyToken,
+  verifyUserById,
+  userLikeServicesController.dislikeService
+); // dislike un service
+router.get(
+  "/user/:id/likedServices",
+  verifyToken,
+  verifyUserById,
+  userLikeServicesController.getLikedServicesByUserId
+); // récupérer les services likés par le user
+
 router.post("/register", userController.createNewUser);
 
 /**
@@ -84,12 +112,7 @@ router.get("/allUsers", verifyToken, isAdmin, userController.getAllUsers);
  * Récupérer un user par son id
  * @route GET /user/:id
  */
-router.get(
-  "/user/:id(\\d+)",
-  verifyToken,
-  verifyUserById,
-  userController.getOneUser
-);
+router.get("/user/:id(\\d+)", verifyToken, userController.getOneUser);
 
 /**
  * Modifier le profil d'un user
@@ -130,6 +153,26 @@ router.post(
   "/refreshToken",
   verifyRefreshToken,
   tokenController.verifyRefreshToken
+);
+
+/**
+ * Get all refresh tokens
+ */
+router.get(
+  "/refreshTokens",
+  verifyToken,
+  isAdmin,
+  tokenController.getAllRefreshTokens
+);
+
+/**
+ * Delete all refresh tokens
+ */
+router.delete(
+  "/refreshTokens",
+  verifyToken,
+  isAdmin,
+  tokenController.deleteAllRefreshTokens
 );
 
 module.exports = router;

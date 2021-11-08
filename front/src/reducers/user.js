@@ -11,6 +11,9 @@ import {
   SAVE_PROFILE,
   SAVE_PROFILE_SUCCESS,
   SAVE_IMAGE,
+  DELETE_TOKEN,
+  SEND_IMAGE_SUCCESS,
+  DELETE_PROFILE_SUCCESS,
 } from '../actions/user';
 
 export const initialState = {
@@ -20,6 +23,8 @@ export const initialState = {
   password: '',
   token: null,
   id: null,
+  accessToken: null,
+  logout: false,
   register: {
     email: '',
     password: '',
@@ -42,6 +47,10 @@ export const initialState = {
     fix: '',
     avatar: 'https://i.imgur.com/Z9fVYeP.png',
     uploadedImage: null,
+    loadingAvatar: false,
+    notifUpdate: false,
+    notifAvatar: false,
+    notifDelete: false,
   },
   likedServices: [],
 };
@@ -83,8 +92,11 @@ const reducer = (state = initialState, action = {}) => {
         likedServices: [
           ...state.likedServices,
         ],
-        logged: action.connected,
+        logged: true,
         id: action.id,
+        role: action.role,
+        accessToken: action.accessToken,
+        logout: false,
       };
     }
     case CREATE_MAIL_ERROR: {
@@ -197,6 +209,10 @@ const reducer = (state = initialState, action = {}) => {
           fix: action.fix,
           avatar: action.avatar,
           uploadedImage: null,
+          notifUpdate: false,
+          notifAvatar: false,
+          notifDelete: false,
+          loadingAvatar: false,
         },
         register: {
           ...state.register,
@@ -236,6 +252,7 @@ const reducer = (state = initialState, action = {}) => {
         details: {
           ...state.details,
           loading: true,
+          notifUpdate: false,
         },
         errors: {
           ...state.errors,
@@ -254,6 +271,7 @@ const reducer = (state = initialState, action = {}) => {
         details: {
           ...state.details,
           loading: false,
+          notifUpdate: true,
         },
         errors: {
           ...state.errors,
@@ -272,6 +290,66 @@ const reducer = (state = initialState, action = {}) => {
         details: {
           ...state.details,
           uploadedImage: action.image,
+          notifAvatar: false,
+          loadingAvatar: true,
+        },
+        errors: {
+          ...state.errors,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
+      };
+    }
+    case SEND_IMAGE_SUCCESS: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+        },
+        details: {
+          ...state.details,
+          notifAvatar: true,
+        },
+        errors: {
+          ...state.errors,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
+      };
+    }
+    case DELETE_TOKEN: {
+      return {
+        ...state,
+        logged: false,
+        accessToken: null,
+        role: '',
+        id: null,
+        logout: true,
+        register: {
+          ...state.register,
+        },
+        details: {
+          ...state.details,
+        },
+        errors: {
+          ...state.errors,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
+      };
+    }
+    case DELETE_PROFILE_SUCCESS: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+        },
+        details: {
+          ...state.details,
+          notifDelete: true,
         },
         errors: {
           ...state.errors,
