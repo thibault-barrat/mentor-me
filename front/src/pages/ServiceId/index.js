@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { AiOutlineHeart } from 'react-icons/ai';
-import avatarimg from '../../assets/images/business-gfb594ee9b_1280.jpg';
 import './style.scss';
 
 export default function serviceId() {

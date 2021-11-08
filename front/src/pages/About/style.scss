@@ -11,6 +11,7 @@
   &__title {
     font-weight: bold;
     font-size: 2rem;
+    margin-bottom: 1rem;
   }
   &__text {
     margin-bottom: 1rem;
@@ -115,8 +116,15 @@
     padding: vars.$gutter;
     margin-bottom: calc(vars.$gutter*3);
     border: solid 2px #dcdcdc; 
+    border-radius: 20px;
     @media (min-width: vars.$breakpoint-sm){
       width: 45%;
     }
   }
+}
+
+.inter__title {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.4rem;
 }
