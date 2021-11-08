@@ -80,7 +80,7 @@ module.exports = class User {
    */
   async findOne(id, showPassword = false) {
     const query = {
-      text: "SELECT * FROM users WHERE id=$1",
+      text: `SELECT * FROM users WHERE id=$1`,
       values: [id],
     };
     const data = await pool.query(query);

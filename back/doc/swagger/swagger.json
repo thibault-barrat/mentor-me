@@ -21,6 +21,14 @@
     {
       "name": "User",
       "description": "All routes related to User."
+    },
+    {
+      "name": "Category",
+      "description": "All routes related to Category."
+    },
+    {
+      "name": "Service",
+      "description": "All routes related to Service."
     }
   ],
   "definitions": {
@@ -233,6 +241,75 @@
         "responses": {
           "200": {
             "description": "all users"
+          }
+        }
+      }
+    },
+    "/allCategories": {
+      "get": {
+        "tags": ["Category"],
+        "summary": "Get all categories",
+        "description": "available for users and visitors",
+        "responses": {
+          "200": {
+            "description": "all categories"
+          }
+        }
+      }
+    },
+    "/category/{id}": {
+      "get": {
+        "tags": ["Category"],
+        "summary": "Get category by id",
+        "description": "only available for connected users",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "id of the category we want to find",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "specific category"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Category"],
+        "summary": "new category",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Form",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "created"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Category"],
+        "summary": "Delete one category by id",
+        "description": "only available for admins",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "id of the category we want to delete",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "deleted category"
           }
         }
       }
