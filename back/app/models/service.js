@@ -117,7 +117,7 @@ module.exports = class Service {
 
   async searchService(fieldSearch) {
     const query = {
-      text: `SELECT id FROM service WHERE LOWER("title") LIKE '%'||$1||'%' OR LOWER("description") LIKE '%'||$1||'%'`,
+      text: `SELECT id FROM service WHERE LOWER("title") LIKE LOWER('%'||$1||'%') OR LOWER("description") LIKE LOWER('%'||$1||'%')`,
       values: [fieldSearch],
     };
 
