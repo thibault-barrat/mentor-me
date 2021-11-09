@@ -49,6 +49,13 @@ module.exports = merge(common, {
       stats: 'minimal',
 
     },
+    proxy: {
+      '/api': {
+        target: 'https://api-mentorme.herokuapp.com/v1',
+        pathRewrite: { '^/api': '' },
+        changeOrigin: true,
+      },
+    },
     static: {
       directory: paths.build,
     },

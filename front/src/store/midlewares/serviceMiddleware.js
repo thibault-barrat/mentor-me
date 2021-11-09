@@ -15,7 +15,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
     case FETCH_SERVICES: {
       const getServices = async () => {
         try {
-          const response = await axios.get('https://api-mentorme.herokuapp.com/v1/allServices');
+          const response = await axios.get('/api/allServices');
           store.dispatch(addServices(response.data));
         }
         catch (error) {
@@ -42,7 +42,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
       }
       const searchServices = async () => {
         try {
-          const response = await axios.get(`https://api-mentorme.herokuapp.com/v1/search?service=${searchValue}`, headers);
+          const response = await axios.get(`/api/search?service=${searchValue}`, headers);
           store.dispatch(searchServicesSuccess(response.data));
         }
         catch (error) {
@@ -75,7 +75,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
       }
       const submitService = async () => {
         try {
-          await axios.post('https://api-mentorme.herokuapp.com/v1/newService', {
+          await axios.post('/api/newService', {
             title,
             duration,
             description,
