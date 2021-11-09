@@ -1,1 +1,2 @@
-/https://api-mentorme.herokuapp.com/v1/*  https://api-mentorme.herokuapp.com/v1/:splat 
+/api/*  https://api-mentorme.herokuapp.com/v1/:splat 200
+/* /index.html 200

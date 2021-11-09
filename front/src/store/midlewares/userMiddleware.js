@@ -2,7 +2,7 @@
 import axios from 'axios';
 // eslint-disable-next-line camelcase
 import jwt_decode from 'jwt-decode';
-import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, sendImageSuccess, deleteToken, deleteProfileSuccess, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE, SEND_IMAGE, REFRESH_TOKEN, DELETE_TOKEN, LOGOUT, DELETE_PROFILE } from '../../actions/user';
+import { saveUser, submitNewUserSuccess, createMailError, createRegisterMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, sendImageSuccess, deleteToken, deleteProfileSuccess, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE, SEND_IMAGE, REFRESH_TOKEN, DELETE_TOKEN, LOGOUT, DELETE_PROFILE } from '../../actions/user';
 
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -19,7 +19,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
       const submitLogin = async () => {
         try {
-          const response = await axios.post('https://api-mentorme.herokuapp.com/v1/login', {
+          const response = await axios.post('/api/login', {
             email,
             password,
           });
@@ -59,7 +59,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
       const submitNewUser = async () => {
         try {
-          await axios.post('https://api-mentorme.herokuapp.com/v1/register', {
+          await axios.post('/api/register', {
             email,
             password,
             firstname,
@@ -70,7 +70,12 @@ const userMiddleware = (store) => (next) => (action) => {
           store.dispatch(submitNewUserSuccess());
         }
         catch (error) {
-          console.log(error);
+          if (error.response.data.errorMessage === 'This user already exists!') {
+            store.dispatch(createRegisterMailError());
+          }
+          else {
+            console.log(error);
+          }
         }
       };
 
@@ -91,7 +96,7 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       const getUser = async () => {
         try {
-          const response = await axios.get(`https://api-mentorme.herokuapp.com/v1/user/${id}`, headers);
+          const response = await axios.get(`/api/user/${id}`, headers);
           store.dispatch(saveUserDetails(response.data));
         }
         catch (error) {
@@ -117,7 +122,7 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       const saveProfile = async () => {
         try {
-          await axios.patch(`https://api-mentorme.herokuapp.com/v1/user/${id}`, {
+          await axios.patch(`/api/user/${id}`, {
             email,
             firstname,
             lastname,
@@ -155,7 +160,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
       const sendImage = async () => {
         try {
-          await axios.patch(`https://api-mentorme.herokuapp.com/v1/user/${id}/avatar`, form, headers);
+          await axios.patch(`/api/user/${id}/avatar`, form, headers);
           // after sending the image we need to do a new get request
           // to obtain the new url of avatar on cloudinary
           store.dispatch(getUserDetails());
@@ -173,7 +178,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
       const refreshToken = async () => {
         try {
-          const response = await axios.post('https://api-mentorme.herokuapp.com/v1/refreshToken', {
+          const response = await axios.post('/api/refreshToken', {
             token,
           });
           // we save the new refreshToken in the local storage
@@ -200,7 +205,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
       const logout = async () => {
         try {
-          await axios.post('https://api-mentorme.herokuapp.com/v1/logout', {
+          await axios.post('/api/logout', {
             token,
           });
           store.dispatch(deleteToken());
@@ -218,18 +223,10 @@ const userMiddleware = (store) => (next) => (action) => {
         { id,
           accessToken,
         } } = store.getState();
-      // we create headers of the request
-      let headers = {};
-      if (accessToken !== null) {
-        headers = {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        };
-      }
+
       const deleteProfile = async () => {
         try {
-          await axios.delete(`https://api-mentorme.herokuapp.com/v1/user/${id}`, {
+          await axios.delete(`/api/user/${id}`, {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },

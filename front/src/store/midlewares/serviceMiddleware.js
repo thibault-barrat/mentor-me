@@ -5,9 +5,11 @@ import {
   submitServiceSuccess,
   fetchServices,
   deleteServiceSuccess,
+  searchServicesSuccess,
   FETCH_SERVICES,
   SUBMIT_SERVICE,
   DELETE_SERVICE,
+  SEARCH_SERVICES,
 } from '../../actions/service';
 
 const serviceMiddleware = (store) => (next) => (action) => {
@@ -15,7 +17,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
     case FETCH_SERVICES: {
       const getServices = async () => {
         try {
-          const response = await axios.get('https://api-mentorme.herokuapp.com/v1/allServices');
+          const response = await axios.get('/api/allServices');
           store.dispatch(addServices(response.data));
         }
         catch (error) {
@@ -24,6 +26,32 @@ const serviceMiddleware = (store) => (next) => (action) => {
       };
 
       getServices();
+      next(action);
+      break;
+    }
+    case SEARCH_SERVICES: {
+      // to send request, we need the search value and access token
+      const { searchValue } = store.getState().services;
+      const { accessToken } = store.getState().user;
+      // we create headers of the request
+      let headers = {};
+      if (accessToken !== null) {
+        headers = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      }
+      const searchServices = async () => {
+        try {
+          const response = await axios.get(`/api/search?service=${searchValue.toLowerCase()}`, headers);
+          store.dispatch(searchServicesSuccess(response.data));
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+      searchServices();
       next(action);
       break;
     }
@@ -49,7 +77,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
       }
       const submitService = async () => {
         try {
-          await axios.post('https://api-mentorme.herokuapp.com/v1/newService', {
+          await axios.post('/api/newService', {
             title,
             duration,
             description,
@@ -83,7 +111,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
       }
       const deleteService = async () => {
         try {
-          await axios.delete(`https://api-mentorme.herokuapp.com/v1/service/${action.serviceId}`, headers);
+          await axios.delete(`/api/service/${action.serviceId}`, headers);
           store.dispatch(deleteServiceSuccess());
           store.dispatch(fetchServices());
         }

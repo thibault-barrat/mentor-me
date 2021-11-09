@@ -22,9 +22,6 @@
 	color: vars.$text-color;
 	margin: 0 auto 2rem;
 	min-height: 400px;
-	display: flex;
-  flex-direction: column;
-	justify-content: center;
 	&__title {
 		font-size: 1.4rem;
 		margin: vars.$gutter 0;
@@ -35,10 +32,9 @@
 	}
   &__container {
     max-width: 700px;
-    align-self: center;
+    margin: 0 auto;
   }
   &__button {
-    align-self: center;
     line-height: 1.3rem;
   }
 }
