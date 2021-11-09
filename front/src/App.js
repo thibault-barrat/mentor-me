@@ -16,6 +16,7 @@ import Profil from './pages/Profil';
 import Services from './pages/Services';
 import Categories from './pages/Categories';
 import serviceId from './pages/ServiceId';
+import Admin from './pages/Admin';
 import NavBaar from './components/NavBaar';
 import Footer from './components/Footer';
 import { fetchCategories } from './actions/category';
@@ -27,7 +28,7 @@ function App() {
   // We need to know if the user is logged and if is admin
   // to enable or disable specific routes
   const isLogged = useSelector((state) => state.user.logged);
-  const isAdmin = useSelector((state) => state.user.isAdmin);
+  const role = useSelector((state) => state.user.role);
 
   // We need to have the loading state of categories and services
   const serviceLoading = useSelector((state) => state.services.loading);
@@ -70,11 +71,14 @@ function App() {
             <Route path="/inscription" component={Register} />
             <Route path="/connexion" component={Connect} />
             <Route path="/profil" component={Profil} />
-            <Route path="/services" component={SearchResult} />
-            <Route path="/categories" exact component={Categories} />
-            <Route path="/categories/:id/services" component={Services} />
-            <Route path="/nouveau-service" component={NewService} />
-            <Route path="/service/:id" component={serviceId} />
+            {/* Following route is only accessible for logged admin */}
+            {isLogged && role === 'admin' && <Route path="/admin" component={Admin} />}
+            {/* Following routes are only accessible for logged users */}
+            {isLogged && <Route path="/services" component={SearchResult} />}
+            {isLogged && <Route path="/categories" exact component={Categories} />}
+            {isLogged && <Route path="/categories/:id/services" component={Services} />}
+            {isLogged && <Route path="/nouveau-service" component={NewService} />}
+            {isLogged && <Route path="/service/:id" component={serviceId} />}
           </Switch>
         )}
       <AuthVerify />

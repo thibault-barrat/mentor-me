@@ -35,7 +35,7 @@ axios.interceptors.response.use(
         else {
           // we get new tokens
           try {
-            const response = await axios.post('https://api-mentorme.herokuapp.com/v1/refreshToken', {
+            const response = await axios.post('/api/refreshToken', {
               token,
             });
             // we save the new refreshToken in the local storage
