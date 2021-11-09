@@ -17,6 +17,10 @@ export default function Register() {
     (state) => state.user.register,
   );
 
+  // to manage error when email already used
+  // we need the registerMail boolean from the state
+  const { registerMail } = useSelector((state) => state.user.errors);
+
   const history = useHistory();
   // Redirect to connect page after register
   useEffect(() => {
@@ -41,15 +45,6 @@ export default function Register() {
   const [validConfirmedPassword, setValidConfirmedPassword] = useState(true);
 
   const handleSubmit = (event) => {
-    /* console.log(`
-      Email: ${email}
-      Password: ${password}
-      Firstname: ${firstname}
-      LastName: ${lastname}
-      Accepted Terms: ${acceptedTerms}
-      Accepted Emaildiff: ${acceptedEmailDiff}
-    `); */
-
     event.preventDefault();
     if (validPassword && validConfirmedPassword && validEmail) {
       dispatch(submitNewUser());
@@ -116,6 +111,9 @@ export default function Register() {
                 />
                 {!validEmail && (
                   <span className="form__error">Ce champ doit contenir un email valide.</span>
+                )}
+                {registerMail && (
+                  <span className="form__error">Cet e-mail est déjà associé à un compte.</span>
                 )}
                 <Field
                   type="email"
