@@ -1,6 +1,9 @@
 import {
   FETCH_SERVICES,
   ADD_SERVICES,
+  CHANGE_SEARCH_VALUE,
+  SEARCH_SERVICES,
+  SEARCH_SERVICES_SUCCESS,
   CHANGE_SERVICE_FIELD,
   CHANGE_LOCATION,
   SUBMIT_SERVICE,
@@ -10,6 +13,10 @@ import {
 export const initialState = {
   items: [],
   loading: true,
+  searchValue: '',
+  searchResult: [],
+  searchLoading: false,
+  searchRedirect: false,
   new: {
     category: '',
     title: '',
@@ -30,6 +37,7 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         items: [...state.items],
         loading: true,
+        searchResult: [...state.searchResult],
         new: {
           ...state.new,
           location: {
@@ -43,6 +51,29 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         items: action.services,
         loading: false,
+        searchResult: [...state.searchResult],
+      };
+    }
+    case CHANGE_SEARCH_VALUE: {
+      return {
+        ...state,
+        searchValue: action.value,
+        searchResult: [...state.searchResult],
+      };
+    }
+    case SEARCH_SERVICES: {
+      return {
+        ...state,
+        searchLoading: true,
+        searchRedirect: true,
+      };
+    }
+    case SEARCH_SERVICES_SUCCESS: {
+      return {
+        ...state,
+        searchResult: action.services,
+        searchLoading: false,
+        searchRedirect: false,
         new: {
           ...state.new,
           location: {
