@@ -14,6 +14,7 @@ import Register from './pages/Register';
 import Connect from './pages/Connect';
 import Profil from './pages/Profil';
 import Categories from './pages/Categories';
+import Services from './pages/Services';
 import serviceId from './pages/ServiceId';
 import NavBaar from './components/NavBaar';
 import Footer from './components/Footer';
@@ -26,7 +27,6 @@ function App() {
   // to enable or disable specific routes
   const isLogged = useSelector((state) => state.user.logged);
   const isAdmin = useSelector((state) => state.user.isAdmin);
-
 
   // We need to have the loading state of categories and services
   const serviceLoading = useSelector((state) => state.services.loading);
@@ -70,7 +70,7 @@ function App() {
             <Route path="/connexion" component={Connect} />
             <Route path="/profil" component={Profil} />
             <Route path="/categories" exact component={Categories} />
-            <Route path="/categories/:id/services"component={Services} />
+            <Route path="/categories/:id/services" component={Services} />
             <Route path="/nouveau-service" component={NewService} />
             <Route path="/service/:id" component={serviceId} />
           </Switch>
