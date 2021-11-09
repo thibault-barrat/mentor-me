@@ -23,6 +23,7 @@ import { fetchCategories } from './actions/category';
 import { fetchServices } from './actions/service';
 import { refreshToken, deleteToken } from './actions/user';
 import SearchResult from './pages/SearchResult';
+import { getAllUsers } from './actions/admin';
 
 function App() {
   // We need to know if the user is logged and if is admin
@@ -55,6 +56,16 @@ function App() {
       }
     }
   }, []);
+
+  // The fetchServices action need to be repeated in a useEffect called when role changed
+  // because it has specific behavior for admin
+  // We also dispatch getAllUsers action when role is admin
+  useEffect(() => {
+    if (role === 'admin') {
+      dispatch(fetchServices());
+      dispatch(getAllUsers());
+    }
+  }, [role]);
 
   return (
     <Router>

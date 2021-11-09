@@ -3,6 +3,7 @@ import reducer from 'src/reducers';
 import userMiddleware from './midlewares/userMiddleware';
 import categoryMiddleware from './midlewares/categoryMiddleware';
 import serviceMiddleware from './midlewares/serviceMiddleware';
+import adminMiddleware from './midlewares/adminMiddleware';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -11,6 +12,7 @@ const enhancers = composeEnhancers(
     userMiddleware,
     categoryMiddleware,
     serviceMiddleware,
+    adminMiddleware,
   ),
 );
 
