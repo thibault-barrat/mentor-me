@@ -32,6 +32,7 @@ export const initialState = {
     lastname: '',
     redirect: false,
     loading: false,
+    notifRegister: false,
   },
   errors: {
     mail: false,
@@ -161,6 +162,7 @@ const reducer = (state = initialState, action = {}) => {
         register: {
           ...state.register,
           loading: true,
+          notifRegister: false,
         },
         errors: {
           ...state.errors,
@@ -184,6 +186,7 @@ const reducer = (state = initialState, action = {}) => {
           lastname: '',
           redirect: true,
           loading: false,
+          notifRegister: true,
         },
         errors: {
           ...state.errors,

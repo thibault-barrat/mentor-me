@@ -4,16 +4,10 @@ import Field from 'src/components/Field';
 import Location from 'src/components/Location';
 import Loading from 'src/components/Loading';
 import './style.scss';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
 import {
   MapContainer,
   TileLayer,
 } from 'react-leaflet';
-// import of leaflet marker icons
-import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
-import iconUrl from 'leaflet/dist/images/marker-icon.png';
-import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import NewServiceMarker from 'src/components/NewServiceMarker';
 import { changeServiceField, submitService } from '../../actions/service';
 
@@ -133,16 +127,6 @@ const NewService = () => {
       dispatch(submitService());
     }
   }, [formValid]);
-
-  // We need to re-define the markers in order to correctly import them
-  // https://github.com/PaulLeCam/react-leaflet/issues/453
-  // eslint-disable-next-line no-underscore-dangle
-  delete L.Icon.Default.prototype._getIconUrl;
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl,
-    iconUrl,
-    shadowUrl,
-  });
 
   return (
     <main className="new-service">

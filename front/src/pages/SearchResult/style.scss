@@ -1,0 +1,17 @@
+@use 'src/styles/vars';
+
+.search-result {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	&__title {
+		text-align: center;
+		padding: calc(vars.$gutter * 2) 0;
+		font-size: calc(vars.$gutter * 2);
+		background-color: vars.$primary-color;
+	}
+  &__no-result {
+    text-align: center;
+    padding: calc(vars.$gutter * 2) 0;
+  }
+}
