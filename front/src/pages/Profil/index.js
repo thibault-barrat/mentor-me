@@ -4,6 +4,7 @@ import './style.scss';
 import { Link, useHistory } from 'react-router-dom';
 import Field from 'src/components/Field';
 import Spinner from 'src/components/Spinner';
+import { MdDelete } from 'react-icons/md';
 import {
   changeProfileField,
   saveProfile,
@@ -241,8 +242,8 @@ export default function profil() {
             <h1 className="profil__subtitle">J'ai proposé :</h1>
 
             {proposedServices.map((service) => (
-              <Link key={service.id} to={`/service/${service.id}`}>
-                <div className="proposed__card">
+              <div key={service.id} className="proposed__card">
+                <Link to={`/service/${service.id}`}>
                   <span className="card__name">{service.title}</span>
                   <img
                     className="proposed__img"
@@ -250,8 +251,11 @@ export default function profil() {
                     src={categories.find((category) => category.id === service.category_id).image}
                     alt={service.title}
                   />
-                </div>
-              </Link>
+                </Link>
+                <MdDelete
+                  className="proposed__delete"
+                />
+              </div>
             ))}
 
             {/* <button type="submit" className="connect-button">voir plus</button> */}
