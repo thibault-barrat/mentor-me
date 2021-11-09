@@ -28,7 +28,6 @@ function App() {
   const isLogged = useSelector((state) => state.user.logged);
   const isAdmin = useSelector((state) => state.user.isAdmin);
 
-
   // We need to have the loading state of categories and services
   const serviceLoading = useSelector((state) => state.services.loading);
   const categoryLoading = useSelector((state) => state.categories.loading);

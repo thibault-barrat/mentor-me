@@ -7,9 +7,9 @@ import {
 const serviceMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case FETCH_SERVICES: {
-      const fetchServices = async () => {
+      const getServices = async () => {
         try {
-          const response = await axios.get('https://api-mentorme.herokuapp.com/v1/allServices');
+          const response = await axios.get('/api/allServices');
           store.dispatch(addServices(response.data));
         }
         catch (error) {
@@ -17,7 +17,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
         }
       };
 
-      fetchServices();
+      getServices();
       next(action);
       break;
     }
@@ -43,7 +43,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
       }
       const submitService = async () => {
         try {
-          await axios.post('https://api-mentorme.herokuapp.com/v1/newService', {
+          await axios.post('/api/newService', {
             title,
             duration,
             description,
