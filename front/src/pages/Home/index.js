@@ -36,7 +36,7 @@ const Home = () => {
           <>
             <Search
               placeholder="Je veux apprendre..."
-              buttonValue="Je cherche une compétence"
+              buttonValue="Rechercher"
             />
             <Link
               to="/nouveau-service"

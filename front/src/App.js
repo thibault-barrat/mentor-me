@@ -21,6 +21,7 @@ import Footer from './components/Footer';
 import { fetchCategories } from './actions/category';
 import { fetchServices } from './actions/service';
 import { refreshToken, deleteToken } from './actions/user';
+import SearchResult from './pages/SearchResult';
 
 function App() {
   // We need to know if the user is logged and if is admin
@@ -69,6 +70,7 @@ function App() {
             <Route path="/inscription" component={Register} />
             <Route path="/connexion" component={Connect} />
             <Route path="/profil" component={Profil} />
+            <Route path="/services" component={SearchResult} />
             <Route path="/categories" exact component={Categories} />
             <Route path="/categories/:id/services" component={Services} />
             <Route path="/nouveau-service" component={NewService} />
