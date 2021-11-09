@@ -8,7 +8,9 @@ const {
   generateRefreshToken,
 } = require("../../utils/jwt");
 const sharp = require("sharp");
-const { Readable } = require("readable-stream");
+const {
+  Readable
+} = require("readable-stream");
 
 const userController = {
   /**
@@ -221,22 +223,29 @@ const userController = {
    */
   connectUser: async (req, res) => {
     try {
+
+
       const user = new User(req.body);
 
       // on vérifie si le user existe déjà en base de données ou pas
       // 1. on vérifie si l'email est en bdd
       await user.checkUserEmail(req.body.email);
 
+
       if (!user.checkEmail) {
         // un user a déjà été inscrit avec cette adresse mail, on retourne une erreur 409 : Conflict
         return res
           .status(404)
-          .send({ errorMessage: "This user does not exist!" });
+          .send({
+            errorMessage: "This user does not exist!"
+          });
       }
 
       // 2. on vérifie le mot de passe du user
       await user.checkUserPassword();
       // on vérifie si le mdp correspond
+
+      console.log(user.checkPassword)
       if (!user.checkPassword) {
         // ce n'est pas le bon mdp
         return res.status(400).send({
@@ -276,7 +285,9 @@ const userController = {
     const refreshToken = req.body.token || req.query.token;
     const token = new RefreshToken();
     await token.deleteRefreshToken(refreshToken);
-    res.status(200).send({ connected: false });
+    res.status(200).send({
+      connected: false
+    });
   },
 
   /**
@@ -305,8 +316,11 @@ const userController = {
 
       const data = await sharp(avatar).resize(300, 300).toBuffer();
 
-      const stream = await cloudinary.uploader.upload_stream(
-        { public_id: `mentorme_${id}`, tags: "MentorMe", folder: "avatars" },
+      const stream = await cloudinary.uploader.upload_stream({
+          public_id: `mentorme_${id}`,
+          tags: "MentorMe",
+          folder: "avatars"
+        },
         async (err, result) => {
           if (err) {
             return res.status(503).send({

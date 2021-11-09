@@ -5,6 +5,7 @@ import {
   SUBMIT_NEW_USER_SUCCESS,
   SUBMIT_NEW_USER,
   CREATE_MAIL_ERROR,
+  CREATE_REGISTER_MAIL_ERROR,
   CREATE_PASSWORD_ERROR,
   SAVE_USER_DETAILS,
   CHANGE_PROFILE_FIELD,
@@ -37,6 +38,7 @@ export const initialState = {
   errors: {
     mail: false,
     password: false,
+    registerMail: false,
   },
   details: {
     loading: false,
@@ -119,6 +121,25 @@ const reducer = (state = initialState, action = {}) => {
         ],
       };
     }
+    case CREATE_REGISTER_MAIL_ERROR: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+          loading: false,
+        },
+        details: {
+          ...state.details,
+        },
+        errors: {
+          ...state.errors,
+          registerMail: true,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
+      };
+    }
     case CREATE_PASSWORD_ERROR: {
       return {
         ...state,
@@ -190,6 +211,7 @@ const reducer = (state = initialState, action = {}) => {
         },
         errors: {
           ...state.errors,
+          registerMail: false,
         },
         details: {
           ...state.details,

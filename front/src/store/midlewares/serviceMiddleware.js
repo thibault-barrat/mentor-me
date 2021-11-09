@@ -1,13 +1,15 @@
 /* eslint-disable no-console */
 import axios from 'axios';
 import {
-  fetchServices,
   addServices,
-  searchServicesSuccess,
   submitServiceSuccess,
+  fetchServices,
+  deleteServiceSuccess,
+  searchServicesSuccess,
   FETCH_SERVICES,
-  SEARCH_SERVICES,
   SUBMIT_SERVICE,
+  DELETE_SERVICE,
+  SEARCH_SERVICES,
 } from '../../actions/service';
 
 const serviceMiddleware = (store) => (next) => (action) => {
@@ -42,7 +44,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
       }
       const searchServices = async () => {
         try {
-          const response = await axios.get(`/api/search?service=${searchValue}`, headers);
+          const response = await axios.get(`/api/search?service=${searchValue.toLowerCase()}`, headers);
           store.dispatch(searchServicesSuccess(response.data));
         }
         catch (error) {
@@ -93,6 +95,32 @@ const serviceMiddleware = (store) => (next) => (action) => {
       };
 
       submitService();
+      next(action);
+      break;
+    }
+    case DELETE_SERVICE: {
+      const { accessToken } = store.getState().user;
+      // we create headers of the request
+      let headers = {};
+      if (accessToken !== null) {
+        headers = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      }
+      const deleteService = async () => {
+        try {
+          await axios.delete(`/api/service/${action.serviceId}`, headers);
+          store.dispatch(deleteServiceSuccess());
+          store.dispatch(fetchServices());
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+
+      deleteService();
       next(action);
       break;
     }

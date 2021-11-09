@@ -16,11 +16,15 @@ const Notif = () => {
 
   // in order to notify user when his profile has been deleted
   // we need to have the notifDelete variable in the redux state
-  const notifDelete = useSelector((state) => state.user.details.notifDelete);
+  const notifDeleteUser = useSelector((state) => state.user.details.notifDelete);
 
   // in order to notify user when he submit a new service
   // we need to have the notifService variable in the redux state
   const notifService = useSelector((state) => state.services.new.notifService);
+
+  // in order to notify when a service has been deleted
+  // we need to have the notifDeleteService variable in the redux state
+  const notifDeleteService = useSelector((state) => state.services.notifDelete);
 
   // in order to notify user when he created his account
   // we need to have the notifRegister variable in the redux state
@@ -49,10 +53,10 @@ const Notif = () => {
 
   // we display a notification when the profile has been deleted
   useEffect(() => {
-    if (notifDelete) {
+    if (notifDeleteUser) {
       toast.success('Votre profil a été supprimé !');
     }
-  }, [notifDelete]);
+  }, [notifDeleteUser]);
 
   // we display a notification when a service has been created
   useEffect(() => {
@@ -60,6 +64,13 @@ const Notif = () => {
       toast.success('Votre service a été ajouté !');
     }
   }, [notifService]);
+
+  // we display a notification when a service has been deleted
+  useEffect(() => {
+    if (notifDeleteService) {
+      toast.success('Le service a été supprimé !');
+    }
+  }, [notifDeleteService]);
 
   // we display a notification when a user has been created
   useEffect(() => {
