@@ -27,7 +27,10 @@ export default function profil() {
   // We also need to know the services and the user id to find the services proposed by the user
   const services = useSelector((state) => state.services.items);
   const id = useSelector((state) => state.user.id);
-  const proposedServices = services.filter((service) => service.user_id === id);
+  const [proposedServices, setProposedServices] = useState([]);
+  useEffect(() => {
+    setProposedServices(services.filter((service) => service.user_id === id));
+  }, [services]);
 
   // We also need to know the liked services of the user
   const likedServices = useSelector((state) => state.user.likedServices);

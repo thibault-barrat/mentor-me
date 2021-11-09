@@ -30,19 +30,24 @@ const Home = () => {
   return (
     <main className="home">
       <section className="slogan">
-        <div className="homme__container">
-          {/* We display the search form and the button to the new service form
+        {/* We display the search form and the button to the new service form
           only for logged user */}
-          {logged && (
-            <>
-              <Search />
-              <button
-                type="button"
-              >
-                Je propose une compétence
-              </button>
-            </>
-          )}
+        {logged && (
+          <>
+            <Search
+              placeholder="Je veux apprendre..."
+              buttonValue="Rechercher"
+            />
+            <Link
+              to="/nouveau-service"
+              className="search-button slogan__button"
+            >
+              Je propose une compétence
+            </Link>
+          </>
+        )}
+        <div className="slogan__container">
+
           <h1 className="slogan__title">Bienvenue sur Mentor.Me, mets ton savoir
             à profit et partages ton domaine avec
             des passionnés comme toi
