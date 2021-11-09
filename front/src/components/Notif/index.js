@@ -18,6 +18,14 @@ const Notif = () => {
   // we need to have the notifDelete variable in the redux state
   const notifDelete = useSelector((state) => state.user.details.notifDelete);
 
+  // in order to notify user when he submit a new service
+  // we need to have the notifService variable in the redux state
+  const notifService = useSelector((state) => state.services.new.notifService);
+
+  // in order to notify user when he created his account
+  // we need to have the notifRegister variable in the redux state
+  const notifRegister = useSelector((state) => state.user.register.notifRegister);
+
   // we display the notification when logout change and it is true
   useEffect(() => {
     if (logout) {
@@ -45,6 +53,20 @@ const Notif = () => {
       toast.success('Votre profil a été supprimé !');
     }
   }, [notifDelete]);
+
+  // we display a notification when a service has been created
+  useEffect(() => {
+    if (notifService) {
+      toast.success('Votre service a été ajouté !');
+    }
+  }, [notifService]);
+
+  // we display a notification when a user has been created
+  useEffect(() => {
+    if (notifRegister) {
+      toast.success('Votre compte a été créé ! Vous pouvez vous connecter.');
+    }
+  }, [notifRegister]);
 
   return (
     <ToastContainer />
