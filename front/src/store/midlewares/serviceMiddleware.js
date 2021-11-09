@@ -42,7 +42,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
       }
       const searchServices = async () => {
         try {
-          const response = await axios.get(`/api/search?service=${searchValue}`, headers);
+          const response = await axios.get(`/api/search?service=${searchValue.toLowerCase()}`, headers);
           store.dispatch(searchServicesSuccess(response.data));
         }
         catch (error) {
