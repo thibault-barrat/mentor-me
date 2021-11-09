@@ -218,22 +218,22 @@ const userMiddleware = (store) => (next) => (action) => {
       break;
     }
     case DELETE_PROFILE: {
+      const token = localStorage.getItem('refreshToken');
       const { user:
         { id,
           accessToken,
         } } = store.getState();
-      // we create headers of the request
-      let headers = {};
-      if (accessToken !== null) {
-        headers = {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        };
-      }
+
       const deleteProfile = async () => {
         try {
-          await axios.delete(`/api/user/${id}`, headers);
+          await axios.delete(`/api/user/${id}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            data: {
+              token,
+            },
+          });
           // une fois qu'on a la réponse, on peut venir stocker les infos du user
           // dans le state => modifier le state => dispatch d'action
           store.dispatch(deleteToken());
