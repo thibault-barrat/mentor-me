@@ -47,17 +47,24 @@ export default function Search({ placeholder, buttonValue }) {
       const filtered = suggestions.filter(
         // we remove duplicate and filter with the value of search input
         (suggestion, index, self) => self.indexOf(suggestion) === index
-        && suggestion.toLowerCase().slice(0, searchValue.length) === searchValue.toLowerCase(),
+          && suggestion.toLowerCase().slice(0, searchValue.length) === searchValue.toLowerCase(),
       );
       setFilteredSuggestions(filtered);
     }
   }, [searchValue]);
 
+  // we need a boolean to know if user has cliked on a suggestion
+  // and empty the suggestions list
+  const [toggleClickSuggestion, setToggleClickSuggestion] = useState(false);
+  useEffect(() => {
+    setFilteredSuggestions([]);
+  }, [toggleClickSuggestion]);
+
   // function to handle click on a suggestion
   const dispatch = useDispatch();
   const handleSuggestionClick = (suggestion) => {
     dispatch(changeSearchValue(suggestion));
-    setFilteredSuggestions([]);
+    setToggleClickSuggestion(!toggleClickSuggestion);
   };
 
   // function to handle change value of search field
