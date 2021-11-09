@@ -13,6 +13,7 @@ import {
   logout,
   deleteProfile,
 } from '../../actions/user';
+import { deleteService } from '../../actions/service';
 
 export default function profil() {
   // We take the details user info from the state
@@ -22,6 +23,9 @@ export default function profil() {
 
   // We take the logged boolean from the state
   const { logged } = useSelector((state) => state.user);
+
+  // We also need to have the loading state during a service delete request
+  const { loadingDelete } = useSelector((state) => state.services.loadingDelete);
 
   // We also need to know the services and the user id to find the services proposed by the user
   const services = useSelector((state) => state.services.items);
@@ -103,8 +107,14 @@ export default function profil() {
 
   // function to handle click on delete account button
   // and dispatch an action to delete the user
-  const handleDelete = () => {
+  const handleDeleteProfile = () => {
     dispatch(deleteProfile());
+  };
+
+  // function to handle click on delete service button
+  // and dispatch an action to delete the service
+  const handleDeleteService = (serviceId) => {
+    dispatch(deleteService(serviceId));
   };
 
   const history = useHistory();
@@ -232,7 +242,7 @@ export default function profil() {
             </button>
           )}
           <br />
-          <button type="submit" className="connect-button-p" onClick={handleDelete}>Supprimer mon profil</button>
+          <button type="submit" className="connect-button-p" onClick={handleDeleteProfile}>Supprimer mon profil</button>
           <button type="submit" className="connect-button-p" onClick={handleLogout}>Se déconnecter</button>
         </div>
 
@@ -243,7 +253,7 @@ export default function profil() {
 
             {proposedServices.map((service) => (
               <div key={service.id} className="proposed__card">
-                <Link to={`/service/${service.id}`}>
+                <Link className="card__link" to={`/service/${service.id}`}>
                   <span className="card__name">{service.title}</span>
                   <img
                     className="proposed__img"
@@ -254,6 +264,7 @@ export default function profil() {
                 </Link>
                 <MdDelete
                   className="proposed__delete"
+                  onClick={() => handleDeleteService(service.id)}
                 />
               </div>
             ))}
@@ -267,17 +278,22 @@ export default function profil() {
           <div className="profil__container-ann-fav">
             <h1 className="profil__subtitle">Mes annonces favorites :</h1>
             {likedServices.map((service) => (
-              <Link key={service.id} to={`/service/${service.id}`}>
-                <div className="proposed__card">
-                  <span className="card__name">{service.title}</span>
-                  <img
-                    className="proposed__img"
-                    // Here we will use the image of the category of the service
-                    src={categories.find((category) => category.id === service.category_id).image}
-                    alt={service.title}
-                  />
-                </div>
-              </Link>
+              // We use ternary operator to display spinner during the delete request
+              loadingDelete ? (
+                <Spinner />
+              ) : (
+                <Link key={service.id} to={`/service/${service.id}`}>
+                  <div className="proposed__card">
+                    <span className="card__name">{service.title}</span>
+                    <img
+                      className="proposed__img"
+                      // Here we will use the image of the category of the service
+                      src={categories.find((category) => category.id === service.category_id).image}
+                      alt={service.title}
+                    />
+                  </div>
+                </Link>
+              )
             ))}
             {/* <button type="submit" className="connect-button">voir plus</button> */}
           </div>

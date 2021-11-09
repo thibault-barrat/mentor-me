@@ -5,6 +5,17 @@ export const CHANGE_SERVICE_FIELD = 'CHANGE_SERVICE_FIELD';
 export const CHANGE_LOCATION = 'CHANGE_LOCATION';
 export const SUBMIT_SERVICE = 'SUBMIT_SERVICE';
 export const SUBMIT_SERVICE_SUCCESS = 'SUBMIT_SERVICE_SUCCESS';
+export const DELETE_SERVICE = 'DELETE_SERVICE';
+export const DELETE_SERVICE_SUCCESS = 'DELETE_SERVICE_SUCCESS';
+
+export const deleteServiceSuccess = () => ({
+  type: DELETE_SERVICE_SUCCESS,
+});
+
+export const deleteService = (serviceId) => ({
+  type: DELETE_SERVICE,
+  serviceId,
+});
 
 export const submitServiceSuccess = () => ({
   type: SUBMIT_SERVICE_SUCCESS,
@@ -24,7 +35,6 @@ export const changeServiceField = (value, name) => ({
   value,
   name,
 });
-
 
 export const fetchServices = () => ({
   type: FETCH_SERVICES,
