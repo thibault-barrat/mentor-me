@@ -60,11 +60,14 @@ VALUES
 INSERT INTO
   "location" ("latitude", "longitude")
 VALUES
-  (50.62925, -0.9882),
-  (46.17569, -0.61201),
-  (47.47805, 5.01476),
-  (44.50522, 2.23951),
-  (45.99509, 2.52986);
+  (44.8378, -0.594),
+  (48.693829, 6.182534),
+  (47.747, 5.732),
+  (-22.2355, 166.47),
+  (50.62925, 3.057256),
+  (45.764043, 4.835659),
+  (49.258329, 4.031696),
+  (48.8534, 2.3488);
 INSERT INTO
   "users" (
     "firstname",
@@ -90,25 +93,25 @@ VALUES
     2
   ),
   (
-    'Jaymee',
-    'Hankin',
-    'jhankin0@ca.gov',
-    'JG35BOWKQle',
-    'Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.',
-    0804904413,
-    0939534832,
-    DEFAULT,
+    'Cedric',
+    'Hinton',
+    'cedric.hinton@icloud.fr',
+    'XUE42MEW2YE',
+    'Bonjour, je m''appelle Cédric, jeune retraité anciennement professeur de lettres. Toujours partant pour un partage de connaissances et pourquoi pas aider les plus jeunes!',
+    '+33804904413',
+    '+4210639534832',
+    'https://i.imgur.com/IzU9WmJ.jpg',
     1
   ),
   (
-    'Derward',
-    'Abramzon',
+    'Lucius',
+    'Burke',
     'dabramzon1@surveymonkey.com',
     'j57vgOZ7m98',
-    '',
-    0117645913,
-    0204517172,
-    DEFAULT,
+    'Hello',
+    '+33117645913',
+    '+41704517172',
+    'https://i.imgur.com/bx5KNBH.jpg',
     1
   ),
   (
@@ -116,32 +119,87 @@ VALUES
     'Tenman',
     'rtenman2@google.com.hk',
     'NMUVpSZ0j',
-    'Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.',
-    0779837770,
-    0695986349,
-    DEFAULT,
+    'Grand fan de moto et d''échecs!',
+    '+33779837770',
+    '+33695986349',
+    'https://i.imgur.com/af4O77d.jpg',
     1
   ),
   (
     'Audry',
     'Milam',
     'amilam0@wikia.com',
-    'Neqmu3',
+    'Neqm$u3',
+    'Passionnée par la couture et les DIY.',
     null,
     null,
-    null,
-    'https://robohash.org/temporadoloremqueest.png?size=100x100&set=set1',
+    'https://i.imgur.com/oBAFKQr.jpg',
     1
   ),
   (
     'Tam',
     'Kennagh',
     'tkennagh1@irs.gov',
-    'pZJF0w9gW',
+    'pZJF0w9gW$',
     null,
     null,
-    0695986349,
-    'https://robohash.org/iuremagniperspiciatis.png?size=100x100&set=set1',
+    '+33695986349',
+    'https://i.imgur.com/aJN0be7.jpg',
+    1
+  ),
+  (
+    'Gérard',
+    'Lerju',
+    'gegelju@gmail.com',
+    'p$ZJF0wgegesg9gW',
+    'Première visite sur ce site! je teste le concept',
+    null,
+    '+641695986',
+    'https://i.imgur.com/zxaTTAh.jpg',
+    1
+  ),
+  (
+    'Kate',
+    'Fuentes',
+    'k.fuentes@outlook.fr',
+    'pZJF0w9gffgegbcf$W',
+    '',
+    null,
+    '+33694584749',
+    'https://i.imgur.com/OWDVzLD.jpg',
+    1
+  ),
+  (
+    'Flavia',
+    'Maldonad',
+    'flavDo@outlook.fr',
+    'pZgegzDFGE4$fgegbcfW',
+    '',
+    null,
+    '+33694584749',
+    'https://i.imgur.com/umN24bq.jpg',
+    1
+  ),
+  (
+    'Alexa',
+    'Henri',
+    'alex.henri@gmail.com',
+    'pZJF0w$15fegsvgs3$',
+    'Hello tout le monde moi c''est Alexa',
+    null,
+    '+33694584749',
+    'https://i.imgur.com/ARzzL9Q.jpg',
+    1
+  ),
+  (
+    'Margot',
+    'Deschamps',
+    'margotdes@outlook.fr',
+    'p$fgzERE5469$gffgegbcfW',
+    '',
+    null,
+    '+33694584749',
+    'https://i.imgur.com/tio3EDE.jpg',
     1
   );
 INSERT INTO
@@ -158,59 +216,103 @@ INSERT INTO
   )
 VALUES
   (
-    'ut rhoncus aliquet',
+    'Cours d''anglais',
     60,
-    'In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.',
-    false,
+    'Vous avez besoin de l''anglais pour des examens ? une validation de diplôme ? un changement de carrière ? N''hésitez pas à me contacter! Je suis disponible pour des cours du soir et/ou en weekend!',
+    true,
     false,
     true,
-    4,
-    7,
-    1
+    8,
+    8,
+    8
   ),
   (
-    'in imperdiet et',
+    'Coach fitness',
     45,
-    'Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl.',
-    true,
+    'Je dispose d''une salle de sport privée avec tous les appareils nécessaires. Je vous propose 45min de séance gratuite. Disponibilité à discuter ensemble!',
     false,
     true,
+    true,
+    6,
     4,
-    8,
     2
   ),
   (
-    'consequat dui nec',
-    35,
-    'Proin risus.',
+    'Tonte de pelouses, taille de haie',
+    60,
+    'Si tu en as marre de passer ton temps à faire ton jardin, contacte-moi! Bonne humeur garantie!',
     false,
     true,
     false,
-    2,
+    4,
     6,
     3
   ),
   (
-    'luctus tincidunt nulla',
-    26,
-    'Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.',
-    true,
+    'Aménagement et entretien d''un jardin',
+    120,
+    'Semis, plantation, tonte et mise en compostage, taille de haie',
     false,
     true,
+    true,
+    3,
+    6,
+    7
+  ),
+  (
+    'Découverte du golf',
+    90,
+    '1heure30 pour découvrir le golf en pratiquant!',
+    false,
+    true,
+    false,
+    9,
     4,
+    8
+  ),
+  (
+    'Couture',
+    75,
+    'Agrandir, rétrécir, pose de fermeture éclair, confection de vêtements, ourlets... Je propose des tutos en vidéos ou des explications autour d''un bon thé chaud!',
+    true,
+    true,
+    false,
+    5,
+    9,
+    3
+  ),
+  (
+    'Cours de guitare',
+    60,
+    'Je peux donner des cours de guitare à des débutants',
+    false,
+    true,
+    false,
+    3,
     3,
     4
   ),
   (
-    'fermentum donec ut',
-    280,
-    'Curabitur convallis.',
+    'Cours de solfège',
+    60,
+    'Je peux vous aider à apprendre le solfège',
+    false,
+    true,
+    false,
+    3,
+    3,
+    4
+  ),
+  (
+    'Cours de piano débutant',
+    60,
+    'Je peux donner des cours de guitare à des débutants',
     true,
     true,
     false,
-    1,
-    7,
-    5
+    3,
+    3,
+    4
   );
 INSERT INTO
   "user_likes_service" ("user_id", "service_id")
