@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-// import {FcLikePlaceholder, FcLike} from 'react-icons';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
 // Style
 import './style.scss';
 
 
-export default function ServicesCard({ result }) {
+export default function ServicesCard({ result, onMouseOver }) {
   // Here we get the categories infos from the reducer 
   const categoryState = useSelector(state => state.categories.items);
 
@@ -18,17 +18,22 @@ export default function ServicesCard({ result }) {
   const classPresentiel = result.irl ? 'tag' : 'tag tag-unselected';
 
   return (
-    <Link
-        to={`/service/${result.id}`}
+    
+    <li 
+      className="card"
+      onMouseOver={onMouseOver}
     >
-      <li className="card">
-        <header className="tags">
-          {categoryName.map((item)=> (
-            <div className="tag" key={item.id}>{item.name}</div>
-          ))}
-          <div className={classVisio}>Visio</div>
-          <div className={classPresentiel}>Présentiel</div>
-        </header>
+      <header className="tags">
+        {categoryName.map((item)=> (
+          <div className="tag" key={item.id}>{item.name}</div>
+        ))}
+        <div className={classVisio}>Visio</div>
+        <div className={classPresentiel}>Présentiel</div>
+        <div className="tags-icon"> <AiOutlineHeart size={23}/> </div>
+      </header>
+      <Link
+        to={`/service/${result.id}`}
+      >
         <div className="card-container">
           <div className="card-image-container">
             <img 
@@ -41,14 +46,19 @@ export default function ServicesCard({ result }) {
             <h2 className="card-title">
               {result.title}
             </h2>
+            <p className="card-description">
+              {result.description.substring(0, 30)}
+              <span className="card-description-span">...lire la suite</span>
+            </p>
             <span className="card-name">
-              {result.firstname}
-              {result.lastname}
+              <p className="card-name-firstname">{result.firstname}</p>
+              <p>{result.lastname}</p>
             </span>
           </div>
         </div>
-      </li>
-    </Link>
+      </Link>
+    </li>
+    
   );
 }
 

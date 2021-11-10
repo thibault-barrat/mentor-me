@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import jwt_decode from 'jwt-decode';
 import Loading from 'src/components/Loading';
 import NewService from 'src/pages/NewService';
+import Services from 'src/pages/Services';
 import AuthVerify from 'src/components/AuthVerify';
 import Notif from 'src/components/Notif';
 import Home from './pages/Home';
