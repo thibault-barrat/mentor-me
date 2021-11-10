@@ -8,6 +8,8 @@ import {
   CHANGE_LOCATION,
   SUBMIT_SERVICE,
   SUBMIT_SERVICE_SUCCESS,
+  DELETE_SERVICE,
+  DELETE_SERVICE_SUCCESS,
 } from '../actions/service';
 
 export const initialState = {
@@ -28,6 +30,8 @@ export const initialState = {
     loading: false,
     notifService: false,
   },
+  notifDelete: false,
+  loadingDelete: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -132,6 +136,28 @@ const reducer = (state = initialState, action = {}) => {
           loading: false,
           notifService: true,
         },
+      };
+    }
+    case DELETE_SERVICE: {
+      return {
+        ...state,
+        items: [...state.items],
+        new: {
+          ...state.new,
+        },
+        loadingDelete: true,
+        notifDelete: false,
+      };
+    }
+    case DELETE_SERVICE_SUCCESS: {
+      return {
+        ...state,
+        items: [...state.items],
+        new: {
+          ...state.new,
+        },
+        loadingDelete: false,
+        notifDelete: true,
       };
     }
     default:

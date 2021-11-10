@@ -2,6 +2,7 @@ export const CHANGE_LOGIN_FIELD = 'CHANGE_LOGIN_FIELD';
 export const SUBMIT_LOGIN = 'SUBMIT_LOGIN';
 export const CREATE_MAIL_ERROR = 'CREATE_MAIL_ERROR';
 export const CREATE_PASSWORD_ERROR = 'CREATE_PASSWORD_ERROR';
+export const CREATE_REGISTER_MAIL_ERROR = 'CREATE_REGISTER_MAIL_ERROR';
 export const SAVE_USER = 'SAVE_USER';
 export const CHANGE_REGISTER_FIELD = 'CHANGE_REGISTER_FIELD';
 export const SUBMIT_NEW_USER = 'SUBMIT_NEW_USER';
@@ -52,6 +53,10 @@ export const submitLogin = () => ({
 
 export const createMailError = () => ({
   type: CREATE_MAIL_ERROR,
+});
+
+export const createRegisterMailError = () => ({
+  type: CREATE_REGISTER_MAIL_ERROR,
 });
 
 export const createPasswordError = () => ({

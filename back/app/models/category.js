@@ -52,15 +52,15 @@ module.exports = class Category {
 
         await this.findOne(id);
 
-        if (!this.name || this.name.lenght === 0) {
+        if (!this.name || this.name.length === 0) {
             this.name = this.categoryById[0].name;
         }
 
-        if (!this.color || this.color.lenght === 0) {
+        if (!this.color || this.color.length === 0) {
             this.color = this.categoryById[0].color;
         }
 
-        if (!this.image || this.image.lenght === 0) {
+        if (!this.image || this.image.length === 0) {
             this.image = this.categoryById[0].image;
         }
 
