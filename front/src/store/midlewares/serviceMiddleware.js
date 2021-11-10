@@ -10,8 +10,12 @@ import {
   SUBMIT_SERVICE,
   DELETE_SERVICE,
   SEARCH_SERVICES,
+  LIKE_SERVICE,
+  UNLIKE_SERVICE,
+  unlikeServiceSuccess,
 } from '../../actions/service';
 import { saveNotPublishedServices } from '../../actions/admin';
+import { getLikedServices } from '../../actions/user';
 
 const serviceMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -133,6 +137,55 @@ const serviceMiddleware = (store) => (next) => (action) => {
       };
 
       deleteService();
+      next(action);
+      break;
+    }
+    case LIKE_SERVICE: {
+      const { id, accessToken } = store.getState().user;
+      // we create headers of the request
+      let headers = {};
+      if (accessToken !== null) {
+        headers = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      }
+      const likeService = async () => {
+        try {
+          await axios.post(`/api/user/${id}/service/${action.serviceId}`, {}, headers);
+          store.dispatch(getLikedServices());
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+
+      likeService();
+      break;
+    }
+    case UNLIKE_SERVICE: {
+      const { id, accessToken } = store.getState().user;
+      // we create headers of the request
+      let headers = {};
+      if (accessToken !== null) {
+        headers = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      }
+      const unlikeService = async () => {
+        try {
+          await axios.delete(`/api/user/${id}/service/${action.serviceId}`, headers);
+          store.dispatch(unlikeServiceSuccess());
+          store.dispatch(getLikedServices());
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+      unlikeService();
       next(action);
       break;
     }

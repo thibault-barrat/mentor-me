@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteService } from '../../actions/service';
+import { deleteService, unlikeService } from '../../actions/service';
 import { deleteProfile } from '../../actions/user';
 import { publishService } from '../../actions/admin';
 
@@ -25,8 +25,18 @@ const Modal = ({
             setTextButton('Supprimer');
             break;
           case 'user':
-            setText('Etes-vous sûr de vouloir supprimer cet utilisateur ?');
-            setTextButton('Supprimer');
+            switch (action.role) {
+              case 'admin':
+                setText('Etes-vous sûr de vouloir supprimer cet utilisateur ?');
+                setTextButton('Supprimer');
+                break;
+              case 'user':
+                setText('Etes-vous sûr de vouloir supprimer votre profil ?');
+                setTextButton('Supprimer');
+                break;
+              default:
+                break;
+            }
             break;
           default:
             break;
@@ -35,6 +45,10 @@ const Modal = ({
       case 'publish':
         setText('Etes-vous sûr de vouloir publier ce service ?');
         setTextButton('Publier');
+        break;
+      case 'unlike':
+        setText('Etes-vous sûr de vouloir retirer ce service de vos favoris ?');
+        setTextButton('Retirer');
         break;
       default:
         break;
@@ -53,7 +67,7 @@ const Modal = ({
             cancelAction();
             break;
           case 'user':
-            dispatch(deleteProfile(action.id, 'admin'));
+            dispatch(deleteProfile(action.id, action.role));
             cancelAction();
             break;
           default:
@@ -62,6 +76,10 @@ const Modal = ({
         break;
       case 'publish':
         dispatch(publishService(action.id));
+        cancelAction();
+        break;
+      case 'unlike':
+        dispatch(unlikeService(action.id));
         cancelAction();
         break;
       default:
@@ -97,6 +115,7 @@ Modal.propTypes = {
   action: PropTypes.shape({
     type: PropTypes.string.isRequired,
     target: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
   }).isRequired,
 };

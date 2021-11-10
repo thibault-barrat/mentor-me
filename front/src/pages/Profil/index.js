@@ -4,16 +4,16 @@ import './style.scss';
 import { Link, useHistory } from 'react-router-dom';
 import Field from 'src/components/Field';
 import Spinner from 'src/components/Spinner';
+import Modal from 'src/components/Modal';
 import { MdDelete } from 'react-icons/md';
+import { AiFillHeart } from 'react-icons/ai';
 import {
   changeProfileField,
   saveProfile,
   saveImage,
   sendImage,
   logout,
-  deleteProfile,
 } from '../../actions/user';
-import { deleteService } from '../../actions/service';
 
 export default function profil() {
   // We take the details user info from the state
@@ -105,18 +105,6 @@ export default function profil() {
     dispatch(logout());
   };
 
-  // function to handle click on delete account button
-  // and dispatch an action to delete the user
-  const handleDeleteProfile = () => {
-    dispatch(deleteProfile(id, 'user'));
-  };
-
-  // function to handle click on delete service button
-  // and dispatch an action to delete the service
-  const handleDeleteService = (serviceId) => {
-    dispatch(deleteService(serviceId));
-  };
-
   const history = useHistory();
 
   // Redirect to home after logout
@@ -128,177 +116,238 @@ export default function profil() {
     }
   }, [logged]);
 
+  // we need local state variables to display modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalAction, setModalAction] = useState({});
+
+  // we display the modal when their props are updated and not empty object
+  useEffect(() => {
+    if (Object.keys(modalAction).length > 0) {
+      setShowModal(true);
+    }
+  }, [modalAction]);
+
   return (
 
-    <div className="profil">
-      <div className="profil__container-top">
-        <h1 className="profil__title">Mon profil</h1>
-        <div className="profil__bio">
-          <label
-            className="bio__label"
-            htmlFor="bio"
-          >
-            <span className="bio__label-text">Votre biographie</span>
-            <textarea
-              type="text"
-              placeholder="Votre biographie"
-              className="bio__textarea"
-              value={bio}
-              name="bio"
-              onChange={(event) => handleChange(event.target.value, 'bio')}
-              disabled={readOnly}
-            />
-          </label>
-        </div>
-        <div className="profil__container-avatar">
-          {/* We use ternary operator to display a spinner when sending new avatar to the API */}
-          {loadingAvatar ? (
-            <Spinner />
-          ) : (
-            <>
-              <img src={avatar} alt="Avatar du profil" className="profil__avatar" />
-              <form>
-                {!validImage && <span className="profil__error">La taille de l'image doit être inférieure à 500Ko</span>}
-                <label htmlFor="avatar" className="profil__label-avatar">
-                  <span className="connect-button-p">Modifier l'avatar</span>
-                  <input
-                    id="avatar"
-                    type="file"
-                    accept="image/png, image/jpeg"
-                    className="profil__input-avatar"
-                    onChange={handleImageUpload}
-                  />
-                </label>
-              </form>
-            </>
-          )}
-        </div>
-      </div>
-      <div className="profil__container-bottom">
-        <div className="profil__container-form">
-          {!validEmail && (
-            <span className="profil__error">Ce champ doit contenir un email valide.</span>
-          )}
-          <Field
-            type="text"
-            name="email"
-            placeholder="Votre email"
-            value={email}
-            disabled={readOnly}
-            onChange={handleChange}
-            onBlur={checkEmail}
+    <main className="profil">
+      <div className="profil__container">
+        {/* We display the modal when showModal is true */}
+        {showModal && (
+          <Modal
+            action={modalAction}
+            cancelAction={() => setShowModal(false)}
           />
-          <Field
-            type="text"
-            name="firstname"
-            placeholder="Votre prénom"
-            value={firstname}
-            disabled={readOnly}
-            onChange={handleChange}
-          />
-          <Field
-            type="text"
-            name="lastname"
-            placeholder="Votre Nom"
-            value={lastname}
-            disabled={readOnly}
-            onChange={handleChange}
-          />
-          <Field
-            type="text"
-            name="fix"
-            placeholder="Votre numéro de teléphone fixe"
-            value={String(fix)}
-            disabled={readOnly}
-            onChange={handleChange}
-          />
-          <Field
-            type="text"
-            name="phone"
-            placeholder="Votre numéro de téléphone portable"
-            value={String(phone)}
-            disabled={readOnly}
-            onChange={handleChange}
-          />
-
-          {/* We display button "Valider when readOnly is false
-        and we display button "Modifier" when readOnly is true" */}
-          {!readOnly && (
-            <button
-              type="submit"
-              className="connect-button-p"
-              onClick={handleSubmit}
-            >
-              Valider
-            </button>
-          )}
-          {readOnly && (
-            <button
-              type="submit"
-              className="connect-button-p"
-              onClick={() => setReadOnly(!readOnly)}
-            >
-              Modifier le profil
-            </button>
-          )}
-          <br />
-          <button type="submit" className="connect-button-p" onClick={handleDeleteProfile}>Supprimer mon profil</button>
-          <button type="submit" className="connect-button-p" onClick={handleLogout}>Se déconnecter</button>
-        </div>
-
-        {/* We display proposed services only if proposedServices contains items */}
-        {proposedServices.length > 0 && (
-          <div className="profil__container-ann">
-            <h1 className="profil__subtitle">J'ai proposé :</h1>
-
-            {proposedServices.map((service) => (
-              <div key={service.id} className="proposed__card">
-                <Link className="card__link" to={`/service/${service.id}`}>
-                  <span className="card__name">{service.title}</span>
-                  <img
-                    className="proposed__img"
-                    // Here we will use the image of the category of the service
-                    src={categories.find((category) => category.id === service.category_id).image}
-                    alt={service.title}
-                  />
-                </Link>
-                <MdDelete
-                  className="proposed__delete"
-                  onClick={() => handleDeleteService(service.id)}
-                />
-              </div>
-            ))}
-
-            {/* <button type="submit" className="connect-button">voir plus</button> */}
-          </div>
         )}
+        <h1 className="profil__title">Mon profil</h1>
+        <div className="profil__container-top">
+          <div className="profil__bio">
+            <label
+              className="bio__label"
+              htmlFor="bio"
+            >
+              <span className="bio__label-text">Votre biographie</span>
+              <textarea
+                type="text"
+                placeholder="Votre biographie"
+                className="bio__textarea"
+                value={bio || ''}
+                name="bio"
+                onChange={(event) => handleChange(event.target.value, 'bio')}
+                disabled={readOnly}
+              />
+            </label>
+          </div>
+          <div className="profil__container-avatar">
+            {/* We use ternary operator to display a spinner when sending new avatar to the API */}
+            {loadingAvatar ? (
+              <Spinner />
+            ) : (
+              <>
+                <img src={avatar} alt="Avatar du profil" className="profil__avatar" />
+                <form>
+                  {!validImage && <span className="profil__error">La taille de l'image doit être inférieure à 500Ko</span>}
+                  <label htmlFor="avatar" className="profil__label-avatar">
+                    <span className="connect-button-p">Modifier l'avatar</span>
+                    <input
+                      id="avatar"
+                      type="file"
+                      accept="image/png, image/jpeg"
+                      className="profil__input-avatar"
+                      onChange={handleImageUpload}
+                    />
+                  </label>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+        <div className="profil__container-bottom">
+          <div className="profil__container-form">
+            {!validEmail && (
+              <span className="profil__error">Ce champ doit contenir un email valide.</span>
+            )}
+            <Field
+              type="text"
+              name="email"
+              placeholder="Votre email"
+              value={email}
+              disabled={readOnly}
+              onChange={handleChange}
+              onBlur={checkEmail}
+            />
+            <Field
+              type="text"
+              name="firstname"
+              placeholder="Votre prénom"
+              value={firstname}
+              disabled={readOnly}
+              onChange={handleChange}
+            />
+            <Field
+              type="text"
+              name="lastname"
+              placeholder="Votre Nom"
+              value={lastname}
+              disabled={readOnly}
+              onChange={handleChange}
+            />
+            <Field
+              type="text"
+              name="fix"
+              placeholder="Votre numéro de teléphone fixe"
+              value={fix}
+              disabled={readOnly}
+              onChange={handleChange}
+            />
+            <Field
+              type="text"
+              name="phone"
+              placeholder="Votre numéro de téléphone portable"
+              value={phone}
+              disabled={readOnly}
+              onChange={handleChange}
+            />
 
-        {/* We display liked services only if likedServices contains items */}
-        {likedServices.length > 0 && (
-          <div className="profil__container-ann-fav">
-            <h1 className="profil__subtitle">Mes annonces favorites :</h1>
-            {likedServices.map((service) => (
-              // We use ternary operator to display spinner during the delete request
-              loadingDelete ? (
-                <Spinner />
-              ) : (
-                <Link key={service.id} to={`/service/${service.id}`}>
-                  <div className="proposed__card">
-                    <span className="card__name">{service.title}</span>
-                    <img
-                      className="proposed__img"
-                      // Here we will use the image of the category of the service
-                      src={categories.find((category) => category.id === service.category_id).image}
-                      alt={service.title}
+            {/* We display button "Valider when readOnly is false
+        and we display button "Modifier" when readOnly is true" */}
+            {!readOnly && (
+              <button
+                type="submit"
+                className="connect-button-p"
+                onClick={handleSubmit}
+              >
+                Valider
+              </button>
+            )}
+            {readOnly && (
+              <button
+                type="submit"
+                className="connect-button-p"
+                onClick={() => setReadOnly(!readOnly)}
+              >
+                Modifier le profil
+              </button>
+            )}
+            <br />
+            <button
+              type="submit"
+              className="connect-button-p"
+              onClick={() => setModalAction({
+                type: 'delete',
+                target: 'user',
+                role: 'user',
+                id: id,
+              })}
+            >
+              Supprimer mon profil
+            </button>
+            <button
+              type="submit"
+              className="connect-button-p"
+              onClick={handleLogout}
+            >
+              Se déconnecter
+            </button>
+          </div>
+
+          {/* We display proposed services only if proposedServices contains items */}
+          {proposedServices.length > 0 && (
+            <div className="profil__container-ann">
+              <h1 className="profil__subtitle">J'ai proposé :</h1>
+
+              {proposedServices.map((service) => (
+                // We use ternary operator to display spinner during the delete request
+                loadingDelete ? (
+                  <Spinner />
+                ) : (
+                  <div key={service.id} className="proposed__card">
+                    <Link className="card__link" to={`/service/${service.id}`}>
+                      <span className="card__name">{service.title}</span>
+                      <img
+                        className="proposed__img"
+                        // Here we will use the image of the category of the service
+                        src={categories.find(
+                          (category) => category.id === service.category_id,
+                        ).image}
+                        alt={service.title}
+                      />
+                    </Link>
+                    <MdDelete
+                      className="proposed__icon"
+                      onClick={() => setModalAction({
+                        type: 'delete',
+                        target: 'service',
+                        role: 'user',
+                        id: service.id,
+                      })}
                     />
                   </div>
-                </Link>
-              )
-            ))}
-            {/* <button type="submit" className="connect-button">voir plus</button> */}
-          </div>
-        )}
+                )
+              ))}
+
+              {/* <button type="submit" className="connect-button">voir plus</button> */}
+            </div>
+          )}
+
+          {/* We display liked services only if likedServices contains items */}
+          {likedServices.length > 0 && (
+            <div className="profil__container-ann">
+              <h1 className="profil__subtitle">Mes annonces favorites :</h1>
+              {/* likedServices contains the id of liked services
+            so we need to filter services with all ids in likedServices and finally map on it */}
+              {services
+                .filter((service) => likedServices
+                  .some((likedService) => likedService.service_id === service.id))
+                .map((service) => (
+                  <div key={service.id} className="proposed__card">
+                    <Link className="card__link" to={`/service/${service.id}`}>
+                      <span className="card__name">{service.title}</span>
+                      <img
+                        className="proposed__img"
+                        // Here we will use the image of the category of the service
+                        src={categories.find(
+                          (category) => category.id === service.category_id,
+                        ).image}
+                        alt={service.title}
+                      />
+                    </Link>
+                    <AiFillHeart
+                      className="proposed__icon"
+                      onClick={() => setModalAction({
+                        type: 'unlike',
+                        target: 'service',
+                        role: 'user',
+                        id: service.id,
+                      })}
+                    />
+                  </div>
+
+                ))}
+              {/* <button type="submit" className="connect-button">voir plus</button> */}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </main>
   );
 }

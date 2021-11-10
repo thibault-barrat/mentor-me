@@ -15,6 +15,7 @@ import {
   DELETE_TOKEN,
   SEND_IMAGE_SUCCESS,
   DELETE_PROFILE_SUCCESS,
+  SAVE_LIKED_SERVICES,
 } from '../actions/user';
 
 export const initialState = {
@@ -382,6 +383,21 @@ const reducer = (state = initialState, action = {}) => {
         likedServices: [
           ...state.likedServices,
         ],
+      };
+    }
+    case SAVE_LIKED_SERVICES: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+        },
+        details: {
+          ...state.details,
+        },
+        errors: {
+          ...state.errors,
+        },
+        likedServices: action.services,
       };
     }
     default:
