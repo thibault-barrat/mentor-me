@@ -9,7 +9,7 @@ const errorPage = () => (
     <div className="t__container">
       <h1 className="t__title">OOPS</h1>
       <p className="t__text">
-        On dirait que tu t'es perdu ... <br /> On a  surement quelqu'un qui peut t'aider à apprendre a te repéré !
+        On dirait que tu t'es perdu ... <br /> On a  surement quelqu'un qui peut t'aider à apprendre à te repérer !
       </p>
       <a href="/">
         <button className="t__button" type="button"> retour </button>
