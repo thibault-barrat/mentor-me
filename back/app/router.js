@@ -17,8 +17,6 @@ const {
 
 const router = Router();
 
-//router.get("/register", mainController.init);
-
 /* Category */
 router.get("/allCategories", categoryController.getAllCategorizz); // Route pour toutes les catégories
 router.get(
