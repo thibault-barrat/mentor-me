@@ -22,7 +22,6 @@ const serviceController = {
       const service = new Service();
 
       await service.findOne(+id);
-      console.log(service.serviceById);
 
       if (service.serviceById.length === 0) {
         return res.status(404).send({
@@ -116,6 +115,17 @@ const serviceController = {
       await service.searchService(fieldSearch);
 
       res.status(200).send(service.searchResults);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  },
+
+  publishAService: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const service = new Service();
+      await service.modifyPublishBoolean(id);
+      res.status(200).send({ published: true });
     } catch (error) {
       res.status(500).send(error);
     }

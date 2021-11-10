@@ -96,6 +96,14 @@ module.exports = class Service {
     await pool.query(query);
   }
 
+  async modifyPublishBoolean(id) {
+    const query = {
+      text: `UPDATE service SET "is_published"=true WHERE id=$1`,
+      values: [id],
+    };
+    await pool.query(query);
+  }
+
   async createOne(userId) {
     const query = {
       text: `INSERT INTO service ("title", "duration", "description", "online", "irl", "user_id", "category_id","location_id" ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING id;`,
