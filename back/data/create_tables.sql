@@ -8,6 +8,11 @@ DROP TABLE IF EXISTS "users",
 "user_likes_service",
 "role",
 "refreshtokens";
+DROP DOMAIN IF EXISTS "phone_number";
+-- Création d'un domaine
+CREATE DOMAIN "phone_number" AS text CHECK (
+  VALUE ~ '((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))'
+);
 -- Création de la table user
 CREATE TABLE "users" (
   id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -16,10 +21,10 @@ CREATE TABLE "users" (
   email TEXT NOT NULL UNIQUE,
   password TEXT NOT NULL,
   biography TEXT,
-  home_phone INT,
-  mobile_phone INT,
+  home_phone phone_number,
+  mobile_phone phone_number,
   role_id INT NOT NULL DEFAULT 1,
-  -- par défaut, l'avatar du user sera le logo de mentor.me
+  -- par défaut, l' avatar du user sera le logo de mentor.me
   avatar_url TEXT NOT NULL DEFAULT 'https://i.imgur.com/Z9fVYeP.png',
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -32,7 +37,7 @@ CREATE TABLE "service" (
   description text NOT NULL,
   online BOOLEAN NOT NULL DEFAULT FALSE,
   irl BOOLEAN NOT NULL DEFAULT FALSE,
-  is_published BOOLEAN NOT NULL DEFAULT TRUE,
+  is_published BOOLEAN NOT NULL DEFAULT FALSE,
   user_id int NOT NULL REFERENCES "users"("id") ON DELETE CASCADE,
   category_id INT NOT NULL,
   location_id INT NOT NULL,

@@ -64,6 +64,12 @@ router.patch(
   verifyUserById,
   serviceController.modifyService
 );
+router.patch(
+  "/service/:id(\\d+)/publish",
+  verifyToken,
+  isAdmin,
+  serviceController.publishAService
+);
 router.post("/newService", verifyToken, serviceController.createService);
 router.get("/search", verifyToken, serviceController.searchOneService);
 
