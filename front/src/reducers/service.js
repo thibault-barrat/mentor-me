@@ -31,7 +31,6 @@ export const initialState = {
     notifService: false,
   },
   notifDelete: false,
-  notifPublish: false,
   loadingDelete: false,
 };
 

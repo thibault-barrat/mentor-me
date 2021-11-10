@@ -11,7 +11,7 @@ import {
   DELETE_SERVICE,
   SEARCH_SERVICES,
 } from '../../actions/service';
-import { addNotPublishedServices } from '../../actions/admin';
+import { saveNotPublishedServices } from '../../actions/admin';
 
 const serviceMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -27,7 +27,7 @@ const serviceMiddleware = (store) => (next) => (action) => {
           )));
           // if the user is admin we dispatch action to add not published services to the state
           if (role === 'admin') {
-            store.dispatch(addNotPublishedServices(response.data.filter(
+            store.dispatch(saveNotPublishedServices(response.data.filter(
               (service) => service.is_published === false,
             )));
           }

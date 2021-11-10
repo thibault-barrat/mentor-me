@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteService } from '../../actions/service';
 import { deleteProfile } from '../../actions/user';
+import { publishService } from '../../actions/admin';
 
 import './style.scss';
 
@@ -60,7 +61,7 @@ const Modal = ({
         }
         break;
       case 'publish':
-        console.log('publish service', action.id);
+        dispatch(publishService(action.id));
         cancelAction();
         break;
       default:
