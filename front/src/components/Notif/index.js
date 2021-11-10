@@ -54,14 +54,14 @@ const Notif = () => {
   // we display a notification when the profile has been deleted
   useEffect(() => {
     if (notifDeleteUser) {
-      toast.success('Votre profil a été supprimé !');
+      toast.success('Le profil a été supprimé !');
     }
   }, [notifDeleteUser]);
 
   // we display a notification when a service has been created
   useEffect(() => {
     if (notifService) {
-      toast.success('Votre service a été ajouté !');
+      toast.success('Votre service est en attente de validation par un administrateur !');
     }
   }, [notifService]);
 

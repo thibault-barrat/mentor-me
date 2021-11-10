@@ -31,6 +31,7 @@ export const initialState = {
     notifService: false,
   },
   notifDelete: false,
+  notifPublish: false,
   loadingDelete: false,
 };
 
@@ -56,18 +57,39 @@ const reducer = (state = initialState, action = {}) => {
         items: action.services,
         loading: false,
         searchResult: [...state.searchResult],
+        new: {
+          ...state.new,
+          location: {
+            ...state.new.location,
+          },
+        },
       };
     }
     case CHANGE_SEARCH_VALUE: {
       return {
         ...state,
         searchValue: action.value,
+        items: [...state.items],
+        new: {
+          ...state.new,
+          location: {
+            ...state.new.location,
+          },
+        },
         searchResult: [...state.searchResult],
       };
     }
     case SEARCH_SERVICES: {
       return {
         ...state,
+        items: [...state.items],
+        new: {
+          ...state.new,
+          location: {
+            ...state.new.location,
+          },
+        },
+        searchResult: [...state.searchResult],
         searchLoading: true,
         searchRedirect: true,
       };
@@ -84,6 +106,7 @@ const reducer = (state = initialState, action = {}) => {
             ...state.new.location,
           },
         },
+        items: [...state.items],
       };
     }
     case CHANGE_SERVICE_FIELD: {
@@ -97,6 +120,7 @@ const reducer = (state = initialState, action = {}) => {
             ...state.new.location,
           },
         },
+        searchResult: [...state.searchResult],
       };
     }
     case CHANGE_LOCATION: {
@@ -107,6 +131,7 @@ const reducer = (state = initialState, action = {}) => {
           ...state.new,
           location: action.location,
         },
+        searchResult: [...state.searchResult],
       };
     }
     case SUBMIT_SERVICE: {
@@ -115,9 +140,13 @@ const reducer = (state = initialState, action = {}) => {
         items: [...state.items],
         new: {
           ...state.new,
+          location: {
+            ...state.new.location,
+          },
           loading: true,
           notifService: false,
         },
+        searchResult: [...state.searchResult],
       };
     }
     case SUBMIT_SERVICE_SUCCESS: {
@@ -136,6 +165,7 @@ const reducer = (state = initialState, action = {}) => {
           loading: false,
           notifService: true,
         },
+        searchResult: [...state.searchResult],
       };
     }
     case DELETE_SERVICE: {
@@ -145,6 +175,7 @@ const reducer = (state = initialState, action = {}) => {
         new: {
           ...state.new,
         },
+        searchResult: [...state.searchResult],
         loadingDelete: true,
         notifDelete: false,
       };
@@ -156,6 +187,7 @@ const reducer = (state = initialState, action = {}) => {
         new: {
           ...state.new,
         },
+        searchResult: [...state.searchResult],
         loadingDelete: false,
         notifDelete: true,
       };
