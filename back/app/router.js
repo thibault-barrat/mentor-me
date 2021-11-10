@@ -17,8 +17,6 @@ const {
 
 const router = Router();
 
-//router.get("/register", mainController.init);
-
 /* Category */
 router.get("/allCategories", categoryController.getAllCategorizz); // Route pour toutes les catégories
 router.get(
@@ -63,6 +61,12 @@ router.patch(
   verifyToken,
   verifyUserById,
   serviceController.modifyService
+);
+router.patch(
+  "/service/:id(\\d+)/publish",
+  verifyToken,
+  isAdmin,
+  serviceController.publishAService
 );
 router.post("/newService", verifyToken, serviceController.createService);
 router.get("/search", verifyToken, serviceController.searchOneService);

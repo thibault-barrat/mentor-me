@@ -33,19 +33,15 @@ const userController = {
    */
   getOneUser: async (req, res) => {
     try {
-      const {
-        id
-      } = req.params;
+      const { id } = req.params;
       const user = new User();
       await user.findOne(+id);
       // on vérifie que le user demandé existe en db
       if (user.userById.length === 0) {
         // s'il n'existe pas, on retourne une erreur 404 : not found
-        return res
-          .status(404)
-          .send({
-            errorMessage: "This user does not exist"
-          });
+        return res.status(404).send({
+          errorMessage: "This user does not exist",
+        });
       }
       // on renvoie le json du user
       res.status(200).send(user.userById[0]);
@@ -60,17 +56,14 @@ const userController = {
    * @param  {Object} res
    */
   createNewUser: async (req, res) => {
-
     try {
       // on vérifie si un des champs requis n'est pas vide
       for (let property in req.body) {
         // si le champ est vide, le user ne peut pas être créé
         if (req.body[property].length === 0) {
-          return res
-            .status(400)
-            .send({
-              errorMessage: `${property} can't be empty!`
-            });
+          return res.status(400).send({
+            errorMessage: `${property} can't be empty!`,
+          });
         }
       }
       // on vérifie le format de l'email grâce à une regex
@@ -80,7 +73,7 @@ const userController = {
       );
       if (!regexEmail.test(req.body.email)) {
         return res.status(406).send({
-          errorMessage: `Wrong email format!`
+          errorMessage: `Wrong email format!`,
         });
       }
       // on vérifie le format du password grâce à une regex
@@ -90,7 +83,7 @@ const userController = {
       );
       if (!regexPassword.test(req.body.password)) {
         return res.status(406).send({
-          errorMessage: `Wrong password format!`
+          errorMessage: `Wrong password format!`,
         });
       }
 
@@ -99,16 +92,14 @@ const userController = {
       // on vérifie si le user existe déjà en base de données ou pas
       if (user.checkEmail) {
         // un user a déjà été inscrit avec cette adresse mail, on retourne une erreur 409 : Conflict
-        return res
-          .status(409)
-          .send({
-            errorMessage: "This user already exists!"
-          });
+        return res.status(409).send({
+          errorMessage: "This user already exists!",
+        });
       }
 
       // le user n'existe pas encore, on le crée
       res.status(201).send({
-        created: true
+        created: true,
       });
     } catch (err) {
       res.status(500).send(err);
@@ -122,9 +113,7 @@ const userController = {
    */
   modifyUserProfile: async (req, res) => {
     try {
-      const {
-        id
-      } = req.params;
+      const { id } = req.params;
 
       // on vérifie si les numéros de  téléphone envoyés sont de type number
       const regex = new RegExp(/^\d+/);
@@ -134,28 +123,24 @@ const userController = {
         req.body.home_phone !== undefined
       ) {
         // on renvoie une erreur 406 not acceptable!
-        return res
-          .status(406)
-          .send({
-            errorMessage: `Home phone is not a number!`
-          });
+        return res.status(406).send({
+          errorMessage: `Home phone is not a number!`,
+        });
       }
       if (
         !regex.test(Number(req.body.mobile_phone)) &&
         req.body.mobile_phone !== undefined
       ) {
-        return res
-          .status(406)
-          .send({
-            errorMessage: `Mobile phone is not a number!`
-          });
+        return res.status(406).send({
+          errorMessage: `Mobile phone is not a number!`,
+        });
       }
 
       const user = new User(req.body);
       await user.modifyOne(+id);
 
       res.status(200).send({
-        modified: true
+        modified: true,
       });
     } catch (err) {
       res.status(500).send(err);
@@ -169,19 +154,15 @@ const userController = {
    */
   deleteOneUser: async (req, res) => {
     try {
-      const {
-        id
-      } = req.params;
+      const { id } = req.params;
       const user = new User();
       // on vérifie que le user existe avant de le delete
       await user.findOne(+id);
       if (user.userById.length === 0) {
         // s'il n'existe pas, on retourne une erreur 404 : not found
-        return res
-          .status(404)
-          .send({
-            errorMessage: "This user does not exist!"
-          });
+        return res.status(404).send({
+          errorMessage: "This user does not exist!",
+        });
       }
       // quand on supprime le user, on souhaite supprimer son avatar sur cloudinary aussi!
       // on récupère le nom de l'avatar dans cloudinary à partir de avatar_url (on split le string contenant l'url)
@@ -207,7 +188,7 @@ const userController = {
       await token.deleteRefreshToken(refreshToken);
       // on mentionne que la suppression a bien eu lieu
       res.status(200).send({
-        deletedUser: true
+        deletedUser: true,
       });
     } catch (err) {
       res.status(500).send(err);
@@ -229,18 +210,19 @@ const userController = {
 
       if (!user.checkEmail) {
         // un user a déjà été inscrit avec cette adresse mail, on retourne une erreur 409 : Conflict
-        return res
-          .status(404)
-          .send({ errorMessage: "This user does not exist!" });
+        return res.status(404).send({
+          errorMessage: "This user does not exist!",
+        });
       }
 
       // 2. on vérifie le mot de passe du user
       await user.checkUserPassword();
       // on vérifie si le mdp correspond
+
       if (!user.checkPassword) {
         // ce n'est pas le bon mdp
         return res.status(400).send({
-          errorMessage: "Wrong password!"
+          errorMessage: "Wrong password!",
         });
       }
       if (user.checkEmail && user.checkPassword) {
@@ -276,7 +258,9 @@ const userController = {
     const refreshToken = req.body.token || req.query.token;
     const token = new RefreshToken();
     await token.deleteRefreshToken(refreshToken);
-    res.status(200).send({ connected: false });
+    res.status(200).send({
+      connected: false,
+    });
   },
 
   /**
@@ -286,9 +270,7 @@ const userController = {
    */
   modifyUserAvatar: async (req, res) => {
     try {
-      const {
-        id
-      } = req.params;
+      const { id } = req.params;
 
       // on récupère l'image envoyée par le user et on la stocke dans le dossier temporaire
       const avatar = req.files.avatar.tempFilePath;
@@ -306,7 +288,11 @@ const userController = {
       const data = await sharp(avatar).resize(300, 300).toBuffer();
 
       const stream = await cloudinary.uploader.upload_stream(
-        { public_id: `mentorme_${id}`, tags: "MentorMe", folder: "avatars" },
+        {
+          public_id: `mentorme_${id}`,
+          tags: "MentorMe",
+          folder: "avatars",
+        },
         async (err, result) => {
           if (err) {
             return res.status(503).send({
@@ -326,7 +312,7 @@ const userController = {
             const user = new User();
             await user.modifyAvatar(id, url);
             res.status(200).send({
-              message: "Avatar modified"
+              message: "Avatar modified",
             });
           }
         }
