@@ -35,9 +35,9 @@ module.exports = class Service {
 
   async updateLocationId(latitude, longitude) {
     const query = {
-      text: 'UPDATE location SET latitude=$1, longitude=$2 WHERE id=$3 RETURNING *',
-      values: [latitude, longitude, this.serviceById[0].location_id]
-    }
+      text: "UPDATE location SET latitude=$1, longitude=$2 WHERE id=$3 RETURNING *",
+      values: [latitude, longitude, this.serviceById[0].location_id],
+    };
 
     const result = await pool.query(query);
   }
@@ -98,7 +98,7 @@ module.exports = class Service {
 
   async createOne(userId) {
     const query = {
-      text: `INSERT INTO service ("title", "duration", "description", "online", "irl", "user_id", "category_id","location_id" ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
+      text: `INSERT INTO service ("title", "duration", "description", "online", "irl", "user_id", "category_id","location_id" ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING id;`,
       values: [
         this.title,
         this.duration,
