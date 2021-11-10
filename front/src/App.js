@@ -16,6 +16,7 @@ import Profil from './pages/Profil';
 import Services from './pages/Services';
 import Categories from './pages/Categories';
 import serviceId from './pages/ServiceId';
+import errorPage from './pages/404';
 import NavBaar from './components/NavBaar';
 import Footer from './components/Footer';
 import { fetchCategories } from './actions/category';
@@ -75,6 +76,7 @@ function App() {
             <Route path="/categories/:id/services" component={Services} />
             <Route path="/nouveau-service" component={NewService} />
             <Route path="/service/:id" component={serviceId} />
+            <Route path="" component={errorPage} />
           </Switch>
         )}
       <AuthVerify />
