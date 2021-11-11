@@ -25,8 +25,10 @@ export const deleteProfileSuccess = () => ({
   type: DELETE_PROFILE_SUCCESS,
 });
 
-export const deleteProfile = () => ({
+export const deleteProfile = (userId, role) => ({
   type: DELETE_PROFILE,
+  userId,
+  role,
 });
 
 export const deleteToken = () => ({

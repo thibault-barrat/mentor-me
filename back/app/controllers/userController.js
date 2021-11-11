@@ -115,24 +115,24 @@ const userController = {
     try {
       const { id } = req.params;
 
-      // on vérifie si les numéros de  téléphone envoyés sont de type number
-      const regex = new RegExp(/^\d+/);
+      // on vérifie si les numéros de  téléphone envoyés sont de bon format
+      const regex = new RegExp(/\+(?:[0-9]?){6,14}[0-9]$/);
       if (
         // si ce n'est pas un number et si ce n'est pas undefined (avec undefined, on laisse l'ancien champ (cf User.js))
-        !regex.test(Number(req.body.home_phone)) &&
+        !regex.test(req.body.home_phone) &&
         req.body.home_phone !== undefined
       ) {
         // on renvoie une erreur 406 not acceptable!
         return res.status(406).send({
-          errorMessage: `Home phone is not a number!`,
+          errorMessage: `Home phone is not correct!`,
         });
       }
       if (
-        !regex.test(Number(req.body.mobile_phone)) &&
+        !regex.test(req.body.mobile_phone) &&
         req.body.mobile_phone !== undefined
       ) {
         return res.status(406).send({
-          errorMessage: `Mobile phone is not a number!`,
+          errorMessage: `Mobile phone is not correct!`,
         });
       }
 

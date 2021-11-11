@@ -8,7 +8,7 @@ import './NavBar.scss';
 const NavBaar = () => {
   const [clicked, setClicked] = useState(false);
   const isLogged = useSelector((state) => state.user.logged);
-  const isAdmin = useSelector((state) => state.user.isAdmin);
+  const role = useSelector((state) => state.user.role);
 
   /* handleClick here set 'clicked' to the opposite value */
   const handleClick = () => {
@@ -60,7 +60,7 @@ const NavBaar = () => {
             </NavLink>
           </li>
         )}
-        {isAdmin && isLogged && (
+        {role === 'admin' && isLogged && (
           <li>
             <NavLink className="navLinks" to="/admin">
               Dashboard
