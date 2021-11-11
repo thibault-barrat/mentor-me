@@ -126,10 +126,10 @@ module.exports = class User {
     if (!this.biography || this.biography.length === 0) {
       this.biography = this.userById[0].biography;
     }
-    if (!this.home_phone || typeof +this.home_phone !== "number") {
+    if (!this.home_phone || this.home_phone.length === 0) {
       this.home_phone = this.userById[0].home_phone;
     }
-    if (!this.mobile_phone || typeof +this.mobile_phone !== "number") {
+    if (!this.mobile_phone || this.mobile_phone.length === 0) {
       this.mobile_phone = this.userById[0].mobile_phone;
     }
 
@@ -141,8 +141,8 @@ module.exports = class User {
         this.firstname,
         this.lastname,
         this.biography,
-        +this.home_phone,
-        +this.mobile_phone,
+        this.home_phone,
+        this.mobile_phone,
         id,
       ],
     };
