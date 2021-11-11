@@ -30,6 +30,10 @@ const Notif = () => {
   // we need to have the notifRegister variable in the redux state
   const notifRegister = useSelector((state) => state.user.register.notifRegister);
 
+  // in order tonotify admin when he published a service
+  // we need to have the notifPublish variable in the redux state
+  const notifPublish = useSelector((state) => state.admin.notifPublish);
+
   // we display the notification when logout change and it is true
   useEffect(() => {
     if (logout) {
@@ -54,14 +58,14 @@ const Notif = () => {
   // we display a notification when the profile has been deleted
   useEffect(() => {
     if (notifDeleteUser) {
-      toast.success('Votre profil a été supprimé !');
+      toast.success('Le profil a été supprimé !');
     }
   }, [notifDeleteUser]);
 
   // we display a notification when a service has been created
   useEffect(() => {
     if (notifService) {
-      toast.success('Votre service a été ajouté !');
+      toast.success('Votre service est en attente de validation par un administrateur !');
     }
   }, [notifService]);
 
@@ -78,6 +82,13 @@ const Notif = () => {
       toast.success('Votre compte a été créé ! Vous pouvez vous connecter.');
     }
   }, [notifRegister]);
+
+  // we display a notification when admin publishes a service
+  useEffect(() => {
+    if (notifPublish) {
+      toast.success('Le service a été publié.');
+    }
+  }, [notifPublish]);
 
   return (
     <ToastContainer />

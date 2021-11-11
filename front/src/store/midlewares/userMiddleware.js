@@ -3,6 +3,7 @@ import axios from 'axios';
 // eslint-disable-next-line camelcase
 import jwt_decode from 'jwt-decode';
 import { saveUser, submitNewUserSuccess, createMailError, createRegisterMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, sendImageSuccess, deleteToken, deleteProfileSuccess, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE, SEND_IMAGE, REFRESH_TOKEN, DELETE_TOKEN, LOGOUT, DELETE_PROFILE } from '../../actions/user';
+import { getAllUsers } from '../../actions/admin';
 
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -219,14 +220,11 @@ const userMiddleware = (store) => (next) => (action) => {
     }
     case DELETE_PROFILE: {
       const token = localStorage.getItem('refreshToken');
-      const { user:
-        { id,
-          accessToken,
-        } } = store.getState();
+      const { accessToken } = store.getState().user;
 
       const deleteProfile = async () => {
         try {
-          await axios.delete(`/api/user/${id}`, {
+          await axios.delete(`/api/user/${action.userId}`, {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
@@ -234,9 +232,16 @@ const userMiddleware = (store) => (next) => (action) => {
               token,
             },
           });
-          // une fois qu'on a la réponse, on peut venir stocker les infos du user
-          // dans le state => modifier le state => dispatch d'action
-          store.dispatch(deleteToken());
+          // if actions has been dispatched by an admin, we don't delete his token
+          // because he needs to stay connected
+          if (action.role !== 'admin') {
+            store.dispatch(deleteToken());
+          }
+          else {
+            // if actions has been dispatched by an admin, he needs to fetch again all users
+            // to update the state
+            store.dispatch(getAllUsers());
+          }
           store.dispatch(deleteProfileSuccess());
         }
         catch (error) {

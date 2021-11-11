@@ -108,7 +108,7 @@ export default function profil() {
   // function to handle click on delete account button
   // and dispatch an action to delete the user
   const handleDeleteProfile = () => {
-    dispatch(deleteProfile());
+    dispatch(deleteProfile(id, 'user'));
   };
 
   // function to handle click on delete service button

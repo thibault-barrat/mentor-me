@@ -11,14 +11,26 @@ import {
   DELETE_SERVICE,
   SEARCH_SERVICES,
 } from '../../actions/service';
+import { saveNotPublishedServices } from '../../actions/admin';
 
 const serviceMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case FETCH_SERVICES: {
+      // we need the role in order to dispatch specific action if the user is admin or not
+      const { role } = store.getState().user;
       const getServices = async () => {
         try {
           const response = await axios.get('/api/allServices');
-          store.dispatch(addServices(response.data));
+          // we add in the redux state only the services that are published
+          store.dispatch(addServices(response.data.filter(
+            (service) => service.is_published === true,
+          )));
+          // if the user is admin we dispatch action to add not published services to the state
+          if (role === 'admin') {
+            store.dispatch(saveNotPublishedServices(response.data.filter(
+              (service) => service.is_published === false,
+            )));
+          }
         }
         catch (error) {
           console.log(error);
