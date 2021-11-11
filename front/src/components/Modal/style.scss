@@ -10,6 +10,7 @@
   background: white;
   width: 80%;
   z-index: 20;
+  border: 1px solid lightgrey;
   @media (min-width: vars.$breakpoint-xs) {
     width: auto;
 	}
