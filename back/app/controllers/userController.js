@@ -181,11 +181,15 @@ const userController = {
           }
         }
       );
-      await user.deleteOne(+id);
       // quand on supprime, on déconnecte le user
-      const refreshToken = req.body.token || req.query.token;
-      const token = new RefreshToken();
-      await token.deleteRefreshToken(refreshToken);
+      if (req.user.role === "admin") {
+        await user.deleteOne(+id);
+      } else {
+        await user.deleteOne(+id);
+        const refreshToken = req.body.token || req.query.token;
+        const token = new RefreshToken();
+        await token.deleteRefreshToken(refreshToken);
+      }
       // on mentionne que la suppression a bien eu lieu
       res.status(200).send({
         deletedUser: true,
