@@ -8,7 +8,7 @@ import { publishService } from '../../actions/admin';
 import './style.scss';
 
 const Modal = ({
-  cancelAction, action,
+  closeAction, closeParentAction, action, className,
 }) => {
   // we need local state variables for text and text button
   const [text, setText] = useState('');
@@ -64,11 +64,13 @@ const Modal = ({
         switch (action.target) {
           case 'service':
             dispatch(deleteService(action.id));
-            cancelAction();
+            closeAction();
+            closeParentAction();
             break;
           case 'user':
             dispatch(deleteProfile(action.id, action.role));
-            cancelAction();
+            closeAction();
+            closeParentAction();
             break;
           default:
             break;
@@ -76,11 +78,13 @@ const Modal = ({
         break;
       case 'publish':
         dispatch(publishService(action.id));
-        cancelAction();
+        closeAction();
+        closeParentAction();
         break;
       case 'unlike':
         dispatch(unlikeService(action.id));
-        cancelAction();
+        closeAction();
+        closeParentAction();
         break;
       default:
         break;
@@ -88,13 +92,13 @@ const Modal = ({
   };
 
   return (
-    <div className="modal">
+    <div className={`modal ${className}`}>
       <p className="modal__text">{text}</p>
       <div className="modal__button-container">
         <button
           type="button"
           className="modal__button"
-          onClick={cancelAction}
+          onClick={closeAction}
         >
           Annnuler
         </button>
@@ -110,8 +114,15 @@ const Modal = ({
   );
 };
 
+Modal.defaultProps = {
+  className: '',
+  closeParentAction: () => {},
+};
+
 Modal.propTypes = {
-  cancelAction: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  closeAction: PropTypes.func.isRequired,
+  closeParentAction: PropTypes.func,
   action: PropTypes.shape({
     type: PropTypes.string.isRequired,
     target: PropTypes.string.isRequired,
