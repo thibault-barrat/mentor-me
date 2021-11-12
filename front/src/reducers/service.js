@@ -10,6 +10,8 @@ import {
   SUBMIT_SERVICE_SUCCESS,
   DELETE_SERVICE,
   DELETE_SERVICE_SUCCESS,
+  UNLIKE_SERVICE,
+  UNLIKE_SERVICE_SUCCESS,
 } from '../actions/service';
 
 export const initialState = {
@@ -32,6 +34,7 @@ export const initialState = {
   },
   notifDelete: false,
   loadingDelete: false,
+  notifUnlike: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -189,6 +192,28 @@ const reducer = (state = initialState, action = {}) => {
         searchResult: [...state.searchResult],
         loadingDelete: false,
         notifDelete: true,
+      };
+    }
+    case UNLIKE_SERVICE: {
+      return {
+        ...state,
+        items: [...state.items],
+        new: {
+          ...state.new,
+        },
+        searchResult: [...state.searchResult],
+        notifUnlike: false,
+      };
+    }
+    case UNLIKE_SERVICE_SUCCESS: {
+      return {
+        ...state,
+        items: [...state.items],
+        new: {
+          ...state.new,
+        },
+        searchResult: [...state.searchResult],
+        notifUnlike: true,
       };
     }
     default:

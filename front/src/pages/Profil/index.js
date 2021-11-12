@@ -4,16 +4,20 @@ import './style.scss';
 import { Link, useHistory } from 'react-router-dom';
 import Field from 'src/components/Field';
 import Spinner from 'src/components/Spinner';
+import Modal from 'src/components/Modal';
 import { MdDelete } from 'react-icons/md';
+import { AiFillHeart } from 'react-icons/ai';
+import {
+  Tab, Tabs, TabList, TabPanel,
+} from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import {
   changeProfileField,
   saveProfile,
   saveImage,
   sendImage,
   logout,
-  deleteProfile,
 } from '../../actions/user';
-import { deleteService } from '../../actions/service';
 
 export default function profil() {
   // We take the details user info from the state
@@ -35,8 +39,12 @@ export default function profil() {
     setProposedServices(services.filter((service) => service.mentor_id === id));
   }, [services]);
 
-  // We also need to know the liked services of the user
-  const likedServices = useSelector((state) => state.user.likedServices);
+  // We also need to know the id of liked services by the user
+  const likedServicesId = useSelector((state) => state.user.likedServices);
+  // To obtain liked services, we filter the services by the likedServicesId
+  const likedServices = services.filter(
+    (service) => likedServicesId.some((likedService) => likedService.service_id === service.id),
+  );
 
   // We also need the categories to display the category image on the service cards
   const categories = useSelector((state) => state.categories.items);
@@ -87,7 +95,22 @@ export default function profil() {
 
   // function to handle the change value in input controlled fields
   const handleChange = (value, name) => {
-    dispatch(changeProfileField(value, name));
+    console.log(value);
+    // for fix and phone, we need to have the phone number with international prefix
+    // if the number starts with 0, we replace it by +33
+    if (name === 'fix' || name === 'phone') {
+      if (value.charAt(0) === '0') {
+        const newValue = `+33${value.substring(1)}`;
+        console.log(newValue);
+        dispatch(changeProfileField(newValue, name));
+      }
+      else {
+        dispatch(changeProfileField(value, name));
+      }
+    }
+    else {
+      dispatch(changeProfileField(value, name));
+    }
   };
 
   // function to handle submission of new profile data
@@ -105,18 +128,6 @@ export default function profil() {
     dispatch(logout());
   };
 
-  // function to handle click on delete account button
-  // and dispatch an action to delete the user
-  const handleDeleteProfile = () => {
-    dispatch(deleteProfile(id, 'user'));
-  };
-
-  // function to handle click on delete service button
-  // and dispatch an action to delete the service
-  const handleDeleteService = (serviceId) => {
-    dispatch(deleteService(serviceId));
-  };
-
   const history = useHistory();
 
   // Redirect to home after logout
@@ -128,11 +139,29 @@ export default function profil() {
     }
   }, [logged]);
 
+  // we need local state variables to display modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalAction, setModalAction] = useState({});
+
+  // we display the modal when their props are updated and not empty object
+  useEffect(() => {
+    if (Object.keys(modalAction).length > 0) {
+      setShowModal(true);
+    }
+  }, [modalAction]);
+
   return (
 
-    <div className="profil">
-      <div className="profil__container-top">
-        <h1 className="profil__title">Mon profil</h1>
+    <main className="profil">
+      {/* We display the modal when showModal is true */}
+      {showModal && (
+        <Modal
+          action={modalAction}
+          cancelAction={() => setShowModal(false)}
+        />
+      )}
+      <h1 className="profil__title">Mon profil</h1>
+      <div className="profil__container">
         <div className="profil__bio">
           <label
             className="bio__label"
@@ -143,7 +172,7 @@ export default function profil() {
               type="text"
               placeholder="Votre biographie"
               className="bio__textarea"
-              value={bio}
+              value={bio || ''}
               name="bio"
               onChange={(event) => handleChange(event.target.value, 'bio')}
               disabled={readOnly}
@@ -173,8 +202,6 @@ export default function profil() {
             </>
           )}
         </div>
-      </div>
-      <div className="profil__container-bottom">
         <div className="profil__container-form">
           {!validEmail && (
             <span className="profil__error">Ce champ doit contenir un email valide.</span>
@@ -208,7 +235,7 @@ export default function profil() {
             type="text"
             name="fix"
             placeholder="Votre numéro de teléphone fixe"
-            value={String(fix)}
+            value={fix}
             disabled={readOnly}
             onChange={handleChange}
           />
@@ -216,7 +243,7 @@ export default function profil() {
             type="text"
             name="phone"
             placeholder="Votre numéro de téléphone portable"
-            value={String(phone)}
+            value={phone}
             disabled={readOnly}
             onChange={handleChange}
           />
@@ -242,63 +269,110 @@ export default function profil() {
             </button>
           )}
           <br />
-          <button type="submit" className="connect-button-p" onClick={handleDeleteProfile}>Supprimer mon profil</button>
-          <button type="submit" className="connect-button-p" onClick={handleLogout}>Se déconnecter</button>
+          <button
+            type="submit"
+            className="connect-button-p"
+            onClick={() => setModalAction({
+              type: 'delete',
+              target: 'user',
+              role: 'user',
+              id: id,
+            })}
+          >
+            Supprimer mon profil
+          </button>
+          <button
+            type="submit"
+            className="connect-button-p"
+            onClick={handleLogout}
+          >
+            Se déconnecter
+          </button>
         </div>
 
-        {/* We display proposed services only if proposedServices contains items */}
-        {proposedServices.length > 0 && (
-          <div className="profil__container-ann">
-            <h1 className="profil__subtitle">J'ai proposé :</h1>
+        {/* We use the react tabs library to display the proposed services
+          and the liked services */}
+        <Tabs className="profil__tabs-container">
+          <TabList className="profil__tabs">
+            <Tab>Services proposés</Tab>
+            <Tab>Services aimés</Tab>
+          </TabList>
 
-            {proposedServices.map((service) => (
-              <div key={service.id} className="proposed__card">
-                <Link className="card__link" to={`/service/${service.id}`}>
-                  <span className="card__name">{service.title}</span>
-                  <img
-                    className="proposed__img"
-                    // Here we will use the image of the category of the service
-                    src={categories.find((category) => category.id === service.category_id).image}
-                    alt={service.title}
-                  />
-                </Link>
-                <MdDelete
-                  className="proposed__delete"
-                  onClick={() => handleDeleteService(service.id)}
-                />
-              </div>
-            ))}
-
-            {/* <button type="submit" className="connect-button">voir plus</button> */}
-          </div>
-        )}
-
-        {/* We display liked services only if likedServices contains items */}
-        {likedServices.length > 0 && (
-          <div className="profil__container-ann-fav">
-            <h1 className="profil__subtitle">Mes annonces favorites :</h1>
-            {likedServices.map((service) => (
-              // We use ternary operator to display spinner during the delete request
-              loadingDelete ? (
-                <Spinner />
+          <TabPanel>
+            <div className="profil__container-ann">
+              {/* We display proposed services only if proposedServices contains items */}
+              {proposedServices.length === 0 ? (
+                <p>Vous n'avez proposé aucun service</p>
               ) : (
-                <Link key={service.id} to={`/service/${service.id}`}>
-                  <div className="proposed__card">
-                    <span className="card__name">{service.title}</span>
-                    <img
-                      className="proposed__img"
-                      // Here we will use the image of the category of the service
-                      src={categories.find((category) => category.id === service.category_id).image}
-                      alt={service.title}
+                proposedServices.map((service) => (
+                  // We use ternary operator to display spinner during the delete request
+                  loadingDelete ? (
+                    <Spinner />
+                  ) : (
+                    <div key={service.id} className="proposed__card">
+                      <Link className="card__link" to={`/service/${service.id}`}>
+                        <span className="card__name">{service.title}</span>
+                        <img
+                          className="proposed__img"
+                          // Here we will use the image of the category of the service
+                          src={categories.find(
+                            (category) => category.id === service.category_id,
+                          ).image}
+                          alt={service.title}
+                        />
+                      </Link>
+                      <MdDelete
+                        className="proposed__icon"
+                        onClick={() => setModalAction({
+                          type: 'delete',
+                          target: 'service',
+                          role: 'user',
+                          id: service.id,
+                        })}
+                      />
+                    </div>
+                  )
+                ))
+              )}
+              {/* <button type="submit" className="connect-button">voir plus</button> */}
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <div className="profil__container-ann">
+              {/* We display liked services only if likedServices contains items */}
+              {likedServices.length === 0 ? (
+                <p>Vous n'avez pas encore de favoris</p>
+              ) : (
+                likedServices.map((service) => (
+                  <div key={service.id} className="proposed__card">
+                    <Link className="card__link" to={`/service/${service.id}`}>
+                      <span className="card__name">{service.title}</span>
+                      <img
+                        className="proposed__img"
+                        // Here we will use the image of the category of the service
+                        src={categories.find(
+                          (category) => category.id === service.category_id,
+                        ).image}
+                        alt={service.title}
+                      />
+                    </Link>
+                    <AiFillHeart
+                      className="proposed__icon"
+                      onClick={() => setModalAction({
+                        type: 'unlike',
+                        target: 'service',
+                        role: 'user',
+                        id: service.id,
+                      })}
                     />
                   </div>
-                </Link>
-              )
-            ))}
-            {/* <button type="submit" className="connect-button">voir plus</button> */}
-          </div>
-        )}
+                ))
+              )}
+              {/* <button type="submit" className="connect-button">voir plus</button> */}
+            </div>
+          </TabPanel>
+        </Tabs>
       </div>
-    </div>
+    </main>
   );
 }

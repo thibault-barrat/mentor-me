@@ -55,6 +55,7 @@ const Admin = () => {
                     onClick={() => setModalAction({
                       type: 'delete',
                       target: 'service',
+                      role: 'admin',
                       id: service.id,
                     })}
                   />
@@ -63,6 +64,7 @@ const Admin = () => {
                     onClick={() => setModalAction({
                       type: 'publish',
                       target: 'service',
+                      role: 'admin',
                       id: service.id,
                     })}
                   />
@@ -90,6 +92,7 @@ const Admin = () => {
                   onClick={() => setModalAction({
                     type: 'delete',
                     target: 'service',
+                    role: 'admin',
                     id: service.id,
                   })}
                 />
@@ -114,6 +117,7 @@ const Admin = () => {
                   onClick={() => setModalAction({
                     type: 'delete',
                     target: 'user',
+                    role: 'admin',
                     id: user.id,
                   })}
                 />

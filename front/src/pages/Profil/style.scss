@@ -1,107 +1,85 @@
 @use 'src/styles/vars';
 
 .profil {
-	@media (min-width: vars.$breakpoint-sm) {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		margin-bottom: 3rem;
-	}
-	&__container-top {
+	&__container {
+		max-width: 1200px;
+		margin: 0 auto;
 		display: grid;
 		grid-template-columns: auto;
-		grid-template-rows: auto auto auto;
-		width: 100%;
-		@media (min-width: vars.$breakpoint-sm) {
+		grid-template-rows: auto auto auto auto;
+		justify-items: center;
+		@media (min-width: vars.$breakpoint-md) {
+			grid-template-columns: auto max-content;
 			grid-template-rows: auto auto;
-			grid-template-columns: auto min-content;
-			align-items: center;
-		}
-	}
-	&__container-bottom {
-		display: flex;
-		justify-content: center;
-		flex-direction: column;
-		@media (min-width: vars.$breakpoint-sm) {
-			flex-direction: row;
-			align-items: flex-start;
-		}
-		div:last-child {
-			padding-bottom: calc(vars.$gutter * 3);
-			@media (min-width: vars.$breakpoint-sm) {
-				padding: vars.$gutter;
-			}
+			margin-bottom: 3rem;
+			padding: 0 5%;
 		}
 	}
 	&__container-form {
+		grid-column: 1;
+		grid-row: 3;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		flex-grow: 1;
-		@media (min-width: vars.$breakpoint-sm) {
-			margin: 2rem 0 2rem 0;
+		max-width: 500px;
+		width: 100%;
+		@media (min-width: vars.$breakpoint-md) {
+			grid-column: 1;
+			grid-row: 2;
+      align-self: flex-start;
 		}
+	}
+	.field {
+		width: 100%;
 	}
 	&__container-ann {
-		background-color: whitesmoke;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		padding: vars.$gutter;
-		@media (min-width: vars.$breakpoint-sm) {
-			border-radius: 20px;
-			background-color: white;
-			margin: calc(vars.$gutter * 2) vars.$gutter;
-		}
-	}
-	&__container-ann-fav {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		padding: vars.$gutter;
-		@media (min-width: vars.$breakpoint-sm) {
-			margin: calc(vars.$gutter * 2) vars.$gutter;
+		background-color: white;
+		padding-bottom: calc(vars.$gutter * 3);
+		@media (min-width: vars.$breakpoint-md) {
+			border-radius: 0 0 20px 20px;
 		}
 	}
 	&__title {
-		grid-row: 1;
-		grid-column: 1;
 		margin-bottom: 0;
 		padding-bottom: 0;
 		text-align: center;
 		margin: 2rem 0 0 0;
 		font-size: 1.7rem;
-		@media (min-width: vars.$breakpoint-sm) {
-			grid-row: 1;
-			grid-column: 1 / span 2;
-		}
 	}
 	&__container-avatar {
-		grid-row: 2;
 		grid-column: 1;
-		justify-self: center;
+		grid-row: 1;
 		text-align: center;
-		width: 300px;
-		@media (min-width: vars.$breakpoint-sm) {
-			grid-row: 2;
+		margin-top: calc(vars.$gutter * 2);
+		width: 250px;
+    @media (min-width: vars.$breakpoint-md) {
 			grid-column: 2;
+			grid-row: 1;
+      align-self: center;
 		}
 	}
 	&__avatar {
-		width: 300px;
-		height: 300px;
+		width: 250px;
+		height: 250px;
 		border: none;
 		border-radius: 150px;
-		padding: 1.5rem;
+		margin-bottom: vars.$gutter;
 	}
 	&__bio {
-		grid-row: 3;
 		grid-column: 1;
-		@media (min-width: vars.$breakpoint-sm) {
-			grid-row: 2;
-			grid-column: 1;
-			margin: vars.$gutter 0;
+		grid-row: 2;
+		width: 100%;
+		@media (min-width: vars.$breakpoint-md) {
+			max-width: 500px;
+      grid-column: 1;
+			grid-row: 1;
+      align-self: center;
 		}
 	}
 	&__error {
@@ -110,11 +88,20 @@
 		text-align: center;
 		width: 75%;
 	}
-	&__subtitle {
-		margin-bottom: 1rem;
-	}
 	&__input-avatar {
 		display: none;
+	}
+	&__tabs-container {
+		justify-self: stretch;
+    @media (min-width: vars.$breakpoint-md) {
+			margin: 0 calc(vars.$gutter * 2);
+		}
+	}
+	&__tabs {
+		border-bottom: 1px solid #aaa;
+		margin: 0;
+		padding: 0;
+		text-align: center;
 	}
 }
 
@@ -123,7 +110,11 @@
 		display: flex;
 		flex-direction: column;
 		margin: auto;
-		width: 75%;
+		width: 100%;
+		max-width: 500px;
+		@media (min-width: vars.$breakpoint-md) {
+			max-width: none;
+		}
 	}
 	&__textarea {
 		padding: vars.$gutter;
@@ -151,14 +142,15 @@
 	}
 }
 
-
 .card__link {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .proposed__card {
-  margin-top: vars.$gutter;
+	margin-top: vars.$gutter;
+	width: 200px;
 }
 
 .proposed__img {
@@ -167,18 +159,19 @@
 	border: none;
 	border-radius: 50px;
 	padding: vars.$gutter;
+	object-fit: cover;
 }
 
-.proposed__delete {
+.proposed__icon {
 	color: rgb(248, 93, 82);
-  display: block;
-  margin: 0 auto;
-  font-size: calc(vars.$gutter * 1.5);
-  transition: 0.2s ease-in-out;
-  cursor: pointer;
-  &:hover {
-    transform: scale(1.1);
-  }
+	display: block;
+	margin: 0 auto;
+	font-size: calc(vars.$gutter * 1.5);
+	transition: 0.2s ease-in-out;
+	cursor: pointer;
+	&:hover {
+		transform: scale(1.1);
+	}
 }
 
 .connect-button-p {

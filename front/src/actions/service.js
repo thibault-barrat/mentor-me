@@ -10,6 +10,18 @@ export const SUBMIT_SERVICE = 'SUBMIT_SERVICE';
 export const SUBMIT_SERVICE_SUCCESS = 'SUBMIT_SERVICE_SUCCESS';
 export const DELETE_SERVICE = 'DELETE_SERVICE';
 export const DELETE_SERVICE_SUCCESS = 'DELETE_SERVICE_SUCCESS';
+export const LIKE_SERVICE = 'LIKE_SERVICE';
+export const UNLIKE_SERVICE = 'UNLIKE_SERVICE';
+export const UNLIKE_SERVICE_SUCCESS = 'UNLIKE_SERVICE_SUCCESS';
+
+export const unlikeService = (serviceId) => ({
+  type: UNLIKE_SERVICE,
+  serviceId,
+});
+
+export const unlikeServiceSuccess = () => ({
+  type: UNLIKE_SERVICE_SUCCESS,
+});
 
 export const deleteServiceSuccess = () => ({
   type: DELETE_SERVICE_SUCCESS,

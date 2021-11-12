@@ -1,8 +1,31 @@
-/* eslint-disable object-curly-newline */
 import axios from 'axios';
 // eslint-disable-next-line camelcase
 import jwt_decode from 'jwt-decode';
-import { saveUser, submitNewUserSuccess, createMailError, createRegisterMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, sendImageSuccess, deleteToken, deleteProfileSuccess, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE, SEND_IMAGE, REFRESH_TOKEN, DELETE_TOKEN, LOGOUT, DELETE_PROFILE } from '../../actions/user';
+import {
+  saveUser,
+  submitNewUserSuccess,
+  createMailError,
+  createRegisterMailError,
+  createPasswordError,
+  getUserDetails,
+  saveUserDetails,
+  saveProfileSuccess,
+  sendImageSuccess,
+  deleteToken,
+  deleteProfileSuccess,
+  saveLikedServices,
+  SUBMIT_LOGIN,
+  SUBMIT_NEW_USER,
+  GET_USER_DETAILS,
+  SAVE_PROFILE,
+  SEND_IMAGE,
+  REFRESH_TOKEN,
+  DELETE_TOKEN,
+  LOGOUT,
+  DELETE_PROFILE,
+  GET_LIKED_SERVICES,
+  getLikedServices,
+} from '../../actions/user';
 import { getAllUsers } from '../../actions/admin';
 
 const userMiddleware = (store) => (next) => (action) => {
@@ -33,6 +56,7 @@ const userMiddleware = (store) => (next) => (action) => {
           // dans le state => modifier le state => dispatch d'action
           store.dispatch(saveUser(role, user_id, response.data.accessToken));
           store.dispatch(getUserDetails());
+          store.dispatch(getLikedServices());
         }
         catch (error) {
           if (error.response.data.errorMessage === 'This user does not exist!') {
@@ -56,7 +80,13 @@ const userMiddleware = (store) => (next) => (action) => {
       // const { email, password } = state.user;
 
       // on peut destructurer directement le state retourné par le store
-      const { user: { register: { email, password, firstname, lastname } } } = store.getState();
+      const {
+        user: {
+          register: {
+            email, password, firstname, lastname,
+          },
+        },
+      } = store.getState();
 
       const submitNewUser = async () => {
         try {
@@ -108,10 +138,15 @@ const userMiddleware = (store) => (next) => (action) => {
       break;
     }
     case SAVE_PROFILE: {
-      const { user:
-        { id,
+      const {
+        user: {
+          id,
           accessToken,
-          details: { email, firstname, lastname, bio, phone, fix } } } = store.getState();
+          details: {
+            email, firstname, lastname, bio, phone, fix,
+          },
+        },
+      } = store.getState();
       // we create headers of the request
       let headers = {};
       if (accessToken !== null) {
@@ -144,8 +179,13 @@ const userMiddleware = (store) => (next) => (action) => {
       break;
     }
     case SEND_IMAGE: {
-      const { user:
-        { id, accessToken, details: { uploadedImage } } } = store.getState();
+      const {
+        user: {
+          id,
+          accessToken,
+          details: { uploadedImage },
+        },
+      } = store.getState();
       // we create headers of the request
       let headers = {};
       if (accessToken !== null) {
@@ -191,6 +231,7 @@ const userMiddleware = (store) => (next) => (action) => {
           // dans le state => modifier le state => dispatch d'action
           store.dispatch(saveUser(role, user_id, response.data.accessToken));
           store.dispatch(getUserDetails());
+          store.dispatch(getLikedServices());
         }
         catch (error) {
           console.log(error);
@@ -254,6 +295,29 @@ const userMiddleware = (store) => (next) => (action) => {
     case DELETE_TOKEN: {
       localStorage.removeItem('refreshToken');
       next(action);
+      break;
+    }
+    case GET_LIKED_SERVICES: {
+      const { user: { id, accessToken } } = store.getState();
+      // we create headers of the request
+      let headers = {};
+      if (accessToken !== null) {
+        headers = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      }
+      const fetchLikedServices = async () => {
+        try {
+          const response = await axios.get(`/api/user/${id}/likedServices`, headers);
+          store.dispatch(saveLikedServices(response.data));
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+      fetchLikedServices();
       break;
     }
     default:
