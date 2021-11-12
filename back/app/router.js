@@ -5,6 +5,7 @@ const userController = require("./controllers/userController");
 const categoryController = require("./controllers/categoryController");
 const serviceController = require("./controllers/serviceController");
 const tokenController = require("./controllers/tokenController");
+const mainController = require("./controllers/mainController");
 const userLikeServicesController = require("./controllers/userLikeServicesController");
 
 // import des middlewares
@@ -177,5 +178,7 @@ router.delete(
   isAdmin,
   tokenController.deleteAllRefreshTokens
 );
+
+router.post("/contact", mainController.sendMail);
 
 module.exports = router;
