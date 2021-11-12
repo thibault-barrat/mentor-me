@@ -147,6 +147,26 @@ const userMiddleware = (store) => (next) => (action) => {
           },
         },
       } = store.getState();
+      // we create data of the request
+      // to avoid errors we cannot send null as phone numbers
+      let data = {
+        email,
+        firstname,
+        lastname,
+        bbiography: bio,
+      };
+      if (phone !== null) {
+        data = {
+          ...data,
+          mobile_phone: phone,
+        };
+      }
+      if (fix !== null) {
+        data = {
+          ...data,
+          home_phone: fix,
+        };
+      }
       // we create headers of the request
       let headers = {};
       if (accessToken !== null) {
@@ -158,14 +178,7 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       const saveProfile = async () => {
         try {
-          await axios.patch(`/api/user/${id}`, {
-            email,
-            firstname,
-            lastname,
-            biography: bio,
-            home_phone: fix,
-            mobile_phone: phone,
-          }, headers);
+          await axios.patch(`/api/user/${id}`, data, headers);
           // une fois qu'on a la réponse, on peut venir stocker les infos du user
           // dans le state => modifier le state => dispatch d'action
           store.dispatch(saveProfileSuccess());
