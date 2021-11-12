@@ -16,11 +16,27 @@ const Notif = () => {
 
   // in order to notify user when his profile has been deleted
   // we need to have the notifDelete variable in the redux state
-  const notifDelete = useSelector((state) => state.user.details.notifDelete);
+  const notifDeleteUser = useSelector((state) => state.user.details.notifDelete);
 
   // in order to notify user when he submit a new service
   // we need to have the notifService variable in the redux state
   const notifService = useSelector((state) => state.services.new.notifService);
+
+  // in order to notify when a service has been deleted
+  // we need to have the notifDeleteService variable in the redux state
+  const notifDeleteService = useSelector((state) => state.services.notifDelete);
+
+  // in order to notify user when he created his account
+  // we need to have the notifRegister variable in the redux state
+  const notifRegister = useSelector((state) => state.user.register.notifRegister);
+
+  // in order tonotify admin when he published a service
+  // we need to have the notifPublish variable in the redux state
+  const notifPublish = useSelector((state) => state.admin.notifPublish);
+
+  // in order to notfy user when he has unliked a service
+  // we need to have the notifUnlike variable in the redux state
+  const notifUnlike = useSelector((state) => state.services.notifUnlike);
 
   // we display the notification when logout change and it is true
   useEffect(() => {
@@ -45,17 +61,45 @@ const Notif = () => {
 
   // we display a notification when the profile has been deleted
   useEffect(() => {
-    if (notifDelete) {
-      toast.success('Votre profil a été supprimé !');
+    if (notifDeleteUser) {
+      toast.success('Le profil a été supprimé !');
     }
-  }, [notifDelete]);
+  }, [notifDeleteUser]);
 
   // we display a notification when a service has been created
   useEffect(() => {
     if (notifService) {
-      toast.success('Votre service a été ajouté !');
+      toast.success('Votre service est en attente de validation par un administrateur !');
     }
   }, [notifService]);
+
+  // we display a notification when a service has been deleted
+  useEffect(() => {
+    if (notifDeleteService) {
+      toast.success('Le service a été supprimé !');
+    }
+  }, [notifDeleteService]);
+
+  // we display a notification when a user has been created
+  useEffect(() => {
+    if (notifRegister) {
+      toast.success('Votre compte a été créé ! Vous pouvez vous connecter.');
+    }
+  }, [notifRegister]);
+
+  // we display a notification when admin publishes a service
+  useEffect(() => {
+    if (notifPublish) {
+      toast.success('Le service a été publié.');
+    }
+  }, [notifPublish]);
+
+  // we display a notification when user has unliked a service
+  useEffect(() => {
+    if (notifUnlike) {
+      toast.success('Le service a été retiré de vos favoris !');
+    }
+  }, [notifUnlike]);
 
   return (
     <ToastContainer />

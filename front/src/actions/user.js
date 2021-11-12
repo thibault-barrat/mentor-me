@@ -2,6 +2,7 @@ export const CHANGE_LOGIN_FIELD = 'CHANGE_LOGIN_FIELD';
 export const SUBMIT_LOGIN = 'SUBMIT_LOGIN';
 export const CREATE_MAIL_ERROR = 'CREATE_MAIL_ERROR';
 export const CREATE_PASSWORD_ERROR = 'CREATE_PASSWORD_ERROR';
+export const CREATE_REGISTER_MAIL_ERROR = 'CREATE_REGISTER_MAIL_ERROR';
 export const SAVE_USER = 'SAVE_USER';
 export const CHANGE_REGISTER_FIELD = 'CHANGE_REGISTER_FIELD';
 export const SUBMIT_NEW_USER = 'SUBMIT_NEW_USER';
@@ -19,13 +20,26 @@ export const LOGOUT = 'LOGOUT';
 export const DELETE_TOKEN = 'DELETE_TOKEN';
 export const DELETE_PROFILE = 'DELETE_PROFILE';
 export const DELETE_PROFILE_SUCCESS = 'DELETE_PROFILE_SUCCESS';
+export const GET_LIKED_SERVICES = 'GET_LIKED_SERVICES';
+export const SAVE_LIKED_SERVICES = 'SAVE_LIKED_SERVICES';
+
+export const saveLikedServices = (services) => ({
+  type: SAVE_LIKED_SERVICES,
+  services,
+});
+
+export const getLikedServices = () => ({
+  type: GET_LIKED_SERVICES,
+});
 
 export const deleteProfileSuccess = () => ({
   type: DELETE_PROFILE_SUCCESS,
 });
 
-export const deleteProfile = () => ({
+export const deleteProfile = (userId, role) => ({
   type: DELETE_PROFILE,
+  userId,
+  role,
 });
 
 export const deleteToken = () => ({
@@ -52,6 +66,10 @@ export const submitLogin = () => ({
 
 export const createMailError = () => ({
   type: CREATE_MAIL_ERROR,
+});
+
+export const createRegisterMailError = () => ({
+  type: CREATE_REGISTER_MAIL_ERROR,
 });
 
 export const createPasswordError = () => ({

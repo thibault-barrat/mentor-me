@@ -16,10 +16,10 @@ CREATE TABLE "users" (
   email TEXT NOT NULL UNIQUE,
   password TEXT NOT NULL,
   biography TEXT,
-  home_phone INT,
-  mobile_phone INT,
+  home_phone TEXT,
+  mobile_phone TEXT,
   role_id INT NOT NULL DEFAULT 1,
-  -- par défaut, l'avatar du user sera le logo de mentor.me
+  -- par défaut, l' avatar du user sera le logo de mentor.me
   avatar_url TEXT NOT NULL DEFAULT 'https://i.imgur.com/Z9fVYeP.png',
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -32,7 +32,7 @@ CREATE TABLE "service" (
   description text NOT NULL,
   online BOOLEAN NOT NULL DEFAULT FALSE,
   irl BOOLEAN NOT NULL DEFAULT FALSE,
-  is_published BOOLEAN NOT NULL DEFAULT TRUE,
+  is_published BOOLEAN NOT NULL DEFAULT FALSE,
   user_id int NOT NULL REFERENCES "users"("id") ON DELETE CASCADE,
   category_id INT NOT NULL,
   location_id INT NOT NULL,

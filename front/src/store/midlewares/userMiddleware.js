@@ -1,8 +1,32 @@
-/* eslint-disable object-curly-newline */
 import axios from 'axios';
 // eslint-disable-next-line camelcase
 import jwt_decode from 'jwt-decode';
-import { saveUser, submitNewUserSuccess, createMailError, createPasswordError, getUserDetails, saveUserDetails, saveProfileSuccess, sendImageSuccess, deleteToken, deleteProfileSuccess, SUBMIT_LOGIN, SUBMIT_NEW_USER, GET_USER_DETAILS, SAVE_PROFILE, SEND_IMAGE, REFRESH_TOKEN, DELETE_TOKEN, LOGOUT, DELETE_PROFILE } from '../../actions/user';
+import {
+  saveUser,
+  submitNewUserSuccess,
+  createMailError,
+  createRegisterMailError,
+  createPasswordError,
+  getUserDetails,
+  saveUserDetails,
+  saveProfileSuccess,
+  sendImageSuccess,
+  deleteToken,
+  deleteProfileSuccess,
+  saveLikedServices,
+  SUBMIT_LOGIN,
+  SUBMIT_NEW_USER,
+  GET_USER_DETAILS,
+  SAVE_PROFILE,
+  SEND_IMAGE,
+  REFRESH_TOKEN,
+  DELETE_TOKEN,
+  LOGOUT,
+  DELETE_PROFILE,
+  GET_LIKED_SERVICES,
+  getLikedServices,
+} from '../../actions/user';
+import { getAllUsers } from '../../actions/admin';
 
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -19,7 +43,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
       const submitLogin = async () => {
         try {
-          const response = await axios.post('https://api-mentorme.herokuapp.com/v1/login', {
+          const response = await axios.post('/api/login', {
             email,
             password,
           });
@@ -32,6 +56,7 @@ const userMiddleware = (store) => (next) => (action) => {
           // dans le state => modifier le state => dispatch d'action
           store.dispatch(saveUser(role, user_id, response.data.accessToken));
           store.dispatch(getUserDetails());
+          store.dispatch(getLikedServices());
         }
         catch (error) {
           if (error.response.data.errorMessage === 'This user does not exist!') {
@@ -55,11 +80,17 @@ const userMiddleware = (store) => (next) => (action) => {
       // const { email, password } = state.user;
 
       // on peut destructurer directement le state retourné par le store
-      const { user: { register: { email, password, firstname, lastname } } } = store.getState();
+      const {
+        user: {
+          register: {
+            email, password, firstname, lastname,
+          },
+        },
+      } = store.getState();
 
       const submitNewUser = async () => {
         try {
-          await axios.post('https://api-mentorme.herokuapp.com/v1/register', {
+          await axios.post('/api/register', {
             email,
             password,
             firstname,
@@ -70,7 +101,12 @@ const userMiddleware = (store) => (next) => (action) => {
           store.dispatch(submitNewUserSuccess());
         }
         catch (error) {
-          console.log(error);
+          if (error.response.data.errorMessage === 'This user already exists!') {
+            store.dispatch(createRegisterMailError());
+          }
+          else {
+            console.log(error);
+          }
         }
       };
 
@@ -91,7 +127,7 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       const getUser = async () => {
         try {
-          const response = await axios.get(`https://api-mentorme.herokuapp.com/v1/user/${id}`, headers);
+          const response = await axios.get(`/api/user/${id}`, headers);
           store.dispatch(saveUserDetails(response.data));
         }
         catch (error) {
@@ -102,10 +138,35 @@ const userMiddleware = (store) => (next) => (action) => {
       break;
     }
     case SAVE_PROFILE: {
-      const { user:
-        { id,
+      const {
+        user: {
+          id,
           accessToken,
-          details: { email, firstname, lastname, bio, phone, fix } } } = store.getState();
+          details: {
+            email, firstname, lastname, bio, phone, fix,
+          },
+        },
+      } = store.getState();
+      // we create data of the request
+      // to avoid errors we cannot send null as phone numbers
+      let data = {
+        email,
+        firstname,
+        lastname,
+        bbiography: bio,
+      };
+      if (phone !== null) {
+        data = {
+          ...data,
+          mobile_phone: phone,
+        };
+      }
+      if (fix !== null) {
+        data = {
+          ...data,
+          home_phone: fix,
+        };
+      }
       // we create headers of the request
       let headers = {};
       if (accessToken !== null) {
@@ -117,14 +178,7 @@ const userMiddleware = (store) => (next) => (action) => {
       }
       const saveProfile = async () => {
         try {
-          await axios.patch(`https://api-mentorme.herokuapp.com/v1/user/${id}`, {
-            email,
-            firstname,
-            lastname,
-            biography: bio,
-            home_phone: fix,
-            mobile_phone: phone,
-          }, headers);
+          await axios.patch(`/api/user/${id}`, data, headers);
           // une fois qu'on a la réponse, on peut venir stocker les infos du user
           // dans le state => modifier le state => dispatch d'action
           store.dispatch(saveProfileSuccess());
@@ -138,8 +192,13 @@ const userMiddleware = (store) => (next) => (action) => {
       break;
     }
     case SEND_IMAGE: {
-      const { user:
-        { id, accessToken, details: { uploadedImage } } } = store.getState();
+      const {
+        user: {
+          id,
+          accessToken,
+          details: { uploadedImage },
+        },
+      } = store.getState();
       // we create headers of the request
       let headers = {};
       if (accessToken !== null) {
@@ -155,7 +214,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
       const sendImage = async () => {
         try {
-          await axios.patch(`https://api-mentorme.herokuapp.com/v1/user/${id}/avatar`, form, headers);
+          await axios.patch(`/api/user/${id}/avatar`, form, headers);
           // after sending the image we need to do a new get request
           // to obtain the new url of avatar on cloudinary
           store.dispatch(getUserDetails());
@@ -173,7 +232,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
       const refreshToken = async () => {
         try {
-          const response = await axios.post('https://api-mentorme.herokuapp.com/v1/refreshToken', {
+          const response = await axios.post('/api/refreshToken', {
             token,
           });
           // we save the new refreshToken in the local storage
@@ -185,6 +244,7 @@ const userMiddleware = (store) => (next) => (action) => {
           // dans le state => modifier le state => dispatch d'action
           store.dispatch(saveUser(role, user_id, response.data.accessToken));
           store.dispatch(getUserDetails());
+          store.dispatch(getLikedServices());
         }
         catch (error) {
           console.log(error);
@@ -200,7 +260,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
       const logout = async () => {
         try {
-          await axios.post('https://api-mentorme.herokuapp.com/v1/logout', {
+          await axios.post('/api/logout', {
             token,
           });
           store.dispatch(deleteToken());
@@ -213,25 +273,29 @@ const userMiddleware = (store) => (next) => (action) => {
       break;
     }
     case DELETE_PROFILE: {
-      const { user:
-        { id,
-          accessToken,
-        } } = store.getState();
-      // we create headers of the request
-      let headers = {};
-      if (accessToken !== null) {
-        headers = {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        };
-      }
+      const token = localStorage.getItem('refreshToken');
+      const { accessToken } = store.getState().user;
+
       const deleteProfile = async () => {
         try {
-          await axios.delete(`https://api-mentorme.herokuapp.com/v1/user/${id}`, headers);
-          // une fois qu'on a la réponse, on peut venir stocker les infos du user
-          // dans le state => modifier le state => dispatch d'action
-          store.dispatch(deleteToken());
+          await axios.delete(`/api/user/${action.userId}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            data: {
+              token,
+            },
+          });
+          // if actions has been dispatched by an admin, we don't delete his token
+          // because he needs to stay connected
+          if (action.role !== 'admin') {
+            store.dispatch(deleteToken());
+          }
+          else {
+            // if actions has been dispatched by an admin, he needs to fetch again all users
+            // to update the state
+            store.dispatch(getAllUsers());
+          }
           store.dispatch(deleteProfileSuccess());
         }
         catch (error) {
@@ -244,6 +308,29 @@ const userMiddleware = (store) => (next) => (action) => {
     case DELETE_TOKEN: {
       localStorage.removeItem('refreshToken');
       next(action);
+      break;
+    }
+    case GET_LIKED_SERVICES: {
+      const { user: { id, accessToken } } = store.getState();
+      // we create headers of the request
+      let headers = {};
+      if (accessToken !== null) {
+        headers = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      }
+      const fetchLikedServices = async () => {
+        try {
+          const response = await axios.get(`/api/user/${id}/likedServices`, headers);
+          store.dispatch(saveLikedServices(response.data));
+        }
+        catch (error) {
+          console.log(error);
+        }
+      };
+      fetchLikedServices();
       break;
     }
     default:

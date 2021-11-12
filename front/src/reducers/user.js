@@ -5,6 +5,7 @@ import {
   SUBMIT_NEW_USER_SUCCESS,
   SUBMIT_NEW_USER,
   CREATE_MAIL_ERROR,
+  CREATE_REGISTER_MAIL_ERROR,
   CREATE_PASSWORD_ERROR,
   SAVE_USER_DETAILS,
   CHANGE_PROFILE_FIELD,
@@ -14,6 +15,7 @@ import {
   DELETE_TOKEN,
   SEND_IMAGE_SUCCESS,
   DELETE_PROFILE_SUCCESS,
+  SAVE_LIKED_SERVICES,
 } from '../actions/user';
 
 export const initialState = {
@@ -32,10 +34,12 @@ export const initialState = {
     lastname: '',
     redirect: false,
     loading: false,
+    notifRegister: false,
   },
   errors: {
     mail: false,
     password: false,
+    registerMail: false,
   },
   details: {
     loading: false,
@@ -118,6 +122,25 @@ const reducer = (state = initialState, action = {}) => {
         ],
       };
     }
+    case CREATE_REGISTER_MAIL_ERROR: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+          loading: false,
+        },
+        details: {
+          ...state.details,
+        },
+        errors: {
+          ...state.errors,
+          registerMail: true,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
+      };
+    }
     case CREATE_PASSWORD_ERROR: {
       return {
         ...state,
@@ -161,6 +184,7 @@ const reducer = (state = initialState, action = {}) => {
         register: {
           ...state.register,
           loading: true,
+          notifRegister: false,
         },
         errors: {
           ...state.errors,
@@ -184,9 +208,11 @@ const reducer = (state = initialState, action = {}) => {
           lastname: '',
           redirect: true,
           loading: false,
+          notifRegister: true,
         },
         errors: {
           ...state.errors,
+          registerMail: false,
         },
         details: {
           ...state.details,
@@ -357,6 +383,21 @@ const reducer = (state = initialState, action = {}) => {
         likedServices: [
           ...state.likedServices,
         ],
+      };
+    }
+    case SAVE_LIKED_SERVICES: {
+      return {
+        ...state,
+        register: {
+          ...state.register,
+        },
+        details: {
+          ...state.details,
+        },
+        errors: {
+          ...state.errors,
+        },
+        likedServices: action.services,
       };
     }
     default:

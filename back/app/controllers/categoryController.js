@@ -15,7 +15,9 @@ const categoryController = {
   //On cherche l'id de la catégorie
   getOneCategory: async (req, res) => {
     try {
-      const { id } = req.params;
+      const {
+        id
+      } = req.params;
       const category = new Category();
 
       await category.findOne(+id);
@@ -25,6 +27,7 @@ const categoryController = {
           errorMessage: "This category does not exist",
         });
       }
+
       res.status(200).send(category.categoryById);
     } catch (error) {
       res.status(500).send(error);
@@ -34,7 +37,9 @@ const categoryController = {
   //On delete une catégorie par son rappport à son ID
   deleteOneCategory: async (req, res) => {
     try {
-      const { id } = req.params;
+      const {
+        id
+      } = req.params;
       const category = new Category();
 
       await category.findOne(+id);
@@ -81,7 +86,9 @@ const categoryController = {
   //Modificiation d'une catégorie par Id
   modifyCategory: async (req, res) => {
     try {
-      const { id } = req.params;
+      const {
+        id
+      } = req.params;
 
       const category = new Category(req.body);
 
@@ -97,7 +104,9 @@ const categoryController = {
 
   getAllServicebyCategoryId: async (req, res) => {
     try {
-      const { id } = req.params;
+      const {
+        id
+      } = req.params;
 
       const category = new Category();
 

@@ -23,7 +23,7 @@ export default function Field({
         type={type}
         placeholder={placeholder}
         className="field-input"
-        value={value}
+        value={value || ''}
         name={name}
         onChange={handleChange}
         onBlur={onBlur}
@@ -38,6 +38,7 @@ export default function Field({
 Field.defaultProps = {
   required: false,
   disabled: false,
+  value: '',
   onBlur: () => {},
 };
 
@@ -45,7 +46,7 @@ Field.defaultProps = {
 Field.propTypes = {
   placeholder: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   required: PropTypes.bool,

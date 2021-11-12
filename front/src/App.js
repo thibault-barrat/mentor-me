@@ -14,20 +14,24 @@ import About from './pages/About';
 import Register from './pages/Register';
 import Connect from './pages/Connect';
 import Profil from './pages/Profil';
+import Services from './pages/Services';
 import Categories from './pages/Categories';
 import serviceId from './pages/ServiceId';
+import Admin from './pages/Admin';
+import errorPage from './pages/404';
 import NavBaar from './components/NavBaar';
 import Footer from './components/Footer';
 import { fetchCategories } from './actions/category';
 import { fetchServices } from './actions/service';
 import { refreshToken, deleteToken } from './actions/user';
+import SearchResult from './pages/SearchResult';
+import { getAllUsers } from './actions/admin';
 
 function App() {
   // We need to know if the user is logged and if is admin
   // to enable or disable specific routes
   const isLogged = useSelector((state) => state.user.logged);
-  const isAdmin = useSelector((state) => state.user.isAdmin);
-
+  const role = useSelector((state) => state.user.role);
 
   // We need to have the loading state of categories and services
   const serviceLoading = useSelector((state) => state.services.loading);
@@ -55,6 +59,16 @@ function App() {
     }
   }, []);
 
+  // The fetchServices action need to be repeated in a useEffect called when role changed
+  // because it has specific behavior for admin
+  // We also dispatch getAllUsers action when role is admin
+  useEffect(() => {
+    if (role === 'admin') {
+      dispatch(fetchServices());
+      dispatch(getAllUsers());
+    }
+  }, [role]);
+
   return (
     <Router>
       <NavBaar />
@@ -70,10 +84,15 @@ function App() {
             <Route path="/inscription" component={Register} />
             <Route path="/connexion" component={Connect} />
             <Route path="/profil" component={Profil} />
-            <Route path="/categories" exact component={Categories} />
-            <Route path="/categories/:id/services"component={Services} />
-            <Route path="/nouveau-service" component={NewService} />
-            <Route path="/service/:id" component={serviceId} />
+            {/* Following route is only accessible for logged admin */}
+            {isLogged && role === 'admin' && <Route path="/admin" component={Admin} />}
+            {/* Following routes are only accessible for logged users */}
+            {isLogged && <Route path="/services" component={SearchResult} />}
+            {isLogged && <Route path="/categories" exact component={Categories} />}
+            {isLogged && <Route path="/categories/:id/services" component={Services} />}
+            {isLogged && <Route path="/nouveau-service" component={NewService} />}
+            {isLogged && <Route path="/service/:id" component={serviceId} />}
+            <Route path="" component={errorPage} />
           </Switch>
         )}
       <AuthVerify />
