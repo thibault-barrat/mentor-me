@@ -16,9 +16,11 @@ const {
   verifyRefreshToken,
 } = require("./middlewares/auth");
 
+// appel du router
 const router = Router();
 
-/* Category */
+// liste des routes utilisées
+//#region CATEGORIES
 router.get("/allCategories", categoryController.getAllCategorizz); // Route pour toutes les catégories
 router.get(
   "/category/:id(\\d+)",
@@ -48,8 +50,9 @@ router.get(
   verifyToken,
   categoryController.getAllServicebyCategoryId
 ); // Route pour avoir tous les services d'une catégorie
+//#endregion
 
-/* Services */
+//#region SERVICES
 router.get("/allServices", serviceController.getAllServicezz);
 router.get("/service/:id(\\d+)", verifyToken, serviceController.getOneService);
 router.delete(
@@ -71,8 +74,9 @@ router.patch(
 );
 router.post("/newService", verifyToken, serviceController.createService);
 router.get("/search", verifyToken, serviceController.searchOneService);
+//#endregion
 
-/* Like Service */
+//#region LIKED SERVICES
 router.post(
   "/user/:id/service/:serviceId",
   verifyToken,
@@ -91,18 +95,24 @@ router.get(
   verifyUserById,
   userLikeServicesController.getLikedServicesByUserId
 ); // récupérer les services likés par le user
+//#endregion
 
+//#region USERS
+/**
+ * S'inscrire
+ * @route POST "/register"
+ */
 router.post("/register", userController.createNewUser);
 
 /**
  * Connecter un user
- * @route post /login
+ * @route POST /login
  */
 router.post("/login", userController.connectUser);
 
 /**
  * Déconnecter un user
- * @route get /logout
+ * @route POST /logout
  */
 router.post("/logout", verifyRefreshToken, userController.disconnectUser);
 
@@ -128,6 +138,7 @@ router.patch(
   verifyUserById,
   userController.modifyUserProfile
 );
+
 /**
  * Modifier l'avatar d'un user
  * @route PATCH /user/:id/avatar
@@ -149,9 +160,12 @@ router.delete(
   verifyUserById,
   userController.deleteOneUser
 );
+//#endregion
 
+//#region TOKENS
 /**
  * Refresh token
+ * @route POST "/refreshToken"
  */
 router.post(
   "/refreshToken",
@@ -161,6 +175,7 @@ router.post(
 
 /**
  * Get all refresh tokens
+ * @route GET "/refreshTokens"
  */
 router.get(
   "/refreshTokens",
@@ -171,6 +186,7 @@ router.get(
 
 /**
  * Delete all refresh tokens
+ * @route DELETE "/refreshTokens"
  */
 router.delete(
   "/refreshTokens",
@@ -178,7 +194,13 @@ router.delete(
   isAdmin,
   tokenController.deleteAllRefreshTokens
 );
+//#endregion
 
+/**
+ * Send an email after submitting about page form
+ * @route POST "/contact"
+ */
 router.post("/contact", mainController.sendMail);
 
+// export du router
 module.exports = router;
