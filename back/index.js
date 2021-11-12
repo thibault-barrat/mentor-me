@@ -19,7 +19,6 @@ app.use(
   })
 );
 
-//TODO penser à mettre cors(corsOptions) ligne 10 quand le front sera déployé
 const corsOptions = {
   origin: [
     "https://mentor-me-oclock.netlify.app/",
