@@ -47,10 +47,9 @@ export default function Services() {
   else {
     return (
       <div className="services">
-        <h1 className="services-title">Voici les offres correspondantes à la catégorie </h1>
         <main className="services-container">
 {/* Map section */}
-          {/* <div className="services-map"> */}
+          <div className="services-map-container">
             <MapContainer className="services-map" center={[48.8534, 2.3488]} zoom={13} scrollWheelZoom={true}>
               <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -80,19 +79,20 @@ export default function Services() {
               />
               <Location />
             </MapContainer>
-
+          </div>
 {/* Services section */}
-          <article className="services-cards">
-            <ul>
-            {/* Here we map on services to give all the infos by prop */}
-              {services.map((item) =>(
-                <ServicesCard 
-                  result={item}
-                  key={item.id}
-                  onMouseOver={()=> handleMouseOver(item.latitude, item.longitude)}
-                />
-              ))}
-            </ul>
+          <article className="services-list">
+            <h1 className="services-title">Voici les offres correspondantes à la catégorie </h1>
+              <ul className="services-cards">
+              {/* Here we map on services to give all the infos by prop */}
+                {services.map((item) =>(
+                  <ServicesCard 
+                    result={item}
+                    key={item.id}
+                    onMouseOver={()=> handleMouseOver(item.latitude, item.longitude)}
+                  />
+                ))}
+              </ul>
           </article>
         </main>
       </div>

@@ -65,7 +65,7 @@
   }
   &-description{
     font-size: calc(vars.$gutter/1.6);
-    width: 150px;
+    width: 100px;
     &-span{
       color: #60baf7;
       font-weight: bold;
@@ -81,15 +81,61 @@
   }
 }
 
-@media (min-width: vars.$breakpoint-sm) {
+@media (min-width: 600px) {
 	.card {
-   
-    
-    &-image-container{
-      margin-left: calc(vars.$gutter*2);
+    &-container{
+      margin-left: calc(vars.$gutter*3);
+      position: relative;
     }
     &-content-container{
+      margin-left:  calc(vars.$gutter*3);
+    }
+    &-title{
+      font-size: calc(vars.$gutter*1.2);
+    }
+    &-description{
+      font-size: calc(vars.$gutter/1.1);
+      margin-bottom: calc(vars.$gutter*2);
+      width: 150px;
+    }
+    &-name{
+      justify-content: flex-end;
+      position: absolute;
+      bottom: 2%;
+      right: 12px;
+    }
+	}
+}
+
+@media (min-width: vars.$breakpoint-md) {
+	.card {
+    width: 100%;
+    &-container{
+      margin-left: vars.$gutter;
+     
+    }
+    &-content-container{
+      margin-left: vars.$gutter;
+    }
+    &-title{
+      font-size: calc(vars.$gutter*1.2);
+    }
+	}
+}
+
+@media (min-width: vars.$breakpoint-lg) {
+	.card {
+    &-container{
       margin-left: calc(vars.$gutter*3);
+    }
+    &-content-container{
+      margin-left:  calc(vars.$gutter*3);
+    }
+    &-title{
+      font-size: calc(vars.$gutter*1.5);
+    }
+    &-description{
+      font-size: calc(vars.$gutter/1.1);
     }
 	}
 }
