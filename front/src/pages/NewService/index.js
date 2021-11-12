@@ -15,6 +15,10 @@ const NewService = () => {
   // we need categories to populate the select field
   const categories = useSelector((state) => state.categories.items);
 
+  // we need user location to center the map
+  const userLatitude = useSelector((state) => state.user.latitude);
+  const userLongitude = useSelector((state) => state.user.longitude);
+
   // We take data for new service from the state
   const {
     category, title, duration, irl, online, description, location, loading,
@@ -226,12 +230,14 @@ const NewService = () => {
             </label>
             {!locationValid && <span className="new-service__error">Veuillez définir une localisation</span>}
             <span className="new-service__label">Localisation (cliquez sur la carte là où vous souhaitez localiser votre service)</span>
-            <MapContainer center={[48.856614, 2.3522219]} zoom={13} scrollWheelZoom className="new-service__map">
+            <MapContainer center={[userLatitude || 48.856614, userLongitude || 2.3522219]} zoom={13} scrollWheelZoom className="new-service__map">
               <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              <Location />
+              {/* We use Location component to find user location
+              when his latitude and longitude are null */}
+              {!userLatitude && !userLongitude && <Location />}
               <NewServiceMarker />
             </MapContainer>
             <button

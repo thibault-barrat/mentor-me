@@ -16,6 +16,7 @@ import {
   SEND_IMAGE_SUCCESS,
   DELETE_PROFILE_SUCCESS,
   SAVE_LIKED_SERVICES,
+  UPDATE_USER_LOCATION,
 } from '../actions/user';
 
 export const initialState = {
@@ -27,6 +28,8 @@ export const initialState = {
   id: null,
   accessToken: null,
   logout: false,
+  latitude: null,
+  longitude: null,
   register: {
     email: '',
     password: '',
@@ -398,6 +401,25 @@ const reducer = (state = initialState, action = {}) => {
           ...state.errors,
         },
         likedServices: action.services,
+      };
+    }
+    case UPDATE_USER_LOCATION: {
+      return {
+        ...state,
+        latitude: action.latitude,
+        longitude: action.longitude,
+        register: {
+          ...state.register,
+        },
+        details: {
+          ...state.details,
+        },
+        errors: {
+          ...state.errors,
+        },
+        likedServices: [
+          ...state.likedServices,
+        ],
       };
     }
     default:

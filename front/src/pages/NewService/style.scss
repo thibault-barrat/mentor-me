@@ -97,6 +97,7 @@
 		display: inline-block;
 		cursor: pointer;
 		line-height: calc(vars.$gutter * 1.4);
+    margin-top: vars.$gutter;
 		&:hover {
 			background-color: lighten($color: rgb(255, 112, 87), $amount: 10%);
 		}
