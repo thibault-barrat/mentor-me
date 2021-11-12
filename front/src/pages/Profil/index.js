@@ -57,6 +57,11 @@ export default function profil() {
   // When this is false, we can not validate the new data
   const [validEmail, setValidEmail] = useState(true);
 
+  // Variable validPhone and validFix to know if the field is conform to regex
+  // When this is false, we can not validate the new data
+  const [validPhone, setValidPhone] = useState(true);
+  const [validFix, setValidFix] = useState(true);
+
   // Variable validImage to know if the uploaded avatar is not too big
   const [validImage, setValidImage] = useState(true);
 
@@ -66,6 +71,22 @@ export default function profil() {
       setValidEmail(false);
     }
     else setValidEmail(true);
+  };
+
+  // function to verify that the phone matches the regex rule
+  const checkPhone = (event) => {
+    if (!/\+(?:[0-9]?){6,14}[0-9]$/.test(event.target.value)) {
+      setValidPhone(false);
+    }
+    else setValidPhone(true);
+  };
+
+  // function to verify that the fix matches the regex rule
+  const checkFix = (event) => {
+    if (!/\+(?:[0-9]?){6,14}[0-9]$/.test(event.target.value)) {
+      setValidFix(false);
+    }
+    else setValidFix(true);
   };
 
   const dispatch = useDispatch();
@@ -95,13 +116,11 @@ export default function profil() {
 
   // function to handle the change value in input controlled fields
   const handleChange = (value, name) => {
-    console.log(value);
     // for fix and phone, we need to have the phone number with international prefix
     // if the number starts with 0, we replace it by +33
     if (name === 'fix' || name === 'phone') {
       if (value.charAt(0) === '0') {
         const newValue = `+33${value.substring(1)}`;
-        console.log(newValue);
         dispatch(changeProfileField(newValue, name));
       }
       else {
@@ -231,6 +250,9 @@ export default function profil() {
             disabled={readOnly}
             onChange={handleChange}
           />
+          {!validFix && (
+            <span className="profil__error">Le numéro de téléphone doit être au format international: +33...</span>
+          )}
           <Field
             type="text"
             name="fix"
@@ -238,7 +260,11 @@ export default function profil() {
             value={fix}
             disabled={readOnly}
             onChange={handleChange}
+            onBlur={checkFix}
           />
+          {!validPhone && (
+            <span className="profil__error">Le numéro de téléphone doit être au format international: +33...</span>
+          )}
           <Field
             type="text"
             name="phone"
@@ -246,6 +272,7 @@ export default function profil() {
             value={phone}
             disabled={readOnly}
             onChange={handleChange}
+            onBlur={checkPhone}
           />
 
           {/* We display button "Valider when readOnly is false
