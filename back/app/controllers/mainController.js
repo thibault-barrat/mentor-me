@@ -21,6 +21,7 @@ const mainController = {
       subject: `Formulaire de contact de la page "à propos"`,
       text: `Message envoyé par ${firstname} ${lastname} (${email}) ${message}`,
       html: `<body style="padding: 1em;"><h1 style="background-color: #fccdc1; padding: 1em; font-weight: 500px; font-size: 18px; text-align: center;">Message envoyé par ${firstname} ${lastname} (adresse email : ${email})</h1><br/><p style="font-size: 14px;">Son message est : <br/><span style="font-style: italic;">${message}<span/></p></body>`,
+      replyTo: `${email}`,
     };
     transporter.sendMail(mailOptions, function (err, data) {
       if (err) {
