@@ -44,6 +44,7 @@ export default function Connect() {
 
   return (
     <div className="connect">
+      <h1 className="connect__title">Se connecter</h1>
       <form
         onSubmit={handleSubmit}
       >
