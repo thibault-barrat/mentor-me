@@ -83,6 +83,8 @@ function App() {
             <Route path="/inscription" component={Register} />
             <Route path="/connexion" component={Connect} />
             <Route path="/profil" component={Profil} />
+            <Route path="/conditions-generales" component={Conditions} />
+            <Route path="/politique-confidentialite" component={Confidentialite} />
             {/* Following route is only accessible for logged admin */}
             {isLogged && role === 'admin' && <Route path="/admin" component={Admin} />}
             {/* Following routes are only accessible for logged users */}

@@ -164,7 +164,7 @@ const About = () => {
           </div>
         </div>
       </div>
-      <h1 className="contactform__title inter__title">Nous contacter</h1>
+      <h1 id="contact" className="contactform__title inter__title">Nous contacter</h1>
       <form action="" method="post">
         <div className="contactform__container">
           <input onChange={handleChange} name="lastname" value={lastname} className="contactform__input" type="text" placeholder="ton nom" />
