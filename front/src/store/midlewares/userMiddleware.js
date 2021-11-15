@@ -150,10 +150,9 @@ const userMiddleware = (store) => (next) => (action) => {
       // we create data of the request
       // to avoid errors we cannot send null as phone numbers
       let data = {
-        email,
         firstname,
         lastname,
-        bbiography: bio,
+        biography: bio,
       };
       if (phone !== null) {
         data = {

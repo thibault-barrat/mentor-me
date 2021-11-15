@@ -162,13 +162,6 @@ export default function profil() {
   const [showModal, setShowModal] = useState(false);
   const [modalAction, setModalAction] = useState({});
 
-  // we display the modal when their props are updated and not empty object
-  useEffect(() => {
-    if (Object.keys(modalAction).length > 0) {
-      setShowModal(true);
-    }
-  }, [modalAction]);
-
   return (
 
     <main className="profil">
@@ -176,7 +169,7 @@ export default function profil() {
       {showModal && (
         <Modal
           action={modalAction}
-          cancelAction={() => setShowModal(false)}
+          closeAction={() => setShowModal(false)}
         />
       )}
       <h1 className="profil__title">Mon profil</h1>
@@ -222,6 +215,7 @@ export default function profil() {
           )}
         </div>
         <div className="profil__container-form">
+          {/* Currently, email can not be modfied in back-end, so we let it disabled */}
           {!validEmail && (
             <span className="profil__error">Ce champ doit contenir un email valide.</span>
           )}
@@ -230,7 +224,7 @@ export default function profil() {
             name="email"
             placeholder="Votre email"
             value={email}
-            disabled={readOnly}
+            disabled
             onChange={handleChange}
             onBlur={checkEmail}
           />
@@ -299,12 +293,15 @@ export default function profil() {
           <button
             type="submit"
             className="connect-button-p"
-            onClick={() => setModalAction({
-              type: 'delete',
-              target: 'user',
-              role: 'user',
-              id: id,
-            })}
+            onClick={() => {
+              setModalAction({
+                type: 'delete',
+                target: 'user',
+                role: 'user',
+                id: id,
+              });
+              setShowModal(true);
+            }}
           >
             Supprimer mon profil
           </button>
@@ -350,12 +347,15 @@ export default function profil() {
                       </Link>
                       <MdDelete
                         className="proposed__icon"
-                        onClick={() => setModalAction({
-                          type: 'delete',
-                          target: 'service',
-                          role: 'user',
-                          id: service.id,
-                        })}
+                        onClick={() => {
+                          setModalAction({
+                            type: 'delete',
+                            target: 'service',
+                            role: 'user',
+                            id: service.id,
+                          });
+                          setShowModal(true);
+                        }}
                       />
                     </div>
                   )
@@ -385,12 +385,15 @@ export default function profil() {
                     </Link>
                     <AiFillHeart
                       className="proposed__icon"
-                      onClick={() => setModalAction({
-                        type: 'unlike',
-                        target: 'service',
-                        role: 'user',
-                        id: service.id,
-                      })}
+                      onClick={() => {
+                        setModalAction({
+                          type: 'unlike',
+                          target: 'service',
+                          role: 'user',
+                          id: service.id,
+                        });
+                        setShowModal(true);
+                      }}
                     />
                   </div>
                 ))

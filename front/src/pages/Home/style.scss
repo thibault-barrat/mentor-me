@@ -30,6 +30,10 @@
 	&__text {
 		line-height: 1.1rem;
 	}
+  &__inv {
+    margin-top: 1rem;
+    font-weight: bold;
+  }
   &__container {
     max-width: 700px;
     margin: 0 auto;
@@ -190,7 +194,7 @@
 			grid-row: 1 / span 2;
 			flex-direction: row;
 			flex-wrap: wrap;
-		}
+    }
 	}
 	&__slogan {
 		grid-column: 1;

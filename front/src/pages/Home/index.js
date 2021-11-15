@@ -60,6 +60,7 @@ const Home = () => {
             voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed
             quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
           </p>
+          <p className="slogan__inv"> Si tu veux avoir accès à nos cours et partager une annonce, nous t'invitons a créer ton compte ! </p>
         </div>
       </section>
       <section className="white-bg">
