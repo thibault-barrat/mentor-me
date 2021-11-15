@@ -14,6 +14,11 @@ export const LIKE_SERVICE = 'LIKE_SERVICE';
 export const UNLIKE_SERVICE = 'UNLIKE_SERVICE';
 export const UNLIKE_SERVICE_SUCCESS = 'UNLIKE_SERVICE_SUCCESS';
 
+export const likeService = (serviceId) => ({
+  type: LIKE_SERVICE,
+  serviceId,
+});
+
 export const unlikeService = (serviceId) => ({
   type: UNLIKE_SERVICE,
   serviceId,

@@ -29,7 +29,7 @@
   }
   &__wave {
     position: absolute;
-    z-index: 0;
+    z-index: 1000;
     bottom: 99%;
     transform: scaleY(50%);
     transform-origin: bottom;

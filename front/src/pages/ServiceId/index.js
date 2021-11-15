@@ -38,7 +38,7 @@ export default function serviceId() {
           </div>
         </div>
         <div className="leaflet__block">
-          <MapContainer center={[foundService.latitude, foundService.longitude]} zoom={13} scrollWheelZoom>
+          <MapContainer className="leaflet__map" center={[foundService.latitude, foundService.longitude]} zoom={13} scrollWheelZoom>
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
