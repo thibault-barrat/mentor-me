@@ -14,7 +14,6 @@ import About from './pages/About';
 import Register from './pages/Register';
 import Connect from './pages/Connect';
 import Profil from './pages/Profil';
-import Services from './pages/Services';
 import Categories from './pages/Categories';
 import serviceId from './pages/ServiceId';
 import Admin from './pages/Admin';
