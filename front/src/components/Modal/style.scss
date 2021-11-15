@@ -14,6 +14,11 @@
   @media (min-width: vars.$breakpoint-xs) {
     width: auto;
 	}
+  &--in-parent-modal {
+    z-index: 2000;
+    position: absolute;
+    width: 100%;
+  }
   &__text {
     text-align: center;
   }
