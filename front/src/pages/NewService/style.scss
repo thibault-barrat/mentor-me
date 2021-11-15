@@ -16,13 +16,24 @@
 		flex-direction: column;
 		align-items: center;
 	}
+	&__field-container {
+		width: 100%;
+		text-align: center;
+		position: relative;
+		&--flex {
+			display: flex;
+			justify-content: center;
+		}
+	}
 	&__form-row {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		width: 100%;
 		.field {
-			flex-grow: 1;
+			@media (min-width: vars.$breakpoint-sm) {
+				flex-grow: 1;
+			}
 		}
 		@media (min-width: vars.$breakpoint-sm) {
 			width: 75%;
@@ -40,12 +51,13 @@
 	}
 	&__checkbox-container {
 		display: flex;
-		margin-bottom: calc(vars.$gutter * 1.1);
+		margin-bottom: calc(vars.$gutter * 3);
 		padding: 0 calc(vars.$gutter * 1);
 		align-items: center;
 		@media (min-width: vars.$breakpoint-sm) {
 			flex-direction: column;
 			align-items: flex-start;
+      margin-bottom: calc(vars.$gutter * 1.1);
 		}
 		@media (min-width: vars.$breakpoint-md) {
 			flex-direction: row;
@@ -78,6 +90,7 @@
 	}
 	&__description-label {
 		margin-bottom: calc(vars.$gutter/2);
+		text-align: left;
 	}
 	&__label {
 		margin-bottom: calc(vars.$gutter/2);
@@ -105,11 +118,28 @@
 		width: 75%;
 		height: 400px;
 		margin-bottom: calc(vars.$gutter * 3);
+		border-radius: 20px;
 	}
 	&__error {
 		margin-bottom: 0.4rem;
 		color: rgb(248, 93, 82);
 		display: inline-block;
+		position: absolute;
+		bottom: 10px;
+		left: 50%;
+		transform: translateX(-50%);
+		&--checkbox {
+			@media (min-width: vars.$breakpoint-sm) {
+				transform: none;
+				left: unset;
+				right: 8%;
+				max-width: 200px;
+				bottom: 0;
+			}
+      @media (min-width: vars.$breakpoint-md) {
+				right: 12%;
+			}
+		}
 	}
 	&__title {
 		text-align: center;

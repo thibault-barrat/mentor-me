@@ -22,6 +22,13 @@ export const DELETE_PROFILE = 'DELETE_PROFILE';
 export const DELETE_PROFILE_SUCCESS = 'DELETE_PROFILE_SUCCESS';
 export const GET_LIKED_SERVICES = 'GET_LIKED_SERVICES';
 export const SAVE_LIKED_SERVICES = 'SAVE_LIKED_SERVICES';
+export const UPDATE_USER_LOCATION = 'UPDATE_USER_LOCATION';
+
+export const updateUserLocation = (latitude, longitude) => ({
+  type: UPDATE_USER_LOCATION,
+  latitude,
+  longitude,
+});
 
 export const saveLikedServices = (services) => ({
   type: SAVE_LIKED_SERVICES,

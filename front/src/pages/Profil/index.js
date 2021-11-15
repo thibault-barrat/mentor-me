@@ -215,6 +215,7 @@ export default function profil() {
           )}
         </div>
         <div className="profil__container-form">
+          {/* Currently, email can not be modfied in back-end, so we let it disabled */}
           {!validEmail && (
             <span className="profil__error">Ce champ doit contenir un email valide.</span>
           )}
@@ -223,7 +224,7 @@ export default function profil() {
             name="email"
             placeholder="Votre email"
             value={email}
-            disabled={readOnly}
+            disabled
             onChange={handleChange}
             onBlur={checkEmail}
           />
