@@ -33,26 +33,26 @@ const About = () => {
     <div>
       <div className="desc__container">
         <h1 className="desc__title">Notre concept</h1>
-        <p className="desc__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, cum minus! Vero sed ipsum blanditiis, reprehenderit ab delectus eveniet rerum. Libero, accusamus ducimus rerum voluptatum at, nostrum soluta illo sunt, magni esse deserunt repellendus dolorum? Animi, fugiat unde! Aspernatur adipisci quia qui cupiditate aperiam! Maiores illo quos tenetur in officiis.</p>
+        <p className="desc__text">MentorMe est une plateforme communautaire de personnes souhaitant partager leurs compétences et/ou profiter des compétences proposées. Trouvez ou proposez des compétences dans tous les domaines : bricolage, cuisine, sport, informatique, etc… La plateforme a pour principe l’entraide et le partage de connaissances gratuitement, sans contrepartie. Inscrivez-vous dès maintenant pour profiter des offres et en proposer de nouvelles!</p>
       </div>
       <h1 className="faq__title inter__title">Les questions fréquentes</h1>
       <div className="faq__container">
         <div className="faq__list__container">
-          <div name="q1" className="faq__list__item" onClick={handleClick1}> <span className="faq__list__question">question 1</span>
+          <div name="q1" className="faq__list__item" onClick={handleClick1}> <span className="faq__list__question">Est-ce que cet échange de service <br /> est réellement gratuit ?</span>
             <i className={showed1 ? 'fas fa-angle-down' : 'fas fa-angle-right'} />
-            <p className={`faq__list__answer ${showed1 ? 'faq__list__answer__clicked' : ''}`}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime quas voluptatum nemo sit quisquam rerum!</p>
+            <p className={`faq__list__answer ${showed1 ? 'faq__list__answer__clicked' : ''}`}>Oui, nous demandons à tous nos membres de respecter cette règle. Ce site vise à proposer un échange gratuit de compétences.</p>
           </div>
-          <div className="faq__list__item" onClick={handleClick2}> <span className="faq__list__question">question 2</span>
+          <div className="faq__list__item" onClick={handleClick2}> <span className="faq__list__question">Un service m’intéresse. Comment puis-je <br /> contacter un mentor ?</span>
             <i className={showed2 ? 'fas fa-angle-down' : 'fas fa-angle-right'} />
-            <p className={`faq__list__answer ${showed2 ? 'faq__list__answer__clicked' : ''}`}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime quas voluptatum nemo sit quisquam rerum!</p>
+            <p className={`faq__list__answer ${showed2 ? 'faq__list__answer__clicked' : ''}`}>Vous pouvez contacter un mentor directement via l’email de contact sur la page du service ou via son adresse email présente sur son profil.</p>
           </div>
-          <div name="q2" className="faq__list__item" onClick={handleClick3}> <span className="faq__list__question">question 3</span>
+          <div name="q2" className="faq__list__item" onClick={handleClick3}> <span className="faq__list__question">Combien de services puis-je proposer ?</span>
             <i className={showed3 ? 'fas fa-angle-down' : 'fas fa-angle-right'} />
-            <p className={`faq__list__answer ${showed3 ? 'faq__list__answer__clicked' : ''}`}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime quas voluptatum nemo sit quisquam rerum!</p>
+            <p className={`faq__list__answer ${showed3 ? 'faq__list__answer__clicked' : ''}`}>La proposition de service est en principe illimitée. Comme notre solution est une solution gratuite, c’est à votre bon gré.</p>
           </div>
-          <div className="faq__list__item" onClick={handleClick4}> <span className="faq__list__question">question 4</span>
+          <div className="faq__list__item" onClick={handleClick4}> <span className="faq__list__question">Je ne trouve pas ma question dans cette FAQ, <br /> où puis-je la poser ?</span>
             <i className={showed4 ? 'fas fa-angle-down' : 'fas fa-angle-right'} />
-            <p className={`faq__list__answer ${showed4 ? 'faq__list__answer__clicked' : ''}`}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime quas voluptatum nemo sit quisquam rerum!</p>
+            <p className={`faq__list__answer ${showed4 ? 'faq__list__answer__clicked' : ''}`}>N’hésitez pas à contacter un membre de l’équipe de MentorMe à l’adresse de contact suivante : mentorme.contact@gmail.com.</p>
           </div>
         </div>
       </div>
@@ -61,22 +61,32 @@ const About = () => {
         <div className="avatar__comp">
           <img className="avatar__img" src={avatarimgm} alt="personnes du groupe" />
           <h2 className="avatar__name position__img">Marion : Dev back <br />et git master</h2>
+          <p className=" profil__inf"><span className="profil__inf__b"> Linkedin :</span><br />  https://www.linkedin.com/in/marion-bricout/</p>
+          <p className=" profil__inf"><span className="profil__inf__b"> Github :</span><br /> https://github.com/Axurynn</p>
         </div>
         <div className="avatar__comp">
           <img className="avatar__img" src={avatarimgw} alt="personnes du groupe" />
-          <h2 className="avatar__name">Wilfried : Lead dev back</h2>
+          <h2 className="avatar__name">Wilfried : Lead dev  <br />back</h2>
+          <p className=" profil__inf"><span className="profil__inf__b"> Linkedin :</span><br /> https://www.linkedin.com/in/wilfried-vandamme</p>
+          <p className=" profil__inf"><span className="profil__inf__b"> Github :</span><br /></p>
         </div>
         <div className="avatar__comp">
           <img className="avatar__img" src={avatarimgf} alt="personnes du groupe" />
           <h2 className="avatar__name ">Florent : Product Owner <br />et dev front</h2>
+          <p className=" profil__inf"><span className="profil__inf__b"> Linkedin :</span><br /> https://www.linkedin.com/in/florent-clemenceau/</p>
+          <p className=" profil__inf"><span className="profil__inf__b"> Github :</span><br /> https://github.com/FloClem</p>
         </div>
         <div className="avatar__comp">
           <img className="avatar__img" src={avatarimgt} alt="personnes du groupe" />
           <h2 className="avatar__name">Thibault : Scrum master <br /> et dev front</h2>
+          <p className=" profil__inf"><span className="profil__inf__b"> Linkedin :</span><br /> https://www.linkedin.com/in/thibaultbarrat/</p>
+          <p className=" profil__inf"><span className="profil__inf__b"> Github :</span><br /> https://github.com/thibault-barrat</p>
         </div>
         <div className="avatar__comp">
           <img className="avatar__img position__img" src={avatarimgd} alt="personnes du groupe" />
-          <h2 className="avatar__name">David : Lead dev front</h2>
+          <h2 className="avatar__name">David : Lead dev <br />front</h2>
+          <p className=" profil__inf"><span className="profil__inf__b"> Linkedin :</span><br /> https://www.linkedin.com/in/david-dang</p>
+          <p className=" profil__inf"><span className="profil__inf__b"> Github :</span><br /> https://github.com/Davnc988</p>
         </div>
       </div>
       <h1 className="contactform__title inter__title">Nous contacter</h1>
