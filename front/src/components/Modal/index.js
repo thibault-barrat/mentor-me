@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteService } from '../../actions/service';
+import { deleteService, unlikeService } from '../../actions/service';
 import { deleteProfile } from '../../actions/user';
 import { publishService } from '../../actions/admin';
 
 import './style.scss';
 
 const Modal = ({
-  cancelAction, action,
+  closeAction, closeParentAction, action, className,
 }) => {
   // we need local state variables for text and text button
   const [text, setText] = useState('');
@@ -25,8 +25,18 @@ const Modal = ({
             setTextButton('Supprimer');
             break;
           case 'user':
-            setText('Etes-vous sûr de vouloir supprimer cet utilisateur ?');
-            setTextButton('Supprimer');
+            switch (action.role) {
+              case 'admin':
+                setText('Etes-vous sûr de vouloir supprimer cet utilisateur ?');
+                setTextButton('Supprimer');
+                break;
+              case 'user':
+                setText('Etes-vous sûr de vouloir supprimer votre profil ?');
+                setTextButton('Supprimer');
+                break;
+              default:
+                break;
+            }
             break;
           default:
             break;
@@ -35,6 +45,10 @@ const Modal = ({
       case 'publish':
         setText('Etes-vous sûr de vouloir publier ce service ?');
         setTextButton('Publier');
+        break;
+      case 'unlike':
+        setText('Etes-vous sûr de vouloir retirer ce service de vos favoris ?');
+        setTextButton('Retirer');
         break;
       default:
         break;
@@ -50,11 +64,13 @@ const Modal = ({
         switch (action.target) {
           case 'service':
             dispatch(deleteService(action.id));
-            cancelAction();
+            closeAction();
+            closeParentAction();
             break;
           case 'user':
-            dispatch(deleteProfile(action.id, 'admin'));
-            cancelAction();
+            dispatch(deleteProfile(action.id, action.role));
+            closeAction();
+            closeParentAction();
             break;
           default:
             break;
@@ -62,7 +78,13 @@ const Modal = ({
         break;
       case 'publish':
         dispatch(publishService(action.id));
-        cancelAction();
+        closeAction();
+        closeParentAction();
+        break;
+      case 'unlike':
+        dispatch(unlikeService(action.id));
+        closeAction();
+        closeParentAction();
         break;
       default:
         break;
@@ -70,13 +92,13 @@ const Modal = ({
   };
 
   return (
-    <div className="modal">
+    <div className={`modal ${className}`}>
       <p className="modal__text">{text}</p>
       <div className="modal__button-container">
         <button
           type="button"
           className="modal__button"
-          onClick={cancelAction}
+          onClick={closeAction}
         >
           Annnuler
         </button>
@@ -92,11 +114,19 @@ const Modal = ({
   );
 };
 
+Modal.defaultProps = {
+  className: '',
+  closeParentAction: () => {},
+};
+
 Modal.propTypes = {
-  cancelAction: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  closeAction: PropTypes.func.isRequired,
+  closeParentAction: PropTypes.func,
   action: PropTypes.shape({
     type: PropTypes.string.isRequired,
     target: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
   }).isRequired,
 };

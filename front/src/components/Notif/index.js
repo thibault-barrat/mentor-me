@@ -34,6 +34,10 @@ const Notif = () => {
   // we need to have the notifPublish variable in the redux state
   const notifPublish = useSelector((state) => state.admin.notifPublish);
 
+  // in order to notfy user when he has unliked a service
+  // we need to have the notifUnlike variable in the redux state
+  const notifUnlike = useSelector((state) => state.services.notifUnlike);
+
   // we display the notification when logout change and it is true
   useEffect(() => {
     if (logout) {
@@ -89,6 +93,13 @@ const Notif = () => {
       toast.success('Le service a été publié.');
     }
   }, [notifPublish]);
+
+  // we display a notification when user has unliked a service
+  useEffect(() => {
+    if (notifUnlike) {
+      toast.success('Le service a été retiré de vos favoris !');
+    }
+  }, [notifUnlike]);
 
   return (
     <ToastContainer />

@@ -12,13 +12,15 @@
 }
 
 .NavBarLogo {
-  width: 10%;
+  width: 40%;
   height: auto;
   color: rgb(0, 0, 0);
   justify-self: start;
   margin-left: 2rem;
   cursor: pointer;
+  max-width: 40%;
 }
+
 
 .NavMenu {
   display: grid;
@@ -88,7 +90,7 @@
     left: 0;
     opacity: 1;
     transition: all 0.5s ease;
-    z-index: 1;
+    z-index: 10;
   }
 
   .NavLinks {
@@ -106,7 +108,8 @@
 
   .NavBarLogo {
     position: absolute;
-    width: 30%;
+    width: 35%;
+    max-width: 150px;
     top: 0;
     left: 0;
     transform: translate(25%, 50%);
@@ -135,5 +138,3 @@
 
 
 }
-
-
