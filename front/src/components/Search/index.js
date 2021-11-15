@@ -32,14 +32,19 @@ export default function Search({ placeholder, buttonValue }) {
       services.forEach((service) => {
         setSuggestions((prev) => [
           ...prev,
-          ...service.title.split(/[^\w]/g).filter((item) => item.length > 2),
-          ...service.description.split(/[^\w]/g).filter((item) => item.length > 2),
+          ...service.title.toLowerCase().split(/[ .:;?!~',`"&|()<>{}[\]\r\n/\\]+/).filter((item) => item.length > 2),
+          ...service.description.toLowerCase().split(/[ .:;?'!~,`"&|()<>{}[\]\r\n/\\]+/).filter((item) => item.length > 2),
         ]);
       });
     }
   }, [services]);
 
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+
+  // we need a boolean to know if user has cliked on a suggestion
+  // and empty the suggestions list
+  const [toggleClickSuggestion, setToggleClickSuggestion] = useState(false);
+
   // when searchValue is changed, we need to update the filteredSuggestions
   // and the activeSuggestionIndex
   useEffect(() => {
@@ -51,14 +56,30 @@ export default function Search({ placeholder, buttonValue }) {
       );
       setFilteredSuggestions(filtered);
     }
+    else {
+      setFilteredSuggestions([]);
+    }
   }, [searchValue]);
 
-  // we need a boolean to know if user has cliked on a suggestion
-  // and empty the suggestions list
-  const [toggleClickSuggestion, setToggleClickSuggestion] = useState(false);
   useEffect(() => {
     setFilteredSuggestions([]);
   }, [toggleClickSuggestion]);
+
+  // function to handle click outside of the suggestions list
+  const handleClickOutside = (event) => {
+    if (!event.target.className.includes('search-input') && !event.target.className.includes('search-suggestion')) {
+      setFilteredSuggestions([]);
+    }
+  };
+
+  // we add an event listener to the window to close the suggestions list
+  // when the user clicks outside of it
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // function to handle click on a suggestion
   const dispatch = useDispatch();
@@ -80,6 +101,7 @@ export default function Search({ placeholder, buttonValue }) {
   };
 
   return (
+
     <div className="search">
       <form className="search-form" action="" onSubmit={handleSubmit}>
         <input

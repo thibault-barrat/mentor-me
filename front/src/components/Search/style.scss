@@ -58,6 +58,7 @@
     background-color: white;
     border-radius: 0 0 9px 9px;
     box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+    z-index: 100;
   }
   &-suggestion {
     padding: calc(vars.$gutter * 0.5);

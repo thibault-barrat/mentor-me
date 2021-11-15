@@ -17,7 +17,7 @@ const NavBaar = () => {
 
   return (
     <nav className="NavBarItems">
-      <a href="/"><img className="NavBarLogo" src={logo} alt="logo mentor me" /></a>
+      <a className="navLogoLink" href="/"><img className="NavBarLogo" src={logo} alt="logo mentor me" /></a>
       <div className="MenuIcon" onClick={handleClick}>
         <i className={clicked ? 'fas fa-times' : 'fas fa-bars'} />
       </div>
