@@ -2,6 +2,7 @@
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import {GiHamburgerMenu} from 'react-icons/gi'
 import logo from 'src/assets/images/LogoMentorMe-maxi.svg';
 import './NavBar.scss';
 
@@ -23,7 +24,7 @@ const NavBaar = () => {
       </div>
       <ul className={`NavMenu ${clicked ? 'navMenuActive' : ''}`}>
         <li>
-          <NavLink className="navLinks" to="/">
+          <NavLink  className="navLinks" to="/">
             Accueil
           </NavLink>
         </li>
