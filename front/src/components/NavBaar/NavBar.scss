@@ -54,6 +54,11 @@
           bottom: 0;
           transform: scaleX(0);
   }
+  &--active {
+    &::after {
+      transform: scaleX(1);
+    }
+  }
 }
 
 .navLinks:hover {
@@ -141,4 +146,12 @@
 
 
 
+}
+
+.bg {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100vh;
 }

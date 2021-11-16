@@ -16,6 +16,7 @@ import avatarimgm from '../../assets/images/marion.jpg';
 
 const About = () => {
   const [activeId, setActiveId] = useState();
+  const [error, setError] = useState(false);
 
   const { lastname, firstname, email, message } = useSelector((state) => state.messages);
   
@@ -37,7 +38,13 @@ const About = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(submitForm());
+    if (lastname && firstname && email && message) {
+      setError(false);
+      dispatch(submitForm());
+    }
+    else {
+      setError(true);
+    }
   };
 
   return (
@@ -167,11 +174,12 @@ const About = () => {
       <h1 id="contact" className="contactform__title inter__title">Nous contacter</h1>
       <form action="" method="post">
         <div className="contactform__container">
-          <input onChange={handleChange} name="lastname" value={lastname} className="contactform__input" type="text" placeholder="ton nom" />
-          <input onChange={handleChange} name="firstname" value={firstname} className="contactform__input" type="text" placeholder="ton prénom" />
+          <input onChange={handleChange} name="lastname" value={lastname} className="contactform__input" type="text" placeholder="ton nom" required />
+          <input onChange={handleChange} name="firstname" value={firstname} className="contactform__input" type="text" placeholder="ton prénom" required />
           <input onChange={handleChange} name="email" value={email} className="contactform__input" type="email" placeholder="ton adresse mail" required />
-          <textarea onChange={handleChange} name="message" value={message} className="contactform__input contactform__message" type="text" placeholder="ton message" />
+          <textarea onChange={handleChange} name="message" value={message} className="contactform__input contactform__message" type="text" placeholder="ton message" required />
         </div>
+        {error && <p className="contactform__error">Tous les champs doivent être remplis</p>}
         <button
           type="submit"
           className="contactform__button"
