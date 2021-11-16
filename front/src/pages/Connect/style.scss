@@ -39,7 +39,17 @@
 		display: inline-block;
 	}
 }
-
+.container-hide{
+  position: relative;
+  &__passwordConnect{
+    position: absolute;
+    top: 35%;
+    right: 65px;
+    @media (min-width: 768px){
+      right: 80px;
+    }
+  }
+}
 @media (min-width: 768px) {
 	.connect {
 		width: 470px;
