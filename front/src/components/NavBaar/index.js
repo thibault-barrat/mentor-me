@@ -1,8 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { AiOutlineClose } from 'react-icons/ai';
 import logo from 'src/assets/images/LogoMentorMe-maxi.svg';
 import './NavBar.scss';
 
@@ -17,59 +18,109 @@ const NavBaar = () => {
   };
 
   return (
-    <nav className="NavBarItems">
-      <a className="navLogoLink" href="/"><img className="NavBarLogo" src={logo} alt="logo mentor me" /></a>
-      <div className="MenuIcon" onClick={handleClick}>
-        <i className={clicked ? 'fas fa-times' : 'fas fa-bars'} />
-      </div>
-      <ul className={`NavMenu ${clicked ? 'navMenuActive' : ''}`}>
-        <li>
-          <NavLink className="navLinks" to="/">
-            Accueil
-          </NavLink>
-        </li>
-        <li>
-          <NavLink className="navLinks" to="/a-propos">
-            A propos
-          </NavLink>
-        </li>
-        {!isLogged && (
+    <>
+      {clicked && (
+        <div
+          className="bg"
+          onClick={() => setClicked(false)}
+        />
+      )}
+      <nav className="NavBarItems">
+        <Link
+          className="navLogoLink"
+          to="/"
+          onClick={() => setClicked(false)}
+        >
+          <img className="NavBarLogo" src={logo} alt="logo mentor me" />
+        </Link>
+        <div className="MenuIcon" onClick={handleClick}>
+          {clicked ? <AiOutlineClose /> : <GiHamburgerMenu />}
+        </div>
+        <ul className={`NavMenu ${clicked ? 'navMenuActive' : ''}`}>
           <li>
-            <NavLink className="navLinks" to="/connexion">
-              Se connecter
+            <NavLink
+              className="navLinks"
+              activeClassName="navLinks--active"
+              exact
+              to="/"
+              onClick={() => setClicked(false)}
+            >
+              Accueil
             </NavLink>
           </li>
-        )}
-        {!isLogged && (
           <li>
-            <NavLink className="navLinks" to="/inscription">
-              S'inscrire
+            <NavLink
+              className="navLinks"
+              activeClassName="navLinks--active"
+              to="/a-propos"
+              onClick={() => setClicked(false)}
+            >
+              A propos
             </NavLink>
           </li>
-        )}
-        {isLogged && (
-          <li>
-            <NavLink className="navLinks" to="/categories">
-              Catégories
-            </NavLink>
-          </li>
-        )}
-        {isLogged && (
-          <li>
-            <NavLink className="navLinks" to="/profil">
-              Mon profil
-            </NavLink>
-          </li>
-        )}
-        {role === 'admin' && isLogged && (
-          <li>
-            <NavLink className="navLinks" to="/admin">
-              Dashboard
-            </NavLink>
-          </li>
-        )}
-      </ul>
-    </nav>
+          {!isLogged && (
+            <li>
+              <NavLink
+                className="navLinks"
+                activeClassName="navLinks--active"
+                to="/connexion"
+                onClick={() => setClicked(false)}
+              >
+                Se connecter
+              </NavLink>
+            </li>
+          )}
+          {!isLogged && (
+            <li>
+              <NavLink
+                className="navLinks"
+                activeClassName="navLinks--active"
+                to="/inscription"
+                onClick={() => setClicked(false)}
+              >
+                S'inscrire
+              </NavLink>
+            </li>
+          )}
+          {isLogged && (
+            <li>
+              <NavLink
+                className="navLinks"
+                activeClassName="navLinks--active"
+                to="/categories"
+                onClick={() => setClicked(false)}
+              >
+                Catégories
+              </NavLink>
+            </li>
+          )}
+          {isLogged && (
+            <li>
+              <NavLink
+                className="navLinks"
+                activeClassName="navLinks--active"
+                to="/profil"
+                onClick={() => setClicked(false)}
+              >
+                Mon profil
+              </NavLink>
+            </li>
+          )}
+          {role === 'admin' && isLogged && (
+            <li>
+              <NavLink
+                className="navLinks"
+                activeClassName="navLinks--active"
+                to="/admin"
+                onClick={() => setClicked(false)}
+              >
+                Dashboard
+              </NavLink>
+            </li>
+          )}
+        </ul>
+      </nav>
+    </>
   );
 };
 

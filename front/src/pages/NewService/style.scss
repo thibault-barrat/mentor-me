@@ -117,8 +117,8 @@
 	&__map {
 		width: 75%;
 		height: 400px;
-		margin-bottom: calc(vars.$gutter * 3);
 		border-radius: 20px;
+		margin: 0 auto calc(vars.$gutter * 3);
 	}
 	&__error {
 		margin-bottom: 0.4rem;

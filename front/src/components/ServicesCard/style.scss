@@ -15,7 +15,7 @@
   border: solid 2px#dcdcdc;
   border-radius: 10px;
   padding: calc(vars.$gutter/2);
-  font-size: calc(vars.$gutter/1.5);
+  font-size: calc(vars.$gutter/1.1);
   color: white;
   margin-right: vars.$gutter;
   margin-top: vars.$gutter;
@@ -29,6 +29,9 @@
     margin-right: vars.$gutter;
     margin-top: vars.$gutter;
     margin-bottom: calc(vars.$gutter/2);
+  }
+  &-title{
+    font-size: calc(vars.$gutter/1.1);
   }
   &-unselected{
     display: none;

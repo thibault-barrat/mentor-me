@@ -4,32 +4,32 @@ INSERT INTO
 VALUES
   (
     'informatique',
-    '#a7fb1c',
+    '#3b485e',
     'https://cdn.pixabay.com/photo/2015/05/26/23/52/technology-785742_960_720.jpg'
   ),
   (
     'cuisine',
-    '#9cab4a',
+    '#753e2e',
     'https://cdn.pixabay.com/photo/2016/02/05/15/34/pasta-1181189_960_720.jpg'
   ),
   (
     'musique',
-    '#7692b5',
+    '#482257',
     'https://cdn.pixabay.com/photo/2016/09/08/21/09/piano-1655558_960_720.jpg'
   ),
   (
     'sport',
-    '#a7fb1c',
+    '#363138',
     'https://cdn.pixabay.com/photo/2017/05/25/15/08/jogging-2343558_960_720.jpg'
   ),
   (
     'bricolage',
-    '#dad83a',
+    '#59592f',
     'https://cdn.pixabay.com/photo/2015/07/11/14/53/plumbing-840835_960_720.jpg'
   ),
   (
     'jardinage',
-    '#c8de01',
+    '#43592f',
     'https://cdn.pixabay.com/photo/2020/04/06/11/22/seedling-5009286_1280.jpg'
   ),
   (
@@ -39,17 +39,17 @@ VALUES
   ),
   (
     'scolaire',
-    '#31ff1b',
+    '#2f5946',
     'https://cdn.pixabay.com/photo/2015/09/02/12/28/pencil-918449_960_720.jpg'
   ),
   (
     'loisirs créatifs',
-    '#437830',
+    '#592f54',
     'https://cdn.pixabay.com/photo/2017/03/24/12/20/yarn-2171040_960_720.jpg'
   ),
   (
     'autre',
-    '#cb9951',
+    '#592f2f',
     'https://cdn.pixabay.com/photo/2016/08/28/22/22/souk-1627045_960_720.jpg'
   );
 INSERT INTO
@@ -108,7 +108,7 @@ VALUES
     'Burke',
     'dabramzon1@surveymonkey.com',
     'j57vgOZ7m98',
-    'Hello',
+    'Hello je suis Lucius, grand mélomane.',
     '+33117645913',
     '+41704517172',
     'https://i.imgur.com/bx5KNBH.jpg',
@@ -163,7 +163,7 @@ VALUES
     'Fuentes',
     'k.fuentes@outlook.fr',
     'pZJF0w9gffgegbcf$W',
-    '',
+    'Adorant les fish&chips et les Beatles, je propose des cours d''anglais sur mon temps libre',
     null,
     '+33694584749',
     'https://i.imgur.com/OWDVzLD.jpg',
@@ -174,7 +174,7 @@ VALUES
     'Maldonad',
     'flavDo@outlook.fr',
     'pZgegzDFGE4$fgegbcfW',
-    '',
+    'Je suis italienne, je mange de la glace, des spaghettis et des pizzas et j''aime le poney',
     null,
     '+33694584749',
     'https://i.imgur.com/umN24bq.jpg',
@@ -227,6 +227,50 @@ VALUES
     8
   ),
   (
+    'Cours de lettres',
+    60,
+    'Je propose des cours particuliers de français, du primaire au lycée.',
+    true,
+    false,
+    true,
+    2,
+    8,
+    3
+  ),
+  (
+    'Bases HTML5/CSS3',
+    75,
+    'Je propose une initiation en HTML/CSS pour tous les débutants',
+    true,
+    false,
+    true,
+    7,
+    1,
+    7
+  ),
+  (
+    'Cours avancé JavaScript',
+    75,
+    'Je propose un cours un peu plus poussé en JavaScript pour les initiés en HTML/CSS',
+    true,
+    false,
+    true,
+    7,
+    1,
+    7
+  ),
+  (
+    'Cours avancé JavaScript II',
+    75,
+    'Je propose un cours un peu plus poussé en JavaScript pour les initiés en HTML/CSS - partie 2',
+    true,
+    false,
+    true,
+    7,
+    1,
+    7
+  ),
+  (
     'Coach fitness',
     45,
     'Je dispose d''une salle de sport privée avec tous les appareils nécessaires. Je vous propose 45min de séance gratuite. Disponibilité à discuter ensemble!',
@@ -251,13 +295,13 @@ VALUES
   (
     'Aménagement et entretien d''un jardin',
     120,
-    'Semis, plantation, tonte et mise en compostage, taille de haie',
+    'Semis, plantation, tonte et mise en compostage, taille de haie, je peux tout vous expliquer',
     false,
     true,
     true,
     3,
     6,
-    7
+    6
   ),
   (
     'Découverte du golf',
@@ -318,8 +362,14 @@ INSERT INTO
   "user_likes_service" ("user_id", "service_id")
 VALUES
   (1, 2),
-  (1, 3),
+  (1, 8),
   (2, 2),
   (2, 1),
-  (2, 3);
+  (3, 3),
+  (3, 7),
+  (3, 1),
+  (7, 3),
+  (2, 2),
+  (7, 6),
+  (7, 3);
 COMMIT;

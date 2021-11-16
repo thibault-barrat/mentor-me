@@ -194,7 +194,7 @@ export default function Register() {
                     onChange={(e) => setAcceptedEmailDiff(e.target.checked)}
                     required
                   />
-                  <span>J'accepte les conditions générales et la politique de confidentialité</span>
+                  <span>J'accepte les <Link to="/conditions-generales" className="checkbox__link">conditions générales </Link> et la <Link to="/politique-confidentialite" className="checkbox__link">politique de confidentialité</Link></span>
                 </label>
 
                 <div className="g-recaptcha" data-sitekey="6LdSsPscAAAAADmH6Q83VWexeO7rsy09eWggHmEy" />
