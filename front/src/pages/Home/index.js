@@ -1,4 +1,5 @@
 import PopCatWave from 'src/assets/images/popular-cat-wave.svg';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { MdChevronRight } from 'react-icons/md';
@@ -22,7 +23,10 @@ const Home = () => {
   const servicesData = useSelector((state) => state.services.items);
 
   // we want to have 4 random categories
-  const categories = chooseRandom(categoryData, 4);
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    setCategories(chooseRandom(categoryData, 4));
+  }, [categoryData]);
 
   // We need to know if the user is logged to change the home for connected user
   const logged = useSelector((state) => state.user.logged);
@@ -42,7 +46,6 @@ const Home = () => {
             Trouve ou propose des compétences dans tous les domaines : bricolage,
             cuisine, sport, informatique, etc… La plateforme a pour principe l’entraide
             et le partage de connaissances gratuitement, sans contrepartie.
-            Inscris-toi dès maintenant pour profiter des offres et en proposer de nouvelles!
           </p>
           {!logged && (
             <p className="slogan__inv"> Si tu veux avoir accès à nos cours et partager une annonce, nous t'invitons à créer ton compte !</p>
@@ -83,7 +86,7 @@ const Home = () => {
             {categories.map((category) => (
               // We use ternary operator to transform the card to a link for logged user
               logged ? (
-                <Link key={category.id} to={`/categories/${category.id}`} className="popular-category__card">
+                <Link key={category.id} to={`/categories/${category.id}/services`} className="popular-category__card">
                   <img className="popular-category__card-image" src={category.image} alt={category.name} />
                   <span className="popular-category__card-name">{category.name}</span>
                 </Link>

@@ -38,6 +38,10 @@ const Notif = () => {
   // we need to have the notifUnlike variable in the redux state
   const notifUnlike = useSelector((state) => state.services.notifUnlike);
 
+  // in order to notfy user when he has submitted a message
+  // we need to have the notifMessage variable in the redux state
+  const notifMessage = useSelector((state) => state.messages.notifMessage);
+
   // we display the notification when logout change and it is true
   useEffect(() => {
     if (logout) {
@@ -100,6 +104,13 @@ const Notif = () => {
       toast.success('Le service a été retiré de vos favoris !');
     }
   }, [notifUnlike]);
+
+  // we display a notification when user has submitted a message
+  useEffect(() => {
+    if (notifMessage) {
+      toast.success('Votre message a bien été envoyé !');
+    }
+  }, [notifMessage]);
 
   return (
     <ToastContainer />

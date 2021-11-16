@@ -58,7 +58,7 @@ export default function Connect() {
           required
 
         />
-        {errors.password && <span className="connect__error">Mauvais mot de passe;</span>}
+        {errors.password && <span className="connect__error">Mauvais mot de passe.</span>}
         <Field
           type="password"
           name="password"

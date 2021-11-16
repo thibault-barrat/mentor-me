@@ -1,10 +1,11 @@
-import { CHANGE_FIELD, SUBMIT_FORM_SUCCESS } from 'src/actions/messages';
+import { CHANGE_FIELD, SUBMIT_FORM_SUCCESS, SUBMIT_FORM } from 'src/actions/messages';
 
 export const initialState = {
   lastname: '',
   firstname: '',
   email: '',
   message: '',
+  notifMessage: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -15,6 +16,12 @@ const reducer = (state = initialState, action = {}) => {
         [action.name]: action.value,
       };
     }
+    case SUBMIT_FORM: {
+      return {
+        ...state,
+        notifMessage: false,
+      };
+    }
     case SUBMIT_FORM_SUCCESS: {
       return {
         ...state,
@@ -22,6 +29,7 @@ const reducer = (state = initialState, action = {}) => {
         firstname: '',
         email: '',
         message: '',
+        notifMessage: true,
       };
     }
     default:
