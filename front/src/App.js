@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 // eslint-disable-next-line camelcase
@@ -29,6 +29,16 @@ import SearchResult from './pages/SearchResult';
 import { getAllUsers } from './actions/admin';
 
 function App() {
+	// We want the page scroll to top when we change page
+	const location = useLocation();
+	useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      // pour que ca scroll doucement
+      behavior: 'smooth',
+    });
+  }, [location]);
+	
 	// We need to know if the user is logged and if is admin
 	// to enable or disable specific routes
 	const isLogged = useSelector(state => state.user.logged);
@@ -71,7 +81,7 @@ function App() {
 	}, [role]);
 
 	return (
-		<Router>
+		<>
 			<NavBaar />
 			{/* We use ternary operator to display Loading components
       if categories or services is loading */}
@@ -109,7 +119,7 @@ function App() {
 			<AuthVerify />
 			<Notif />
 			<Footer />
-		</Router>
+		</>
 	);
 }
 

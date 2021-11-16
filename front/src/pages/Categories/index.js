@@ -35,7 +35,7 @@ export default function Categories() {
           La compétence s'acquiert par l'apprentissage
         </h2>
         <Search 
-          placeholder="Je cherche ..."
+          placeholder="Je veux apprendre ..."
           buttonValue="Rechercher"
         />
       </div>

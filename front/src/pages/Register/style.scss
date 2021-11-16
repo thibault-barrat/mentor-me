@@ -65,6 +65,15 @@
   padding: 1rem;
 }
 
+.checkbox__link {
+  color: rgb(96, 145, 236);
+  text-decoration: underline;
+  line-height: 1.4rem;
+  &:hover {
+    text-decoration: none;
+    color: blue;
+  }
+}
 
 
 

@@ -8,14 +8,13 @@ import { likeService, unlikeService } from 'src/actions/service';
 // Style
 import './style.scss';
 
-
 export default function ServicesCard({ result, onMouseOver }) {
-  // Here we get the categories infos from the reducer 
-  const categoryState = useSelector(state => state.categories.items);
+  // Here we get the categories infos from the reducer
+  const categoryState = useSelector((state) => state.categories.items);
 
-  // Here we get the likedServices infos from the reducer 
+  // Here we get the likedServices infos from the reducer
   const likedServices = useSelector((state) => state.user.likedServices);
-  // Here the state we use to change the liked heart css 
+  // Here the state we use to change the liked heart css
   const [isLiked, setIsLiked] = useState(likedServices.some((service) => service.service_id === result.id));
 
   const dispatch = useDispatch();
@@ -28,15 +27,15 @@ export default function ServicesCard({ result, onMouseOver }) {
   const classPresentiel = result.irl ? 'tag' : 'tag tag-unselected';
 
   return (
-    
-    <li 
+
+    <li
       className="card"
       onMouseOver={onMouseOver}
     >
       <header className="tags">
-        {categoryName.map((item)=> (
-          <div 
-            className="tag-title" 
+        {categoryName.map((item) => (
+          <div
+            className="tag-title"
             key={item.id}
             style={{
               backgroundColor: item.color,
@@ -48,25 +47,25 @@ export default function ServicesCard({ result, onMouseOver }) {
         <div className={classVisio}>Visio</div>
         <div className={classPresentiel}>Présentiel</div>
         <div className="tags-icon">
-        {isLiked ? (
-          <AiFillHeart
-            className="likedHeart"
-            size={23}
-            onClick={() => {
-              dispatch(unlikeService(result.id))
-              setIsLiked(false);
-            }}
-          />
-        ) : (
-          <AiOutlineHeart
-            onClick={() => {
-              dispatch(likeService(result.id))
-              setIsLiked(true);
-            }}
-            size={23}
-          />
-        )}
-          
+          {isLiked ? (
+            <AiFillHeart
+              className="likedHeart"
+              size={23}
+              onClick={() => {
+                dispatch(unlikeService(result.id));
+                setIsLiked(false);
+              }}
+            />
+          ) : (
+            <AiOutlineHeart
+              onClick={() => {
+                dispatch(likeService(result.id));
+                setIsLiked(true);
+              }}
+              size={23}
+            />
+          )}
+
         </div>
       </header>
       <Link
@@ -74,9 +73,9 @@ export default function ServicesCard({ result, onMouseOver }) {
       >
         <div className="card-container">
           <div className="card-image-container">
-            <img 
+            <img
               className="card-image"
-              src={result.avatar_url} 
+              src={result.avatar_url}
               alt="Photo de profil"
             />
           </div>
@@ -96,13 +95,13 @@ export default function ServicesCard({ result, onMouseOver }) {
         </div>
       </Link>
     </li>
-    
+
   );
 }
 
 // Prop validation
 ServicesCard.propTypes = {
-  result: 
+  result:
     PropTypes.shape({
       title: PropTypes.string,
       id: PropTypes.number,
