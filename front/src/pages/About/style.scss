@@ -1,167 +1,205 @@
 @use 'src/styles/vars';
 
-
 .desc {
-  &__container {
-    text-align: center;
-    background-color: #fccdc1;
-    padding: 1rem;
-    
-  }
-  &__title {
-    font-weight: bold;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-  &__text {
-    margin-bottom: 1rem;
-    line-height: 1.5rem;
-    @media (min-width: vars.$breakpoint-sm){
-      width: 60%;
-      
-    }
-  }
+	&__container {
+		text-align: center;
+		background-color: #fccdc1;
+		padding: 1rem;
+		min-height: 300px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	&__title {
+		font-size: 2rem;
+		margin: vars.$gutter 0;
+		line-height: 2.2rem;
+	}
+	&__text {
+		margin-bottom: 1rem;
+		line-height: 1.5rem;
+		max-width: 1000px;
+	}
 }
 
 .faq {
-  &__container {
-
-    margin-bottom: 1rem;
-    @media (min-width: vars.$breakpoint-sm){
-      padding: 2rem;
-      min-height: 380px;
-    }
-    
-  }
-  &__title {
-    text-align: center;
-
-  }
-  &__list__container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    margin-left: 10%;
-    align-items: center;
-    font-size: 1.5rem; 
-    @media (min-width: vars.$breakpoint-sm){
-      margin-left: 20%;
-      flex-direction: row;
-      
-    }
-    
-    
-  }
-  &__list__item {
-    width: 50%;
-    padding-top: 1rem;
-    @media (min-width: vars.$breakpoint-sm){
-      font-size: 1.4rem;
-      margin-bottom: 3rem;
-    }
-  }
+	&__container {
+		margin: 1rem;
+		@media (min-width: vars.$breakpoint-sm) {
+			padding: 2rem;
+			min-height: 380px;
+		}
+	}
+	&__title {
+		text-align: center;
+	}
+	&__list__container {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		font-size: 1.5rem;
+		justify-content: space-evenly;
+		@media (min-width: vars.$breakpoint-sm) {
+			flex-direction: row;
+		}
+	}
+	&__list__item {
+		flex: 0 0 45%;
+		padding-top: 1rem;
+		@media (min-width: vars.$breakpoint-sm) {
+			font-size: 1.2rem;
+			margin-bottom: 3rem;
+		}
+	}
+	&__list__chevron {
+		font-size: 2rem;
+		max-width: 16px;
+		transition: 0.4s;
+		&__clicked {
+			transform: rotate(180deg);
+		}
+	}
 }
 
 .faq__list__question {
-  margin-right: 1rem;
+	display: flex;
+	align-items: center;
+  justify-content: space-between;
+	cursor: pointer;
+	&-text {
+		margin-right: 1rem;
+	}
 }
 
 .faq__list__answer {
-  display: none;
+	max-height: 0;
+	margin: 1rem;
+	font-size: 1.2rem;
+	overflow: hidden;
+	transition: max-height 0.4s;
 }
 .faq__list__answer__clicked {
-  display: block;
-  padding: 1rem;
-  font-size: 1.3rem;
+	max-height: 1000px;
 }
 
 .avatar {
+	&__container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 3rem;
+		@media (min-width: vars.$breakpoint-sm) {
+			flex-direction: row;
+			align-items: flex-start;
+		}
+	}
 
-  &__container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    @media (min-width: vars.$breakpoint-sm){
-      flex-direction: row;
-      align-items: flex-start;
-    }
-  }
+	&__comp {
+		width: 80%;
+		text-align: center;
+		@media (min-width: vars.$breakpoint-sm) {
+			min-height: 350px;
+		}
+	}
 
-  &__comp {
-    width: 80%;
-    text-align: center;
-    @media (min-width: vars.$breakpoint-sm){
-      min-height: 350px;
-      
-    }
-  }
-  
-  &__img {
-    border-radius: 30px;
-    width: 60%;
-    object-fit: cover;
-    max-height: 230px;
-    min-height: 230px;
-  }
+	&__img {
+		border-radius: 30px;
+		width: 60%;
+		object-fit: cover;
+		max-height: 230px;
+		min-height: 230px;
+	}
 
-  &__name {
-   font-size: 1.5rem;
-   margin-top: 1rem;
-   margin-bottom: 1rem;
-   @media (min-width: vars.$breakpoint-sm){
-    font-size: 1rem;
-   }
-  }
+	&__name {
+		font-size: 1.5rem;
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+		@media (min-width: vars.$breakpoint-sm) {
+			font-size: 1rem;
+		}
+	}
 }
 
 .position__img {
-  object-position: top;
+	object-position: top;
 }
 
 .contactform {
-  &__container {
-    margin-bottom: 4rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    @media (min-width: vars.$breakpoint-sm){
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      margin-bottom: 6rem;
-    }
-  }
-  &__input {
-    
-    width: 80%;
-    text-align: center;
-    padding: vars.$gutter;
-    margin-bottom: calc(vars.$gutter*3);
-    border: solid 2px #dcdcdc; 
-    border-radius: 20px;
-    @media (min-width: vars.$breakpoint-sm){
-      width: 45%;
-    }
-  }
+	&__container {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+	&__input {
+		width: 80%;
+		text-align: center;
+		padding: vars.$gutter;
+		margin: 0 auto 2rem;
+		border: solid 2px #dcdcdc;
+		border-radius: 20px;
+	}
+	&__message {
+		height: 150px;
+		resize: vertical;
+		font-family: 'Montserrat', sans-serif;
+		font-size: 14px;
+		&::placeholder {
+			font-family: 'Montserrat', sans-serif;
+		}
+	}
+	&__button {
+		color: white;
+		padding: calc(vars.$gutter/1.5) calc(vars.$gutter * 2);
+		font-size: vars.$gutter;
+		background-color: rgb(255, 112, 87);
+		border: none;
+		border-radius: 5px;
+		font-weight: bold;
+		margin: 0 auto calc(vars.$gutter * 4);
+		transition: 0.3s;
+		display: block;
+		cursor: pointer;
+		line-height: calc(vars.$gutter * 1.4);
+		&:hover {
+			background-color: lighten($color: rgb(255, 112, 87), $amount: 10%);
+		}
+	}
 }
 
 .inter__title {
-  text-align: center;
-  padding: 1rem;
-  font-size: 1.4rem;
+	text-align: center;
+	padding: 1rem;
+	font-size: 1.4rem;
+}
+
+.profil__networks {
+	margin-bottom: 2rem;
 }
 
 .profil__inf {
-  font-size: 1.2rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  text-align: start;
-  line-height: 1.7rem;
-  @media (min-width: vars.$breakpoint-sm){
-    font-size: 1rem;
-  }
+	font-size: 1.5rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	text-align: start;
+	line-height: 1.7rem;
+
+	& svg {
+		fill: rgb(255, 112, 87);
+	}
+
+	@media (min-width: vars.$breakpoint-sm) {
+		font-size: 1.5rem;
+
+		& svg {
+			fill: rgb(255, 112, 87);
+		}
+	}
 }
 
 .profil__inf__b {
-  font-weight: bold;
+	font-weight: bold;
 }

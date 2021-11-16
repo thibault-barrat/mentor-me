@@ -52,7 +52,7 @@ export default function Connect() {
         <Field
           type="email"
           name="email"
-          placeholder="Email"
+          placeholder="Ton email"
           value={email}
           onChange={handleChange}
           required
@@ -62,7 +62,7 @@ export default function Connect() {
         <Field
           type="password"
           name="password"
-          placeholder="Mot de passe"
+          placeholder="Ton mot de passe"
           value={password}
           onChange={handleChange}
           required
@@ -78,7 +78,7 @@ export default function Connect() {
           className="connect-link"
           to="/inscription"
         >
-          Vous n'avez pas de compte ?
+          Tu n'as pas de compte ?
         </Link>
       </form>
     </div>

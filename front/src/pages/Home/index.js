@@ -30,6 +30,24 @@ const Home = () => {
   return (
     <main className="home">
       <section className="slogan">
+        <div className="slogan__container">
+
+          <h1 className="slogan__title">Bienvenue sur Mentor.me, mets ton savoir
+            à profit et partages ton domaine avec
+            des passionnés comme toi
+          </h1>
+          <p className="slogan__text">
+            Mentor.me est une plateforme communautaire de personnes souhaitant
+            partager leurs compétences et/ou profiter des compétences proposées.
+            Trouve ou propose des compétences dans tous les domaines : bricolage,
+            cuisine, sport, informatique, etc… La plateforme a pour principe l’entraide
+            et le partage de connaissances gratuitement, sans contrepartie.
+            Inscris-toi dès maintenant pour profiter des offres et en proposer de nouvelles!
+          </p>
+          {!logged && (
+            <p className="slogan__inv"> Si tu veux avoir accès à nos cours et partager une annonce, nous t'invitons à créer ton compte !</p>
+          )}
+        </div>
         {/* We display the search form and the button to the new service form
           only for logged user */}
         {logged && (
@@ -46,29 +64,13 @@ const Home = () => {
             </Link>
           </>
         )}
-        <div className="slogan__container">
-
-          <h1 className="slogan__title">Bienvenue sur Mentor.Me, mets ton savoir
-            à profit et partages ton domaine avec
-            des passionnés comme toi
-          </h1>
-          <p className="slogan__text">
-            Sed ut perspiciatis unde omnis iste natus error
-            sit voluptatem accusantium doloremque laudantium, totam
-            rem aperiam, eaque ipsa quae ab illo inventore veritatis et
-            quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-            voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed
-            quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-          </p>
-          <p className="slogan__inv"> Si tu veux avoir accès à nos cours et partager une annonce, nous t'invitons a créer ton compte ! </p>
-        </div>
       </section>
       <section className="white-bg">
         {/* alt attribute is empty for decorative images */}
         <img src={PopCatWave} className="popular-category__wave" alt="" />
         <div className="home__container popular-category">
           <h3 className="popular-category__title">
-            Catégories les plus populaires
+            Les dernières catégories
           </h3>
           {/* We display the link to the categories only for logged user */}
           {logged && (
@@ -96,7 +98,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section>
+      <section className="last-services__section">
         <div className="home__container last-services">
           <div className="last-services__cards">
             {/* We just need the last four services */}
@@ -112,11 +114,6 @@ const Home = () => {
                   />
                   <span
                     className="last-services__card-name"
-                    style={{
-                      // Here we will use the category color as background color
-                      backgroundColor: categoryData
-                        .find((category) => category.id === service.category_id).color,
-                    }}
                   >
                     {service.title}
                   </span>
@@ -136,11 +133,6 @@ const Home = () => {
                     />
                     <span
                       className="last-services__card-name"
-                      style={{
-                        // Here we will use the category color as background color
-                        backgroundColor: categoryData
-                          .find((category) => category.id === service.category_id).color,
-                      }}
                     >
                       {service.title}
                     </span>

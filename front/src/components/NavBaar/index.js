@@ -2,6 +2,7 @@
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import logo from 'src/assets/images/LogoMentorMe-maxi.svg';
 import './NavBar.scss';
 
@@ -17,7 +18,7 @@ const NavBaar = () => {
 
   return (
     <nav className="NavBarItems">
-      <a href="/"><img className="NavBarLogo" src={logo} alt="logo mentor me" /></a>
+      <a className="navLogoLink" href="/"><img className="NavBarLogo" src={logo} alt="logo mentor me" /></a>
       <div className="MenuIcon" onClick={handleClick}>
         <i className={clicked ? 'fas fa-times' : 'fas fa-bars'} />
       </div>

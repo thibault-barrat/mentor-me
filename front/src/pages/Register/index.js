@@ -88,7 +88,7 @@ export default function Register() {
                 <Field
                   type="text"
                   name="lastname"
-                  placeholder="Votre Nom"
+                  placeholder="Ton nom"
                   value={lastname}
                   onChange={handleChange}
                   required
@@ -96,7 +96,7 @@ export default function Register() {
                 <Field
                   type="text"
                   name="firstname"
-                  placeholder="Votre Prénom"
+                  placeholder="Ton prénom"
                   value={firstname}
                   onChange={handleChange}
                   required
@@ -110,7 +110,7 @@ export default function Register() {
                 <Field
                   type="email"
                   name="email"
-                  placeholder="Votre adresse email"
+                  placeholder="Ton adresse email"
                   value={email}
                   onChange={handleChange}
                   onBlur={checkEmail}
@@ -122,7 +122,7 @@ export default function Register() {
                 <Field
                   type="password"
                   name="password"
-                  placeholder="Mot de passe"
+                  placeholder="Ton mot de passe"
                   value={password}
                   onChange={handleChange}
                   onBlur={checkPassword}
