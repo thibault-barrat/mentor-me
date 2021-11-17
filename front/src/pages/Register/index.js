@@ -6,7 +6,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
-import { BiHide } from 'react-icons/bi';
+import { FaRegEyeSlash, FaRegEye } from 'react-icons/fa';
 import Loading from 'src/components/Loading';
 import { changeRegisterField, submitNewUser } from '../../actions/user';
 import './style.scss';
@@ -95,6 +95,7 @@ export default function Register() {
     }
     else setValidConfirmedPassword(true);
   };
+ 
 
   return (
     <div>
@@ -151,11 +152,20 @@ export default function Register() {
                   onBlur={checkPassword}
                   required
                 />
-                <BiHide 
+                {passwordShown !== "password" && (
+                  <FaRegEyeSlash 
                   onClick={() => togglePassword("password")}
                   size={18}
                   className="hide-container__password"
                 />
+                )}
+                {passwordShown == "password" && (
+                  <FaRegEye 
+                  onClick={() => togglePassword("password")}
+                  size={18}
+                  className="hide-container__password"
+                />
+                )}
                 {!validConfirmedPassword && (
                   <span className="form__error">Les mots de passe doivent être identiques.</span>
                 )}
@@ -168,11 +178,20 @@ export default function Register() {
                   onBlur={checkConfirmedPassword}
                   required
                 />
-                <BiHide 
+                {passwordShown !== "confirmedPassword" && (
+                  <FaRegEyeSlash 
                   onClick={() => togglePassword("confirmedPassword")}
                   size={18}
                   className="hide-container__confirmedPassword"
                 />
+                )}
+                {passwordShown == "confirmedPassword" && (
+                  <FaRegEye 
+                  onClick={() => togglePassword("confirmedPassword")}
+                  size={18}
+                  className="hide-container__confirmedPassword"
+                />
+                )}
                 </div>
                 <label htmlFor="acceptedTerms" className="checkbox__container">
                   <input

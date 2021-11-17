@@ -2,7 +2,7 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { BiHide } from 'react-icons/bi';
+import { FaRegEyeSlash, FaRegEye } from 'react-icons/fa';
 
 // Local import
 import { changeLoginField, submitLogin } from '../../actions/user';
@@ -78,11 +78,20 @@ export default function Connect() {
           onChange={handleChange}
           required
         />
-        <BiHide 
-          onClick={togglePassword}
-          size={18}
-          className="container-hide__passwordConnect"
-        />
+        {!passwordShown && (
+          <FaRegEyeSlash 
+            onClick={togglePassword}
+            size={18}
+            className="container-hide__passwordConnect"
+          />
+        )}
+        {passwordShown  && (
+          <FaRegEye 
+            onClick={togglePassword}
+            size={18}
+            className="container-hide__passwordConnect"
+          />
+        )}
         </div>
         <button
           type="submit"
