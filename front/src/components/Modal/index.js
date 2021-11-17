@@ -58,6 +58,8 @@ const Modal = ({
   const dispatch = useDispatch();
 
   // function to handle click on confirm button
+  // and dispatch the correct action depending on action props of the modal
+  // and close the modal and eventually the parent modal
   const handleConfirmClick = () => {
     switch (action.type) {
       case 'delete':
@@ -114,6 +116,8 @@ const Modal = ({
   );
 };
 
+// className and closeParentAction are optional
+// we need closeParentAction only if we want to close the parent modal
 Modal.defaultProps = {
   className: '',
   closeParentAction: () => {},

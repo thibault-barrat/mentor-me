@@ -16,7 +16,7 @@ const NewServiceMarker = () => {
   });
 
   // when position changed we dispatch an action
-  // to update location in the store
+  // to update location of the new service in the store
   const dispatch = useDispatch();
   useEffect(() => {
     if (position) {

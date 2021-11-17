@@ -8,25 +8,25 @@ import Search from 'src/components/Search';
 import './style.scss';
 
 const Home = () => {
-  /**
-   *
-   * @param {array} array the array to randomized
-   * @param {number} n the number of values to have in the randomized array
-   * @returns a randomized array
-   */
-  const chooseRandom = (array, n) => (
-    array.sort(() => 0.5 - Math.random()).slice(0, n)
-  );
+  // /**
+  //  *
+  //  * @param {array} array the array to randomized
+  //  * @param {number} n the number of values to have in the randomized array
+  //  * @returns a randomized array
+  //  */
+  // const chooseRandom = (array, n) => (
+  //   array.sort(() => 0.5 - Math.random()).slice(0, n)
+  // );
 
   // We take the categories and services from the redux store
   const categoryData = useSelector((state) => state.categories.items);
   const servicesData = useSelector((state) => state.services.items);
 
-  // we want to have 4 random categories
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    setCategories(chooseRandom(categoryData, 4));
-  }, [categoryData]);
+  // // we want to have 4 random categories
+  // const [categories, setCategories] = useState([]);
+  // useEffect(() => {
+  //   setCategories(chooseRandom(categoryData, 4));
+  // }, [categoryData]);
 
   // We need to know if the user is logged to change the home for connected user
   const logged = useSelector((state) => state.user.logged);
@@ -37,7 +37,7 @@ const Home = () => {
         <div className="slogan__container">
 
           <h1 className="slogan__title">Bienvenue sur Mentor.me, mets ton savoir
-            à profit et partages ton domaine avec
+            à profit et partage ton domaine avec
             des passionnés comme toi
           </h1>
           <p className="slogan__text">
@@ -83,7 +83,7 @@ const Home = () => {
             </Link>
           )}
           <div className="popular-category__cards">
-            {categories.map((category) => (
+            {categoryData.slice(0, 4).map((category) => (
               // We use ternary operator to transform the card to a link for logged user
               logged ? (
                 <Link key={category.id} to={`/categories/${category.id}/services`} className="popular-category__card">

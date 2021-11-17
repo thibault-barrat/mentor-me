@@ -18,8 +18,10 @@ const About = () => {
   const [activeId, setActiveId] = useState();
   const [error, setError] = useState(false);
 
-  const { lastname, firstname, email, message } = useSelector((state) => state.messages);
-  
+  const {
+    lastname, firstname, email, message,
+  } = useSelector((state) => state.messages);
+
   const dispatch = useDispatch();
 
   // function to toggle the active id
