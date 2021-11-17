@@ -29,8 +29,9 @@
 .form__title {
   font-size: 2rem;
   padding: 1.4rem;
-
+ 
 }
+
 
 .right__container input {
   display: block;
@@ -38,6 +39,8 @@
     margin-bottom: calc(vars.$gutter*3);
     border: solid 2px #dcdcdc;
 }
+
+
 
 .form__input {
   margin: 1rem;
@@ -59,19 +62,49 @@
   margin-left: 1rem;
 }
 
+.checkbox__link{
+  color: #6558f5;
+	text-decoration: underline;
+	&:hover {
+		color: lighten($color: #6558f5, $amount: 10%);
+	}
+}
+
 .form__error {
   margin-bottom: 1rem;
   color: rgb(248, 93, 82);
   padding: 1rem;
 }
 
-.checkbox__link {
-  color: rgb(96, 145, 236);
-  text-decoration: underline;
-  line-height: 1.4rem;
-  &:hover {
-    text-decoration: none;
-    color: blue;
+.hide-container{
+  max-width: 550px;
+  width: 100%;
+  position: relative;
+  &__password{
+    position: absolute;
+    top: 17%;
+    right: 49px;
+    @media (min-width: 450px) {
+      top: 17%;
+      right: 70px;
+    }
+    @media (min-width: 570px) {
+      top: 17%;
+      right: 90px;
+    }
+  }
+  &__confirmedPassword{
+    position: absolute;
+    bottom: 24%;
+    right: 49px;
+    @media (min-width: 450px) {
+      bottom: 24%;
+      right: 70px;
+    }
+    @media (min-width: 570px) {
+      bottom: 24%;
+      right: 90px;
+    }
   }
 }
 

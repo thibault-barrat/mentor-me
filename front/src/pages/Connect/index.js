@@ -1,7 +1,8 @@
 // Npm import
 import { Link, useHistory } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { FaRegEyeSlash, FaRegEye } from 'react-icons/fa';
 
 // Local import
 import { changeLoginField, submitLogin } from '../../actions/user';
@@ -15,7 +16,16 @@ export default function Connect() {
   const {
     email, password, logged, errors,
   } = useSelector((state) => state.user);
+  
+  // Here we create a hook to set the passwordShown to a boolean
+  const [passwordShown, setPasswordShown] = useState(false);
 
+  // Here the password toggle handler
+  const togglePassword = () => {
+    // inverse the boolean state of passwordShown
+    setPasswordShown(!passwordShown);
+    
+  };
   // We use dispatch to modify the state
   const dispatch = useDispatch();
 
@@ -58,16 +68,31 @@ export default function Connect() {
           required
 
         />
-        {errors.password && <span className="connect__error">Mauvais mot de passe.</span>}
+        {errors.password && <span className="connect__error">Mauvais mot de passe;</span>}
+        <div className="container-hide">
         <Field
-          type="password"
+          type={passwordShown ? "text" : "password"}
           name="password"
           placeholder="Ton mot de passe"
           value={password}
           onChange={handleChange}
           required
-
         />
+        {!passwordShown && (
+          <FaRegEyeSlash 
+            onClick={togglePassword}
+            size={18}
+            className="container-hide__passwordConnect"
+          />
+        )}
+        {passwordShown  && (
+          <FaRegEye 
+            onClick={togglePassword}
+            size={18}
+            className="container-hide__passwordConnect"
+          />
+        )}
+        </div>
         <button
           type="submit"
           className="connect-button"
