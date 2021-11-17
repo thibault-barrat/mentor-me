@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable spaced-comment */
 /* eslint-disable import/no-extraneous-dependencies */
 import { NavLink, Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -8,6 +10,7 @@ import logo from 'src/assets/images/LogoMentorMe-maxi.svg';
 import './NavBar.scss';
 
 const NavBaar = () => {
+  /* we are crating our constants for the state */
   const [clicked, setClicked] = useState(false);
   const isLogged = useSelector((state) => state.user.logged);
   const role = useSelector((state) => state.user.role);
@@ -33,6 +36,7 @@ const NavBaar = () => {
         >
           <img className="NavBarLogo" src={logo} alt="logo mentor me" />
         </Link>
+        {/* here we have the "Menu burger" icon with the condition if the icon is clicked then it become a cross and open the menu on smartphone.*/}
         <div className="MenuIcon" onClick={handleClick}>
           {clicked ? <AiOutlineClose /> : <GiHamburgerMenu />}
         </div>
