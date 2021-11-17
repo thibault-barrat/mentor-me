@@ -37,7 +37,7 @@ const Home = () => {
         <div className="slogan__container">
 
           <h1 className="slogan__title">Bienvenue sur Mentor.me, mets ton savoir
-            à profit et partages ton domaine avec
+            à profit et partage ton domaine avec
             des passionnés comme toi
           </h1>
           <p className="slogan__text">
