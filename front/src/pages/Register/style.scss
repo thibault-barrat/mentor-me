@@ -62,6 +62,14 @@
   margin-left: 1rem;
 }
 
+.checkbox__link{
+  color: #6558f5;
+	text-decoration: underline;
+	&:hover {
+		color: lighten($color: #6558f5, $amount: 10%);
+	}
+}
+
 .form__error {
   margin-bottom: 1rem;
   color: rgb(248, 93, 82);

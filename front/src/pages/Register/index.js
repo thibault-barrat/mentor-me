@@ -5,7 +5,7 @@
 /* eslint-disable import/no-absolute-path */
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { BiHide } from 'react-icons/bi';
 import Loading from 'src/components/Loading';
 import { changeRegisterField, submitNewUser } from '../../actions/user';
@@ -65,7 +65,7 @@ export default function Register() {
     }
     if (name == "confirmedPassword"){
       setPasswordShown("confirmedPassword");
-        if (passwordShown == "password"){
+        if (passwordShown == "confirmedPassword"){
           setPasswordShown("");
         }
     }
