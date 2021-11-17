@@ -22,13 +22,13 @@ const SearchResult = () => {
       <h1 className="search-result__title">Résultats de la recherche</h1>
       {/* If searchLoading is true, we display the loader */}
       {searchLoading && <Loading />}
-      {!searchLoading && searchResult.length > 0 && (
+      {!searchLoading && filteredServices.length > 0 && (
         <ServicesList
           services={filteredServices}
           title="Voici les offres correspondantes à la recherche"
         />
       )}
-      {!searchLoading && searchResult.length === 0 && (
+      {!searchLoading && filteredServices.length === 0 && (
         <p className="search-result__no-result">
           Aucun résultat pour votre recherche
         </p>
