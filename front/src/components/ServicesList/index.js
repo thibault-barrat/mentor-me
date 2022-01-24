@@ -1,4 +1,6 @@
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents,useMap } from 'react-leaflet';
+import {
+  MapContainer, TileLayer, Marker, Popup, useMap,
+} from 'react-leaflet';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import ServicesCard from 'src/components/ServicesCard';
@@ -9,52 +11,52 @@ import './style.scss';
 
 const ServicesList = ({ services, title }) => {
   //
-  const [position, setPosition] = useState(null)
+  const [position, setPosition] = useState(null);
 
-  // We create a function to set the state position on a mouse over 
-  function handleMouseOver(lat, long){
+  // We create a function to set the state position on a mouse over
+  function handleMouseOver(lat, long) {
     setPosition([lat, long]);
   }
   // Here a function for leaftlet to fly to the position we've set with handleMouseOver
-  function ServicesLocation({pos}) {
+  function ServicesLocation({ pos }) {
     const map = useMap();
 
-    if(pos !== null){
+    if (pos !== null) {
       map.flyTo(pos, 12);
     }
 
-    return null
+    return null;
   }
 
   return (
-      <div className="services">
-        <main className="services-container">
-  {/* Map section */}
-          <div className="services-map-container">
-            <MapContainer className="services-map" center={[48.8534, 2.3488]} zoom={13} scrollWheelZoom={true}>
-              <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              {services.map(service => (
-                <Marker 
-                  key={service.id} 
-                  position={[
-                    service.latitude,
-                    service.longitude
-                  ]}
-                >
+    <div className="services">
+      <main className="services-container">
+        {/* Map section */}
+        <div className="services-map-container">
+          <MapContainer className="services-map" center={[48.8534, 2.3488]} zoom={13} scrollWheelZoom>
+            <TileLayer
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            {services.map((service) => (
+              <Marker
+                key={service.id}
+                position={[
+                  service.latitude,
+                  service.longitude,
+                ]}
+              >
                 <Popup>
                   <div>
-                    <Link to={`/service/${service.id}`} >
+                    <Link to={`/service/${service.id}`}>
                       <h2>{service.title}</h2>
                     </Link>
                     <p className="">
-                        {service.description.substring(0, 30)}
-                        <Link to={`/service/${service.id}`} >
-                          <span className="card-description-span">...lire la suite</span>
-                        </Link>
-                      </p>
+                      {service.description.substring(0, 30)}
+                      <Link to={`/service/${service.id}`}>
+                        <span className="card-description-span">...lire la suite</span>
+                      </Link>
+                    </p>
                     <p>
                       {service.firstname}
                       {service.lastname}
@@ -62,31 +64,31 @@ const ServicesList = ({ services, title }) => {
                   </div>
                 </Popup>
               </Marker>
-              ))}
-              <ServicesLocation 
-                pos={position}
+            ))}
+            <ServicesLocation
+              pos={position}
+            />
+            <Location />
+          </MapContainer>
+        </div>
+        {/* Services section */}
+        <article className="services-list">
+          <h1 className="services-title">{title}</h1>
+          <ul className="services-cards">
+            {/* Here we map on services to give all the infos by prop */}
+            {services.map((item) => (
+              <ServicesCard
+                result={item}
+                key={item.id}
+                onMouseOver={() => handleMouseOver(item.latitude, item.longitude)}
               />
-              <Location />
-            </MapContainer>
-          </div>
-  {/* Services section */}
-          <article className="services-list">
-            <h1 className="services-title">{title}</h1>
-              <ul className="services-cards">
-              {/* Here we map on services to give all the infos by prop */}
-                {services.map((item) =>(
-                  <ServicesCard 
-                    result={item}
-                    key={item.id}
-                    onMouseOver={()=> handleMouseOver(item.latitude, item.longitude)}
-                  />
-                ))}
-              </ul>
-          </article>
-        </main>
-      </div>
-    );
-  };
+            ))}
+          </ul>
+        </article>
+      </main>
+    </div>
+  );
+};
 
 ServicesList.propTypes = {
   services: PropTypes.arrayOf(PropTypes.shape({

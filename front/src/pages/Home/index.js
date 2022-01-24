@@ -1,5 +1,4 @@
 import PopCatWave from 'src/assets/images/popular-cat-wave.svg';
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { MdChevronRight } from 'react-icons/md';
