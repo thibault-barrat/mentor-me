@@ -62,8 +62,8 @@ const About = () => {
           Inscris-toi dès maintenant pour profiter des offres et en proposer de nouvelles!
         </p>
       </div>
-      <h1 className="faq__title inter__title">Les questions fréquentes</h1>
-      <div className="faq__container">
+      <div className="faq__container white-bg">
+        <h1 className="faq__title inter__title">Les questions fréquentes</h1>
         <div className="faq__list__container">
           <div name="q1" className="faq__list__item" onClick={() => toggleActiveId(1)}>
             <div className="faq__list__question">
@@ -173,23 +173,23 @@ const About = () => {
           </div>
         </div>
       </div>
-      <h1 id="contact" className="contactform__title inter__title">Nous contacter</h1>
-      <form action="" method="post">
-        <div className="contactform__container">
-          <input onChange={handleChange} name="lastname" value={lastname} className="contactform__input" type="text" placeholder="ton nom" required />
-          <input onChange={handleChange} name="firstname" value={firstname} className="contactform__input" type="text" placeholder="ton prénom" required />
-          <input onChange={handleChange} name="email" value={email} className="contactform__input" type="email" placeholder="ton adresse mail" required />
-          <textarea onChange={handleChange} name="message" value={message} className="contactform__input contactform__message" type="text" placeholder="ton message" required />
-        </div>
-        {error && <p className="contactform__error">Tous les champs doivent être remplis</p>}
-        <button
-          type="submit"
-          className="contactform__button"
-          onClick={handleSubmit}
-        >
-          <span>Envoyer </span><FiSend />
-        </button>
-      </form>
+      <div className="contactform__container white-bg">
+        <h1 id="contact" className="contactform__title inter__title">Nous contacter</h1>
+        <form action="" method="post" className="contactform__form">
+          <input onChange={handleChange} name="lastname" value={lastname} className="contactform__input contactform__input--2col-desktop" type="text" placeholder="Ton nom" required />
+          <input onChange={handleChange} name="firstname" value={firstname} className="contactform__input contactform__input--2col-desktop" type="text" placeholder="Ton prénom" required />
+          <input onChange={handleChange} name="email" value={email} className="contactform__input" type="email" placeholder="Ton adresse mail" required />
+          <textarea onChange={handleChange} name="message" value={message} className="contactform__input contactform__message" type="text" placeholder="Ton message" required />
+          {error && <p className="contactform__error">Tous les champs doivent être remplis</p>}
+          <button
+            type="submit"
+            className="contactform__button"
+            onClick={handleSubmit}
+          >
+            <span>Envoyer </span><FiSend />
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
