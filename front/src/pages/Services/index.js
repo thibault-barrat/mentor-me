@@ -1,5 +1,4 @@
 // Npm Import
-import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -21,7 +20,7 @@ export default function Services() {
   // so we need to compare if the service's category_id is = to the category's id
   const services = servicesState.filter((item) => item.category_id === parseInt(id, 10));
 
-  if (services.length == 0) {
+  if (services.length === 0) {
     return (
       <p className="empty-list">La catégorie dispose d'aucun échange de compétence pour le moment.</p>
     );

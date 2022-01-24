@@ -35,7 +35,7 @@ export default function Register() {
     dispatch(changeRegisterField(value, name));
   };
 
-  const [passwordShown, setPasswordShown] = useState("");
+  const [passwordShown, setPasswordShown] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [acceptedEmailDiff, setAcceptedEmailDiff] = useState(false);
@@ -54,22 +54,21 @@ export default function Register() {
 
   // Here the password toggle handler
   const togglePassword = (name) => {
-    // if the prop name is equal to the onClick name  
+    // if the prop name is equal to the onClick name
     // that change the value of passwordShown to show the password writed
-    if (name == "password"){
-      setPasswordShown("password");
-        // if the state is equal to password, when we click again the state will be reset 
-        if (passwordShown == "password"){
-          setPasswordShown("");
-        }
+    if (name === 'password') {
+      setPasswordShown('password');
+      // if the state is equal to password, when we click again the state will be reset
+      if (passwordShown === 'password') {
+        setPasswordShown('');
+      }
     }
-    if (name == "confirmedPassword"){
-      setPasswordShown("confirmedPassword");
-        if (passwordShown == "confirmedPassword"){
-          setPasswordShown("");
-        }
+    if (name === 'confirmedPassword') {
+      setPasswordShown('confirmedPassword');
+      if (passwordShown === 'confirmedPassword') {
+        setPasswordShown('');
+      }
     }
-    
   };
 
   // function to verify that the email matches the regex rule
@@ -95,7 +94,6 @@ export default function Register() {
     }
     else setValidConfirmedPassword(true);
   };
- 
 
   return (
     <div>
@@ -143,55 +141,55 @@ export default function Register() {
                   <span className="form__error">Le mot de passe doit contenir au moins 6 caractères, une majuscule, un chiffre et un caractère spécial.</span>
                 )}
                 <div className="hide-container">
-                <Field
-                  type={passwordShown == "password" ? "text" : "password"}
-                  name="password"
-                  placeholder="Ton mot de passe"
-                  value={password}
-                  onChange={handleChange}
-                  onBlur={checkPassword}
-                  required
-                />
-                {passwordShown !== "password" && (
-                  <FaRegEyeSlash 
-                  onClick={() => togglePassword("password")}
-                  size={18}
-                  className="hide-container__password"
-                />
-                )}
-                {passwordShown == "password" && (
-                  <FaRegEye 
-                  onClick={() => togglePassword("password")}
-                  size={18}
-                  className="hide-container__password"
-                />
-                )}
-                {!validConfirmedPassword && (
+                  <Field
+                    type={passwordShown === 'password' ? 'text' : 'password'}
+                    name="password"
+                    placeholder="Ton mot de passe"
+                    value={password}
+                    onChange={handleChange}
+                    onBlur={checkPassword}
+                    required
+                  />
+                  {passwordShown !== 'password' && (
+                  <FaRegEyeSlash
+                    onClick={() => togglePassword('password')}
+                    size={18}
+                    className="hide-container__password"
+                  />
+                  )}
+                  {passwordShown === 'password' && (
+                  <FaRegEye
+                    onClick={() => togglePassword('password')}
+                    size={18}
+                    className="hide-container__password"
+                  />
+                  )}
+                  {!validConfirmedPassword && (
                   <span className="form__error">Les mots de passe doivent être identiques.</span>
-                )}
-                <Field
-                  type={passwordShown == "confirmedPassword" ? "text" : "password"}
-                  name="confirmedPassword"
-                  placeholder="Confirmer le mot de passe"
-                  value={confirmedPassword}
-                  onChange={setConfirmedPassword}
-                  onBlur={checkConfirmedPassword}
-                  required
-                />
-                {passwordShown !== "confirmedPassword" && (
-                  <FaRegEyeSlash 
-                  onClick={() => togglePassword("confirmedPassword")}
-                  size={18}
-                  className="hide-container__confirmedPassword"
-                />
-                )}
-                {passwordShown == "confirmedPassword" && (
-                  <FaRegEye 
-                  onClick={() => togglePassword("confirmedPassword")}
-                  size={18}
-                  className="hide-container__confirmedPassword"
-                />
-                )}
+                  )}
+                  <Field
+                    type={passwordShown === 'confirmedPassword' ? 'text' : 'password'}
+                    name="confirmedPassword"
+                    placeholder="Confirmer le mot de passe"
+                    value={confirmedPassword}
+                    onChange={setConfirmedPassword}
+                    onBlur={checkConfirmedPassword}
+                    required
+                  />
+                  {passwordShown !== 'confirmedPassword' && (
+                  <FaRegEyeSlash
+                    onClick={() => togglePassword('confirmedPassword')}
+                    size={18}
+                    className="hide-container__confirmedPassword"
+                  />
+                  )}
+                  {passwordShown === 'confirmedPassword' && (
+                  <FaRegEye
+                    onClick={() => togglePassword('confirmedPassword')}
+                    size={18}
+                    className="hide-container__confirmedPassword"
+                  />
+                  )}
                 </div>
                 <label htmlFor="acceptedTerms" className="checkbox__container">
                   <input

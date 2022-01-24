@@ -15,7 +15,8 @@ export default function ServicesCard({ result, onMouseOver }) {
   // Here we get the likedServices infos from the reducer
   const likedServices = useSelector((state) => state.user.likedServices);
   // Here the state we use to change the liked heart css
-  const [isLiked, setIsLiked] = useState(likedServices.some((service) => service.service_id === result.id));
+  const [isLiked, setIsLiked] = useState(likedServices
+    .some((service) => service.service_id === result.id));
 
   const dispatch = useDispatch();
 
@@ -76,7 +77,7 @@ export default function ServicesCard({ result, onMouseOver }) {
             <img
               className="card-image"
               src={result.avatar_url}
-              alt="Photo de profil"
+              alt="Avatar du profil"
             />
           </div>
           <div className="card-content-container">
@@ -106,5 +107,12 @@ ServicesCard.propTypes = {
       title: PropTypes.string,
       id: PropTypes.number,
       category_id: PropTypes.number,
+      online: PropTypes.bool,
+      irl: PropTypes.bool,
+      description: PropTypes.string,
+      firstname: PropTypes.string,
+      lastname: PropTypes.string,
+      avatar_url: PropTypes.string,
     }).isRequired,
+  onMouseOver: PropTypes.func.isRequired,
 };

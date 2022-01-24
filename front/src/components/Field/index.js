@@ -1,7 +1,7 @@
-//Npm import
+// Npm import
 import PropTypes from 'prop-types';
 
-//Style
+// Style
 import './style.scss';
 
 export default function Field({
@@ -34,7 +34,7 @@ export default function Field({
   );
 }
 
-//Default Prop
+// Default Prop
 Field.defaultProps = {
   required: false,
   disabled: false,
@@ -42,7 +42,7 @@ Field.defaultProps = {
   onBlur: () => {},
 };
 
-//Prop validation
+// Prop validation
 Field.propTypes = {
   placeholder: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
