@@ -143,7 +143,7 @@ const userMiddleware = (store) => (next) => (action) => {
           id,
           accessToken,
           details: {
-            email, firstname, lastname, bio, phone, fix,
+            firstname, lastname, bio, phone, fix,
           },
         },
       } = store.getState();

@@ -67,7 +67,7 @@ export default function Connect() {
           required
 
         />
-        {errors.password && <span className="connect__error">Mauvais mot de passe;</span>}
+        {errors.password && <span className="connect__error">Mauvais mot de passe</span>}
         <div className="container-hide">
           <Field
             type={passwordShown ? 'text' : 'password'}
