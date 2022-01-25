@@ -6,7 +6,9 @@
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint --fix src/**/*.js",
     "clean": "rm -rf dist",
-    "clean:all": "rm -rf dist node_modules yarn.lock package-lock.json"
+    "clean:all": "rm -rf dist node_modules yarn.lock package-lock.json",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
@@ -48,6 +50,8 @@
   },
   "dependencies": {
     "axios": "^0.24.0",
+    "babel-jest": "^27.4.6",
+    "jest": "^27.4.7",
     "jwt-decode": "^3.1.2",
     "leaflet": "^1.7.1",
     "prop-types": "^15.7.2",
@@ -61,5 +65,14 @@
     "react-tabs": "^3.2.3",
     "react-toastify": "^8.1.0",
     "redux": "^4.1.1"
+  },
+  "jest": {
+    "modulePaths": [
+      "./"
+    ],
+    "roots": [
+      "<rootDir>/src",
+      "<rootDir>/tests"
+    ]
   }
 }
