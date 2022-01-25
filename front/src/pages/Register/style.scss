@@ -80,6 +80,8 @@
   max-width: 550px;
   width: 100%;
   position: relative;
+  display: flex;
+  flex-direction: column;
   &__password{
     position: absolute;
     top: 17%;
