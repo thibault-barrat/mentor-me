@@ -1,0 +1,156 @@
+@use 'src/styles/vars';
+
+.tags{
+  display: flex;
+  padding-left: calc(vars.$gutter/2);
+  position: relative;
+  &-icon{
+    position: absolute;
+    top: 28%;
+    right: 15px;
+  }
+}
+.tag{
+  background-color: vars.$secondary-color;
+  border: solid 2px#dcdcdc;
+  border-radius: 10px;
+  padding: calc(vars.$gutter/2);
+  font-size: calc(vars.$gutter/1.1);
+  color: white;
+  margin-right: vars.$gutter;
+  margin-top: vars.$gutter;
+  margin-bottom: calc(vars.$gutter/2);
+  &-title{
+    border: solid 2px#dcdcdc;
+    border-radius: 10px;
+    padding: calc(vars.$gutter/2);
+    font-size: calc(vars.$gutter/1.5);
+    color: white;
+    margin-right: vars.$gutter;
+    margin-top: vars.$gutter;
+    margin-bottom: calc(vars.$gutter/2);
+  }
+  &-title{
+    font-size: calc(vars.$gutter/1.1);
+  }
+  &-unselected{
+    display: none;
+  }
+}
+.likedHeart{
+  color:  rgb(248, 93, 82);
+}
+
+.card{
+  border: solid 2px #dcdcdc;
+  border-radius: 15px;
+  margin: auto;
+  width: 70%;
+  margin-bottom: vars.$gutter;
+  padding-bottom: calc(vars.$gutter/2);
+  background-color: white;
+  box-shadow: 0px 3px 7px -2px #000000;
+
+  &-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    
+  }
+  &-content-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: calc(vars.$gutter*1.5);
+    
+  }
+  &-image-container{
+    width: 100px; 
+    height: 100px;
+    border-radius: 50%;
+    margin-left: vars.$gutter;
+  }
+  &-image{
+    width: 100px; 
+    height: 100px;
+    border-radius: 50%;
+  }
+  &-title{
+    margin-bottom: vars.$gutter;
+  }
+  &-description{
+    font-size: calc(vars.$gutter/1.6);
+    width: 100px;
+    &-span{
+      color: #60baf7;
+      font-weight: bold;
+    }
+  }
+  &-name{
+    display: flex;
+    font-size: calc(vars.$gutter/1.2);
+    margin-top: vars.$gutter;
+    &-firstname{
+      margin-right: calc(vars.$gutter/4);
+    }
+  }
+}
+
+@media (min-width: 600px) {
+	.card {
+    &-container{
+      margin-left: vars.$gutter;
+      position: relative;
+    }
+    &-content-container{
+      margin-left: calc(vars.$gutter*1.5);
+    }
+    &-title{
+      font-size: calc(vars.$gutter*1.2);
+    }
+    &-description{
+      font-size: calc(vars.$gutter/1.1);
+      margin-bottom: calc(vars.$gutter*2);
+      width: 150px;
+    }
+    &-name{
+      justify-content: flex-end;
+      position: absolute;
+      bottom: 2%;
+      right: 12px;
+    }
+	}
+}
+
+@media (min-width: vars.$breakpoint-md) {
+	.card {
+    width: 100%;
+    &-container{
+      margin-left: vars.$gutter;
+     
+    }
+    &-content-container{
+      margin-left: vars.$gutter;
+    }
+    &-title{
+      font-size: calc(vars.$gutter*1.2);
+    }
+	}
+}
+
+@media (min-width: vars.$breakpoint-lg) {
+	.card {
+    &-container{
+      margin-left: calc(vars.$gutter*3);
+    }
+    &-content-container{
+      margin-left:  calc(vars.$gutter*3);
+    }
+    &-title{
+      font-size: calc(vars.$gutter*1.5);
+    }
+    &-description{
+      font-size: calc(vars.$gutter/1.1);
+    }
+	}
+}

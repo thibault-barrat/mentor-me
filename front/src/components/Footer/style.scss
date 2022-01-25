@@ -1,0 +1,51 @@
+@use "src/styles/vars";
+
+.footer {
+  width: 100%;
+  background-color: vars.$primary-color;
+  padding: vars.$gutter 0;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  font-size: calc(vars.$gutter*0.8);
+  position: relative;
+  color: vars.$text-color;
+  &__item {
+    flex: 0 0 100%;
+    text-align: center;
+    padding: calc(vars.$gutter*0.5) 0;
+    @media (min-width: vars.$breakpoint-xs) {
+      flex: 0 0 50%;
+    }
+    @media (min-width: vars.$breakpoint-sm) {
+      flex: 0 0 auto;
+    }
+    &--link {
+      transition: all 0.3s ease-in;
+      &:hover {
+        color: lighten(vars.$text-color, 30%)
+      }
+    }
+  }
+  &__wave {
+    position: absolute;
+    z-index: 1000;
+    bottom: 99%;
+    transform: scaleY(50%);
+    transform-origin: bottom;
+    @media (min-width: vars.$breakpoint-sm) {
+      visibility: hidden;
+      opacity: 0;
+    }
+    &--desktop {
+      visibility: hidden;
+      opacity: 0;
+      right: 0;
+      width: 30%;
+      @media (min-width: vars.$breakpoint-sm) {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+}

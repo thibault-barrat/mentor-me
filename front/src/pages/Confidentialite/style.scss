@@ -1,0 +1,39 @@
+@use 'src/styles/vars';
+
+.conditions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+
+  &__header {
+    margin: 2em 0;
+    line-height: 2.2rem;
+
+    &__title {
+      font-size: 2rem;
+      margin: 1em 0 0;
+      color: #3e2722;
+    }
+  }
+
+  &__container {
+    margin-bottom: 4em;
+    z-index: 99;
+
+    &__text {
+      text-justify: inter-word;
+      text-align: justify;
+      line-height: 1.3rem;
+
+      & a:hover {
+        color: rgb(255, 112, 87);
+      }
+    }
+    &__title {
+      margin: 2em 0;
+      font-size: 1.3rem;
+    }
+  }
+}

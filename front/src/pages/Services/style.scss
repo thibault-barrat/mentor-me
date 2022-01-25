@@ -1,0 +1,53 @@
+@use 'src/styles/vars';
+
+.empty-list{
+  margin: auto;
+  z-index: 0;
+}
+.services{
+  margin-bottom: calc(vars.$gutter*4);
+  &-title{
+    text-align: center;
+    font-size: calc(vars.$gutter*1.25);
+    padding: calc(vars.$gutter*1.5);
+    margin-bottom: calc(vars.$gutter*1.5);
+    background-color: lighten($color: vars.$primary-color, $amount: 15%);
+
+  }
+  &-map{
+    width: 100%;
+    height: 400px;
+    margin: auto;
+  }
+  
+}
+
+@media (min-width: vars.$breakpoint-md) {
+  .services{
+    flex-grow: 1;
+    margin-bottom: 0;
+
+    &-container{
+      display: flex;
+      flex-direction: row-reverse;
+    }
+    &-map-container{
+      width: 50%;
+      height: 100vh;
+    }
+    &-map{
+      height: 100vh;
+    }
+    &-list{
+      width: 50%;
+    }
+    &-title{
+      width: 100%;
+      height: 80px;
+    }
+    &-cards{
+      width: 70%;
+      margin: 0 auto;
+    }
+  }
+}

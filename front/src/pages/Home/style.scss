@@ -1,0 +1,252 @@
+@use 'src/styles/vars';
+
+.home {
+	section:last-of-type {
+		padding-bottom: calc(vars.$gutter * 3);
+	}
+	&__container {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+}
+
+.white-bg {
+	background: #fff;
+	position: relative;
+}
+
+.slogan {
+	padding: vars.$gutter 5%;
+	margin-bottom: calc(vars.$gutter * 2);
+	text-align: center;
+	color: vars.$text-color;
+	margin: 0 auto 2rem;
+	min-height: 300px;
+	&__title {
+		font-size: 2rem;
+		line-height: 2.2rem;
+		margin: vars.$gutter 0;
+	}
+	&__text {
+		line-height: 1.5rem;
+	}
+	&__inv {
+		line-height: 1.3rem;
+		margin-top: 1rem;
+		font-weight: bold;
+	}
+	&__container {
+		max-width: 1000px;
+		margin: 0 auto 2rem;
+	}
+	&__button {
+		line-height: 1.3rem;
+		margin-top: 2rem;
+		display: inline-block;
+		width: auto;
+	}
+}
+
+.popular-category {
+	padding: calc(vars.$gutter * 3) 5%;
+	display: grid;
+	grid-template-columns: auto;
+	grid-template-rows: auto auto auto;
+	justify-content: center;
+	align-content: center;
+	position: relative;
+	min-height: 400px;
+	@media (min-width: vars.$breakpoint-sm) {
+		grid-template-columns: 50% 50%;
+		grid-template-rows: 1fr 1fr;
+	}
+	&__title {
+		margin: vars.$gutter 0;
+		font-size: 1.2rem;
+		text-align: center;
+		z-index: 20;
+		position: relative;
+		grid-column: 1;
+		grid-row: 1;
+		@media (min-width: vars.$breakpoint-sm) {
+			grid-column: 1;
+			grid-row: 1;
+			align-self: end;
+		}
+	}
+	&__link {
+		z-index: 20;
+		position: relative;
+		grid-column: 1;
+		grid-row: 3;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		@media (min-width: vars.$breakpoint-sm) {
+			grid-column: 1;
+			grid-row: 2;
+			align-self: start;
+		}
+	}
+	&__icon {
+		font-size: 2rem;
+	}
+	&__cards {
+		grid-column: 1;
+		grid-row: 2;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		@media (min-width: vars.$breakpoint-sm) {
+			grid-column: 2;
+			grid-row: 1 / span 2;
+		}
+	}
+	&__card {
+		flex: 0 0 100%;
+		position: relative;
+		margin-bottom: vars.$gutter;
+		height: 100px;
+		transition: all 0.1s ease-in;
+		@media (min-width: vars.$breakpoint-xs) {
+			flex: 0 0 49%;
+			height: auto;
+		}
+		&::after {
+			position: absolute;
+			content: '';
+			display: block;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.3);
+			inset: 0;
+			border-radius: 20px;
+		}
+		&:hover {
+			transform: translateY(-3px) scale(1.01);
+		}
+	}
+	&__card-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 20px;
+		filter: drop-shadow(0px 5px 4px rgba(0, 0, 0, 0.64));
+	}
+	&__card-name {
+		color: #fff;
+		position: absolute;
+		text-transform: capitalize;
+		width: 100%;
+		left: 0;
+		bottom: 15px;
+		text-align: center;
+		font-weight: 600;
+		font-size: 1.5rem;
+		z-index: 10;
+		@media (min-width: vars.$breakpoint-sm) {
+			font-size: 1.2rem;
+		}
+	}
+	&__wave {
+		opacity: 0;
+		visibility: hidden;
+		position: absolute;
+		left: 0;
+		height: 100%;
+		z-index: 10;
+		@media (min-width: vars.$breakpoint-sm) {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+}
+
+.last-services {
+	padding: vars.$gutter 5%;
+	display: grid;
+	grid-template-columns: auto;
+	grid-template-rows: auto auto auto;
+	min-height: 400px;
+	@media (min-width: vars.$breakpoint-sm) {
+		grid-template-columns: 70% 30%;
+		grid-template-rows: auto auto;
+		align-items: center;
+	}
+	&__title {
+		grid-column: 1;
+		grid-row: 1;
+		justify-self: center;
+		align-self: end;
+		margin: vars.$gutter 0;
+		font-size: 1.2rem;
+		text-align: center;
+		@media (min-width: vars.$breakpoint-sm) {
+			grid-column: 2;
+			grid-row: 1;
+		}
+	}
+	&__cards {
+		grid-column: 1;
+		grid-row: 2;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		@media (min-width: vars.$breakpoint-sm) {
+			grid-column: 1;
+			grid-row: 1 / span 2;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+	}
+	&__slogan {
+		grid-column: 1;
+		grid-row: 3;
+		justify-self: center;
+		align-self: start;
+		margin: vars.$gutter 0;
+		font-size: 1.3rem;
+		font-weight: 500;
+		text-align: center;
+		@media (min-width: vars.$breakpoint-sm) {
+			grid-column: 2;
+			grid-row: 2;
+			font-size: 1.4rem;
+			font-weight: 600;
+		}
+	}
+	&__card {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		margin-bottom: vars.$gutter;
+		transition: all 0.1s ease-in;
+		&:hover {
+			transform: translateY(-3px) scale(1.01);
+		}
+		@media (min-width: vars.$breakpoint-sm) {
+			flex: 0 0 45%;
+			justify-content: flex-start;
+		}
+	}
+	&__card-name {
+		padding: vars.$gutter;
+		border-radius: 10px;
+		display: inline-block;
+		text-align: left;
+		font-weight: 600;
+		&::first-letter {
+			text-transform: uppercase;
+		}
+	}
+	&__card-image {
+		display: block;
+		width: 100px;
+		height: 100px;
+		object-fit: cover;
+		border-radius: 200px;
+	}
+	&__section {
+		display: flex;
+	}
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "informatique",
+    "color": "#a7fb1c",
+    "image": "https://cdn.pixabay.com/photo/2015/05/26/23/52/technology-785742_960_720.jpg"
+  },
+  {
+    "id": 2,
+    "name": "cuisine",
+    "color": "#9cab4a",
+    "image": "https://cdn.pixabay.com/photo/2016/02/05/15/34/pasta-1181189_960_720.jpg"
+  },
+  {
+    "id": 3,
+    "name": "musique",
+    "color": "#7692b5",
+    "image": "https://cdn.pixabay.com/photo/2016/09/08/21/09/piano-1655558_960_720.jpg"
+  },
+  {
+    "id": 4,
+    "name": "sport",
+    "color": "#9bfb1e",
+    "image": "https://cdn.pixabay.com/photo/2017/05/25/15/08/jogging-2343558_960_720.jpg"
+  },
+  {
+    "id": 5,
+    "name": "bricolage",
+    "color": "#dad83a",
+    "image": "https://cdn.pixabay.com/photo/2015/07/11/14/53/plumbing-840835_960_720.jpg"
+  },
+  {
+    "id": 6,
+    "name": "jardinage",
+    "color": "#c8de01",
+    "image": "https://cdn.pixabay.com/photo/2020/04/06/11/22/seedling-5009286_1280.jpg"
+  },
+  {
+    "id": 7,
+    "name": "bien-être",
+    "color": "#a7927c",
+    "image": "https://cdn.pixabay.com/photo/2017/03/26/21/54/yoga-2176668_960_720.jpg"
+  },
+  {
+    "id": 8,
+    "name": "scolaire",
+    "color": "#31ff1b",
+    "image": "https://cdn.pixabay.com/photo/2015/09/02/12/28/pencil-918449_960_720.jpg"
+  },
+  {
+    "id": 9,
+    "name": "loisirs créatifs",
+    "color": "#437830",
+    "image": "https://cdn.pixabay.com/photo/2017/03/24/12/20/yarn-2171040_960_720.jpg"
+  },
+  {
+    "id": 10,
+    "name": "autres",
+    "color": "#cb9951",
+    "image": "https://cdn.pixabay.com/photo/2016/08/28/22/22/souk-1627045_960_720.jpg"
+  }
+]

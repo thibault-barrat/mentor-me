@@ -1,0 +1,59 @@
+@use 'src/styles/vars';
+
+.category{
+  margin-bottom: vars.$gutter;
+
+  &-card{
+    transition: .3s;
+    &:hover{
+      opacity: 0.60;
+    }
+
+  }
+  &-container{
+    width: 200px; 
+    height: 200px;
+    margin-bottom: calc(vars.$gutter/2);
+    position: relative;
+    &::after {
+			position: absolute;
+			content: '';
+			display: block;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.3);
+			inset: 0;
+			border-radius: 10px;
+		}
+  }
+  &-image{
+    border-radius: 10px;
+    width: 200px; 
+    height: 200px;
+    object-fit: cover;
+  }
+  &-title{
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: white;
+    position: absolute;
+    top: 80%;
+    width: 100%;
+    z-index: 10;
+  }
+}
+
+@media (min-width: vars.$breakpoint-md){
+  .category{
+    &-container{
+      width: 280px; 
+      height: 280px;
+    }
+    &-image{
+      width: 280px; 
+      height: 280px;
+    }
+  }
+}

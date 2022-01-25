@@ -1,0 +1,63 @@
+@use 'src/styles/vars';
+
+.connect {
+	background-color: white;
+	width: 350px;
+	border-radius: 30px;
+	margin: auto;
+	text-align: center;
+	margin-top: calc(vars.$gutter * 4);
+	margin-bottom: calc(vars.$gutter * 4);
+	padding: calc(vars.$gutter * 2.5) 0;
+	&-button {
+		display: block;
+		color: white;
+		padding: calc(vars.$gutter/1.5);
+		font-size: vars.$gutter;
+		background-color: rgb(255, 112, 87);
+		border: none;
+		border-radius: 5px;
+		font-weight: bold;
+		margin-bottom: calc(vars.$gutter * 2);
+		transition: 0.3s;
+		margin-right: auto;
+		margin-left: auto;
+		&:hover {
+			background-color: lighten($color: rgb(255, 112, 87), $amount: 10%);
+		}
+	}
+	&-link {
+		color: #6558f5;
+		text-decoration: underline;
+		&:hover {
+			color: lighten($color: #6558f5, $amount: 10%);
+		}
+	}
+	&__error {
+		margin-bottom: 0.4rem;
+		color: rgb(248, 93, 82);
+		display: inline-block;
+	}
+}
+.container-hide{
+  position: relative;
+  &__passwordConnect{
+    position: absolute;
+    top: 35%;
+    right: 65px;
+    @media (min-width: 768px){
+      right: 80px;
+    }
+  }
+}
+@media (min-width: 768px) {
+	.connect {
+		width: 470px;
+	}
+}
+
+.connect__title {
+  font-size: 2rem;
+  padding: 1.4rem;
+  margin-bottom: 1rem;
+}

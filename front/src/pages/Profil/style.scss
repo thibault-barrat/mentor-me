@@ -1,0 +1,193 @@
+@use 'src/styles/vars';
+
+.profil {
+	&__container {
+		max-width: 1200px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: auto;
+		grid-template-rows: auto auto auto auto;
+		justify-items: center;
+		@media (min-width: vars.$breakpoint-md) {
+			grid-template-columns: auto max-content;
+			grid-template-rows: auto auto;
+			margin-bottom: 3rem;
+			padding: 0 5%;
+		}
+	}
+	&__container-form {
+		grid-column: 1;
+		grid-row: 3;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		flex-grow: 1;
+		max-width: 500px;
+		width: 100%;
+		@media (min-width: vars.$breakpoint-md) {
+			grid-column: 1;
+			grid-row: 2;
+      align-self: flex-start;
+		}
+	}
+	.field {
+		width: 100%;
+	}
+	&__container-ann {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: vars.$gutter;
+		background-color: white;
+		padding-bottom: calc(vars.$gutter * 3);
+		@media (min-width: vars.$breakpoint-md) {
+			border-radius: 0 0 20px 20px;
+		}
+	}
+	&__title {
+		margin-bottom: 0;
+		padding-bottom: 0;
+		text-align: center;
+		margin: 2rem 0 0 0;
+		font-size: 1.7rem;
+	}
+	&__container-avatar {
+		grid-column: 1;
+		grid-row: 1;
+		text-align: center;
+		margin-top: calc(vars.$gutter * 2);
+		width: 250px;
+    @media (min-width: vars.$breakpoint-md) {
+			grid-column: 2;
+			grid-row: 1;
+      align-self: center;
+		}
+	}
+	&__avatar {
+		width: 250px;
+		height: 250px;
+		border: none;
+		border-radius: 150px;
+		margin-bottom: vars.$gutter;
+	}
+	&__bio {
+		grid-column: 1;
+		grid-row: 2;
+		width: 100%;
+		@media (min-width: vars.$breakpoint-md) {
+			max-width: 500px;
+      grid-column: 1;
+			grid-row: 1;
+      align-self: center;
+		}
+	}
+	&__error {
+		margin-bottom: 1rem;
+		color: rgb(248, 93, 82);
+		text-align: center;
+		width: 75%;
+	}
+	&__input-avatar {
+		display: none;
+	}
+	&__tabs-container {
+		justify-self: stretch;
+    @media (min-width: vars.$breakpoint-md) {
+			margin: 0 calc(vars.$gutter * 2);
+		}
+	}
+	&__tabs {
+		border-bottom: 1px solid #aaa;
+		margin: 0;
+		padding: 0;
+		text-align: center;
+	}
+}
+
+.bio {
+	&__label {
+		display: flex;
+		flex-direction: column;
+		margin: auto;
+		width: 100%;
+		max-width: 500px;
+		@media (min-width: vars.$breakpoint-md) {
+			max-width: none;
+		}
+	}
+	&__textarea {
+		padding: vars.$gutter;
+		margin-bottom: calc(vars.$gutter * 3);
+		border: solid 2px #dcdcdc;
+		min-height: 150px;
+		resize: vertical;
+		font-family: 'Montserrat', sans-serif;
+		&::placeholder {
+			font-family: 'Montserrat', sans-serif;
+		}
+		&:focus-visible {
+			outline: none;
+		}
+	}
+	&__label-text {
+		margin-bottom: calc(vars.$gutter/2);
+	}
+}
+
+.card__name {
+	text-align: center;
+	&::first-letter {
+		text-transform: capitalize;
+	}
+}
+
+.card__link {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.proposed__card {
+	margin-top: vars.$gutter;
+	width: 200px;
+}
+
+.proposed__img {
+	width: 200px;
+	height: 200px;
+	border: none;
+	border-radius: 50px;
+	padding: vars.$gutter;
+	object-fit: cover;
+}
+
+.proposed__icon {
+	color: rgb(248, 93, 82);
+	display: block;
+	margin: 0 auto;
+	font-size: calc(vars.$gutter * 1.5);
+	transition: 0.2s ease-in-out;
+	cursor: pointer;
+	&:hover {
+		transform: scale(1.1);
+	}
+}
+
+.connect-button-p {
+	color: white;
+	padding: calc(vars.$gutter/1.5);
+	font-size: vars.$gutter;
+	background-color: rgb(255, 112, 87);
+	border: none;
+	border-radius: 5px;
+	font-weight: bold;
+	margin-bottom: calc(vars.$gutter * 2);
+	transition: 0.3s;
+	display: inline-block;
+	cursor: pointer;
+	line-height: calc(vars.$gutter * 1.4);
+	&:hover {
+		background-color: lighten($color: rgb(255, 112, 87), $amount: 10%);
+	}
+}

@@ -1,0 +1,42 @@
+@use 'src/styles/vars';
+
+.categories{
+  margin-bottom: calc(vars.$gutter*4);
+
+  &-search{
+    background-color: lighten($color: vars.$primary-color, $amount: 15%);
+    padding: vars.$gutter;
+    padding-bottom: calc(vars.$gutter*2);
+    
+  }
+  &-quote{
+    margin-top: vars.$gutter;
+    margin-bottom: calc(vars.$gutter*1.25);
+    text-align: center;
+    font-size: calc(vars.$gutter*2);
+  }
+  &-list-title{
+    margin-top: calc(vars.$gutter*2);
+    margin-bottom: calc(vars.$gutter/2);
+    text-align: center;
+    font-size: calc(vars.$gutter*2);
+  }
+  &-list{
+    max-width: 450px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: calc(vars.$gutter*3);
+  }
+}
+
+@media (min-width: vars.$breakpoint-md){
+  .categories-list{
+    max-width: 875px;
+    margin: auto;
+    margin-top: calc(vars.$gutter*2.5);
+    display: flex;
+    justify-content: space-between;
+  }
+}

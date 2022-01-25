@@ -1,0 +1,114 @@
+@use 'src/styles/vars';
+
+@media (min-width: vars.$breakpoint-sm){
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.right__container {
+  
+  margin: 2rem 2rem 5rem 2rem;
+  background-color: #FFF;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 550px;
+  max-height: 960px;
+
+  @media (min-width: vars.$breakpoint-sm){
+    margin: 2rem 2rem 5rem 8rem;
+  }
+
+}
+
+.form__title {
+  font-size: 2rem;
+  padding: 1.4rem;
+ 
+}
+
+
+.right__container input {
+  display: block;
+  padding: vars.$gutter;
+    margin-bottom: calc(vars.$gutter*3);
+    border: solid 2px #dcdcdc;
+}
+
+
+
+.form__input {
+  margin: 1rem;
+}
+
+.connect-button {
+  margin-top: 1.5rem;
+  background-color: rgb(255, 112, 87);
+}
+
+.checkbox__container {
+  display: flex;
+  width: 75%;
+}
+
+.checkbox {
+  padding: 1rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.checkbox__link{
+  color: #6558f5;
+	text-decoration: underline;
+	&:hover {
+		color: lighten($color: #6558f5, $amount: 10%);
+	}
+}
+
+.form__error {
+  margin-bottom: 1rem;
+  color: rgb(248, 93, 82);
+  padding: 1rem;
+}
+
+.hide-container{
+  max-width: 550px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  &__password{
+    position: absolute;
+    top: 17%;
+    right: 49px;
+    @media (min-width: 450px) {
+      top: 17%;
+      right: 70px;
+    }
+    @media (min-width: 570px) {
+      top: 17%;
+      right: 90px;
+    }
+  }
+  &__confirmedPassword{
+    position: absolute;
+    bottom: 24%;
+    right: 49px;
+    @media (min-width: 450px) {
+      bottom: 24%;
+      right: 70px;
+    }
+    @media (min-width: 570px) {
+      bottom: 24%;
+      right: 90px;
+    }
+  }
+}
+
+
+

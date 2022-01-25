@@ -1,0 +1,41 @@
+@use 'src/styles/vars';
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  padding: vars.$gutter;
+  background: white;
+  width: 80%;
+  z-index: 20;
+  border: 1px solid lightgrey;
+  @media (min-width: vars.$breakpoint-xs) {
+    width: auto;
+	}
+  &--in-parent-modal {
+    z-index: 2000;
+    position: absolute;
+    width: 100%;
+  }
+  &__text {
+    text-align: center;
+  }
+  &__button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: vars.$gutter;
+  }
+  &__button {
+    border-radius: 9px;
+		border: none;
+		padding: calc(vars.$gutter/2);
+		color: white;
+		background-color: #f0613c;
+		transition: 0.3s;
+		&:hover {
+			background-color: lighten($color: #f0613c, $amount: 10%);
+		}
+  }
+}

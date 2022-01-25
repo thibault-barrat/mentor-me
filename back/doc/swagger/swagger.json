@@ -1,0 +1,318 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Mentorme API documentation",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "consumes": [
+    "application/json",
+    "application/x-www-form-urlencoded",
+    "multipart/form-data"
+  ],
+  "produces": [
+    "application/json",
+    "application/x-www-form-urlencoded",
+    "multipart/form-data"
+  ],
+  "host": "localhost:3000",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "User",
+      "description": "All routes related to User."
+    },
+    {
+      "name": "Category",
+      "description": "All routes related to Category."
+    },
+    {
+      "name": "Service",
+      "description": "All routes related to Service."
+    }
+  ],
+  "definitions": {
+    "createUser": {
+      "type": "object",
+      "properties": {
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "connectUser": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "modifyUser": {
+      "type": "object",
+      "properties": {
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "biography": {
+          "type": "string"
+        },
+        "home_phone": {
+          "type": "number"
+        },
+        "mobile_phone": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Sign up",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Form",
+            "in": "body",
+            "required": "true",
+            "schema": {
+              "$ref": "#/definitions/createUser"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "created member"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Sign in",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Form",
+            "in": "body",
+            "required": "true",
+            "schema": {
+              "$ref": "#/definitions/connectUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "connected"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Log out",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "created member"
+          }
+        }
+      }
+    },
+    "/allUsers": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get all users",
+        "description": "only available for admins",
+        "responses": {
+          "200": {
+            "description": "all users"
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get one user by id",
+        "description": "only available for connected members",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "id of the user we want to find",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "all users"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["User"],
+        "summary": "Modify one user profile",
+        "description": "only available for the specified connected member or for admins",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "id of the user we want to modify",
+            "type": "number"
+          },
+          {
+            "name": "Form",
+            "in": "body",
+            "required": "true",
+            "schema": {
+              "$ref": "#/definitions/modifyUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "all users"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete one user by id",
+        "description": "only available for the specified connected member or for admins",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "id of the user we want to modify",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "all users"
+          }
+        }
+      }
+    },
+    "/user/{id}/avatar": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Get all users",
+        "description": "only available for admins",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "id of the user we want to modify the avatar",
+            "type": "number"
+          },
+          {
+            "name": "avatar",
+            "in": "formData",
+            "required": "true",
+            "description": "the image the user wants to set as his avatar",
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "all users"
+          }
+        }
+      }
+    },
+    "/allCategories": {
+      "get": {
+        "tags": ["Category"],
+        "summary": "Get all categories",
+        "description": "available for users and visitors",
+        "responses": {
+          "200": {
+            "description": "all categories"
+          }
+        }
+      }
+    },
+    "/category/{id}": {
+      "get": {
+        "tags": ["Category"],
+        "summary": "Get category by id",
+        "description": "only available for connected users",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "id of the category we want to find",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "specific category"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Category"],
+        "summary": "new category",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Form",
+            "in": "body",
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "created"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Category"],
+        "summary": "Delete one category by id",
+        "description": "only available for admins",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "id of the category we want to delete",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "deleted category"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,111 @@
+@use 'src/styles/vars';
+
+.search {
+	padding-top: vars.$gutter;
+	max-width: 450px;
+	margin: auto;
+
+	&-form {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		position: relative;
+	}
+	&-input {
+		width: 90%;
+		border: solid 1px #dcdcdc;
+		border-radius: 50px;
+		font-size: vars.$gutter;
+		padding: calc(vars.$gutter/2);
+		padding-left: 40px;
+		background-color: white;
+		margin-bottom: calc(vars.$gutter * 1.5);
+		transition: 0.3s;
+		&:focus {
+			border-color: dodgerblue;
+			box-shadow: 0 0 8px 0 dodgerblue;
+		}
+	}
+	&-input {
+		&:focus + #icon {
+			color: dodgerblue;
+		}
+	}
+	&-button {
+		width: 180px;
+		border-radius: 9px;
+		border: none;
+		padding: calc(vars.$gutter/2);
+		font-size: calc(vars.$gutter * 1.25);
+		color: white;
+		background-color: #f0613c;
+		transition: 0.3s;
+		&:hover {
+			background-color: lighten($color: #f0613c, $amount: 10%);
+		}
+	}
+	&-icon {
+		position: absolute;
+		left: 8%;
+		top: 8px;
+		color: #a88175;
+	}
+	&-suggestions {
+    position: absolute;
+    top: 38px;
+    left: 15%;
+    width: 40%;
+    background-color: white;
+    border-radius: 0 0 9px 9px;
+    box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+    z-index: 100;
+  }
+  &-suggestion {
+    padding: calc(vars.$gutter * 0.5);
+    border-bottom: solid 1px #dcdcdc;
+    cursor: pointer;
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+}
+
+/* for every screens larger than 768px */
+@media (min-width: vars.$breakpoint-sm) {
+	.search {
+		max-width: 500px;
+		margin: auto;
+
+		&-form {
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: space-evenly;
+			align-items: baseline;
+		}
+		&-input {
+			width: 60%;
+		}
+		&-button {
+			width: 130px;
+			font-size: vars.$gutter;
+			padding: calc(vars.$gutter/2);
+		}
+		&-icon {
+			position: absolute;
+			left: 7.5%;
+			top: 8px;
+		}
+	}
+}
+@media (min-width: vars.$breakpoint-md) {
+	.search {
+		max-width: 1000px;
+		margin: auto;
+
+		&-icon {
+			position: absolute;
+			left: 10.5%;
+			top: 8px;
+		}
+	}
+}
