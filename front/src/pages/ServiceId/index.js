@@ -29,7 +29,7 @@ export default function serviceId() {
           <div className="desc__container">
             {isLiked ? (
               <AiFillHeart
-                className="likedHeart"
+                className="like-button likedHeart"
                 size={23}
                 onClick={() => {
                   dispatch(unlikeService(foundService.id));
@@ -38,6 +38,7 @@ export default function serviceId() {
               />
             ) : (
               <AiOutlineHeart
+                className="like-button"
                 onClick={() => {
                   dispatch(likeService(foundService.id));
                   setIsLiked(true);
@@ -48,7 +49,7 @@ export default function serviceId() {
             <h1 className="desc__item user__title">{foundService.title}</h1>
             <p className="desc__item desc__text__s">{foundService.description}</p>
             <span className="desc__item"> Durée : {foundService.duration} minutes</span>
-            <a href={`mailto:${foundService.email}`} className="connect-button" type="button"> contacter le mentor</a>
+            <a href={`mailto:${foundService.email}`} className="connect-button" type="button">Contacter le mentor</a>
           </div>
         </div>
         <div className="leaflet__block">
